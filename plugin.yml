@@ -9,3 +9,15 @@ commands:
     aliases: [iw]
     description: InfinityWarps main command
     permission: infinitywarps.infinitywarps
+  warp:
+    description: Warp to a location
+    permission: infinitywarps.warp
+  setwarp:
+    description: Set a warp
+    permission: infinitywarps.setwarp
+  delwarp:
+    description: Delete a warp
+    permission: infinitywarps.delwarp
+  warps:
+    description: Open a menu to view all warps
+    permission: infinitywarps.warps
