@@ -6,18 +6,18 @@ import org.bukkit.command.CommandSender;
 
 import com.jstnf.infinitywarps.IWMain;
 
-public class InfinityWarpsCommand implements CommandExecutor
+public class DelwarpCommand implements CommandExecutor
 {
 	private IWMain plugin;
 
-	public InfinityWarpsCommand(IWMain plugin)
+	public DelwarpCommand(IWMain plugin)
 	{
 		this.plugin = plugin;
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		plugin.getLogger().info("The command was run!");
+		plugin.getLogger().info("[/delwarp] To implement!");
 		return true;
 	}
 }

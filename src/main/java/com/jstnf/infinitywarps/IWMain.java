@@ -3,7 +3,7 @@ package com.jstnf.infinitywarps;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.jstnf.infinitywarps.commands.IWCommandUtil;
+import com.jstnf.infinitywarps.utils.CommandUtils;
 
 public class IWMain extends JavaPlugin
 {
@@ -16,7 +16,7 @@ public class IWMain extends JavaPlugin
 	
 	public void onEnable()
 	{
-		IWCommandUtil.setupListeners(this);
+		CommandUtils.setupListeners(this);
 		this.getLogger().info("InfinityWarps v" + pdf.getVersion() + " successfully enabled.");
 	}
 	
