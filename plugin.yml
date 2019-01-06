@@ -1,0 +1,11 @@
+name: InfinityWarps
+version: 0.0.1-SNAPSHOT
+main: com.jstnf.infinitywarps.IWMain
+author: jstnf-pokeball92870
+description: A customizable, feature-packed warps plugin.
+
+commands:
+  infinitywarps:
+    aliases: [iw]
+    description: InfinityWarps main command
+    permission: infinitywarps.infinitywarps
