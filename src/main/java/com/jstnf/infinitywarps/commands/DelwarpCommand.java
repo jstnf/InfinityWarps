@@ -8,16 +8,16 @@ import com.jstnf.infinitywarps.IWMain;
 
 public class DelwarpCommand implements CommandExecutor
 {
-	private IWMain plugin;
+    private IWMain plugin;
 
-	public DelwarpCommand(IWMain plugin)
-	{
-		this.plugin = plugin;
-	}
+    public DelwarpCommand(IWMain plugin)
+    {
+        this.plugin = plugin;
+    }
 
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-	{
-		plugin.getLogger().info("[/delwarp] To implement!");
-		return true;
-	}
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
+        plugin.getLogger().info("[/delwarp] To implement!");
+        return true;
+    }
 }

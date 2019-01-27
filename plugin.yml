@@ -21,3 +21,6 @@ commands:
   warps:
     description: Open a menu to view all warps
     permission: infinitywarps.warps
+  iwtest:
+    description: Test various plugin functionality
+    permission: infinitywarps.iwtest

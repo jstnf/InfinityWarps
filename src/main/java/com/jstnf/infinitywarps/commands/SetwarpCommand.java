@@ -8,16 +8,16 @@ import com.jstnf.infinitywarps.IWMain;
 
 public class SetwarpCommand implements CommandExecutor
 {
-	private IWMain plugin;
+    private IWMain plugin;
 
-	public SetwarpCommand(IWMain plugin)
-	{
-		this.plugin = plugin;
-	}
+    public SetwarpCommand(IWMain plugin)
+    {
+        this.plugin = plugin;
+    }
 
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-	{
-		plugin.getLogger().info("[/setwarp] To implement!");
-		return true;
-	}
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
+        plugin.getLogger().info("[/setwarp] To implement!");
+        return true;
+    }
 }

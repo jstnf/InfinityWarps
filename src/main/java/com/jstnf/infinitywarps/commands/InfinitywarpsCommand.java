@@ -8,16 +8,16 @@ import com.jstnf.infinitywarps.IWMain;
 
 public class InfinitywarpsCommand implements CommandExecutor
 {
-	private IWMain plugin;
+    private IWMain plugin;
 
-	public InfinitywarpsCommand(IWMain plugin)
-	{
-		this.plugin = plugin;
-	}
+    public InfinitywarpsCommand(IWMain plugin)
+    {
+        this.plugin = plugin;
+    }
 
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-	{
-		plugin.getLogger().info("[/iw] To implement!");
-		return true;
-	}
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
+        plugin.getLogger().info("[/iw] To implement!");
+        return true;
+    }
 }
