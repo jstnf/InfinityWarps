@@ -1,0 +1,7 @@
+# InfinityWarps config.yml
+centerOnBlock: true
+safeTeleport: true
+defaultItemIcon: ENDER_PEARL
+perWarpPermissions: false
+
+configVersion: 1
