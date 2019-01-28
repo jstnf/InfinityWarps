@@ -1,4 +1,5 @@
 # InfinityWarps
-A customizable, feature-packed warps plugin.
+A customizable, feature-packed warps plugin. Developed for IAS.
 
-Developed for the Infinite Architects Society.
+Trello:
+https://trello.com/b/lIkurrS7/infinitywarps-development
