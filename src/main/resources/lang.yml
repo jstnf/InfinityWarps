@@ -15,6 +15,7 @@ warpDeleteSuccess: '&3Warp &f{0} &3deleted.'
 
 warpLocationError: '&cUnable to warp. Perhaps the world was deleted or unloaded?'
 
+ecoWarpCost: '&aCost&f: {0}'
 ecoWarpMoneyTaken: '&f{0} &3was taken from your account.'
 ecoWarpCannotAfford: '&cYou cannot afford to warp to &f{0}&c.'
 ecoWarpWarning: '&3It will cost &f{0} &3to warp to &f{1}&3. Use &f/warpconfirm &3to continue.'

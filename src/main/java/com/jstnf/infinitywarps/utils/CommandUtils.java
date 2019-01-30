@@ -1,11 +1,7 @@
 package com.jstnf.infinitywarps.utils;
 
 import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.commands.DelwarpCommand;
-import com.jstnf.infinitywarps.commands.InfinitywarpsCommand;
-import com.jstnf.infinitywarps.commands.SetwarpCommand;
-import com.jstnf.infinitywarps.commands.WarpCommand;
-import com.jstnf.infinitywarps.commands.WarpsCommand;
+import com.jstnf.infinitywarps.commands.*;
 import com.jstnf.infinitywarps.commands.test.IWTestCommand;
 
 public class CommandUtils

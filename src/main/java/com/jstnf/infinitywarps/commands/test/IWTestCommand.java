@@ -1,13 +1,12 @@
 package com.jstnf.infinitywarps.commands.test;
 
+import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.gui.TestGUIHandler;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.entity.Player;
 
 public class IWTestCommand implements CommandExecutor

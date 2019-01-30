@@ -1,10 +1,9 @@
 package com.jstnf.infinitywarps.commands;
 
+import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import com.jstnf.infinitywarps.IWMain;
 
 public class InfinitywarpsCommand implements CommandExecutor
 {
