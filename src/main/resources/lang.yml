@@ -1,4 +1,9 @@
-# InfinityWarps language file
+# InfinityWarps lang.yml
+# Config Version (do not change this value!)
+configVersion: 1
+
+############################## InfinityWarps Language File ##############################
+
 prefix: ''
 
 warpDelay: '&3Warping to &c{0} &3in &f{1} &3seconds.'

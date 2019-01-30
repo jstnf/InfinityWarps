@@ -1,10 +1,38 @@
 # InfinityWarps config.yml
-centerOnBlock: true
-safeTeleport: true
-defaultItemIcon: ENDER_PEARL
-perWarpPermissions: false
-teleportDelay: 5
-teleportCooldown: 30
-useEconomy: false
-
+# Config Version (do not change this value!)
 configVersion: 1
+
+############################## InfinityWarps Configuration ##############################
+
+# On teleport, should InfinityWarps center the player on the block?
+centerOnBlock: true
+
+# Should InfinityWarps attempt to find a safe location to warp to?
+# If false, InfinityWarps will warp the player directly to the location, regardless of safety.
+# This includes in the air, in liquids, and inside of blocks.
+safeTeleport: true
+
+# If no item is specified for a warp's item icon in the GUI, InfinityWarps will use this item by default.
+# A complete list of possible items can be found at:
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+defaultItemIcon: ENDER_PEARL
+
+# Default items for warps GUI.
+borderItemIcon: BLUE_STAINED_GLASS_PANE
+prevPageItemIcon: FEATHER
+nextPageItemIcon: FEATHER
+
+# Should players need a permission for each of the warps they can use?
+perWarpPermissions: false
+
+# In seconds, the time before a warp is initiated.
+# Warps are cancelled if the player moves at any time during this timer.
+teleportDelay: 5
+
+# In seconds, the cooldown timer between warps.
+teleportCooldown: 30
+
+# Should InfinityWarps use the economy?
+# This requires Vault as well as an economy plugin.
+# If false, any costs associated to warps will not show up in menus or when using a warp.
+useEconomy: false

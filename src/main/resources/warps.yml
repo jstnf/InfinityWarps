@@ -1,0 +1,48 @@
+# InfinityWarps warps.yml
+# Config Version (do not change this value!)
+configVersion: 1
+
+# Example warps.yml format
+
+# warps:
+#   warpName:
+#     location:
+#       world: world
+#       x: 100.0
+#       y: 70.0
+#       z: 100.0
+#       pitch: -10.0
+#       yaw: 10.0
+#     material: ENDER_PEARL
+#     lore:
+#     - 'Lore line 1'
+#     - 'Lore line 2'
+#     - 'Lore line 3'
+#     cost: 100.0
+#     isPrivate: false
+#     warpOwner: ''
+#     addedPlayers:
+#     - ''
+#   privateWarpExample:
+#     location:
+#       world: world2
+#       x: -15.23
+#       y: 70.0
+#       z: 60.566
+#       pitch: 120.0
+#       yaw: 34.752
+#     material: DIAMOND_BLOCK
+#     lore:
+#     - 'Lore line 1'
+#     - 'Lore line 2'
+#     - 'Lore line 3'
+#     cost: 0.0
+#     isPrivate: true
+#     warpOwner: '<insert example UUID>'
+#     addedPlayers:
+#     - '<UUID 1>'
+#     - '<UUID 2>'
+
+############################## InfinityWarps Warps File ##############################
+
+warps:
