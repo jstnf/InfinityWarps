@@ -8,20 +8,31 @@ api-version: 1.13
 commands:
   infinitywarps:
     aliases: [iw]
-    description: InfinityWarps main command
+    description: The main command for InfinityWarps.
     permission: infinitywarps.infinitywarps
   warp:
-    description: Warp to a location
-    permission: infinitywarps.warp
+    description: Warp to a location.
+    permission: infinitywarps.command.warp
   setwarp:
-    description: Set a warp
-    permission: infinitywarps.setwarp
+    description: Set a warp at your current location.
+    permission: infinitywarps.command.setwarp
   delwarp:
-    description: Delete a warp
-    permission: infinitywarps.delwarp
+    description: Delete a warp.
+    permission: infinitywarps.command.delwarp
   warps:
-    description: Open a menu to view all warps
-    permission: infinitywarps.warps
+    description: Open a menu to view all warps.
+    permission: infinitywarps.command.warps
+  setprivatewarp:
+    aliases: [setpwarp]
+    description: Set a private warp at your current location.
+    permission: infinitywarps.command.setprivatewarp
+  delprivatewarp:
+    aliases: [delpwarp]
+    description: Delete a private warp.
+    permission: infinitywarps.command.delprivatewarp
+  modifywarp:
+    description: Modify properties of a warp.
+    permission: infinitywarps.command.modifywarp
   iwtest:
-    description: Test various plugin functionality
+    description: Test various InfinityWarps functionality.
     permission: infinitywarps.iwtest

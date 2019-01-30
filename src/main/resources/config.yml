@@ -3,5 +3,8 @@ centerOnBlock: true
 safeTeleport: true
 defaultItemIcon: ENDER_PEARL
 perWarpPermissions: false
+teleportDelay: 5
+teleportCooldown: 30
+useEconomy: false
 
 configVersion: 1

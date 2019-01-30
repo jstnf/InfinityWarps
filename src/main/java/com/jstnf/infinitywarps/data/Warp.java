@@ -1,52 +1,134 @@
 package com.jstnf.infinitywarps.data;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
 public class Warp
 {
+	/* Warp name */
+	private String name;
+
+	/* Warp location */
 	private Location loc;
-	private ItemStack itemIcon;
+
+	/* Item icon vars */
+	private Material iconMaterial;
+	private ArrayList<String> iconLore;
+
+	/* Private warps */
 	private boolean isPrivate;
 	private OfflinePlayer warpOwner;
 	private ArrayList<OfflinePlayer> addedPlayers;
 
-	public Warp(Location loc, boolean isPrivate, Player warpOwner, ArrayList<OfflinePlayer> players)
+	/* Economy - applicable only with useEconomy set to true */
+	private double cost;
+
+	/**
+	 * Constructor used with '/setwarp <warp>' command.
+	 */
+	public Warp(String name, Location loc, Player warpOwner)
 	{
+		this.name = name;
+
 		this.loc = loc;
-		this.isPrivate = isPrivate;
 		this.warpOwner = Bukkit.getOfflinePlayer(warpOwner.getUniqueId());
+
+		this.isPrivate = false;
+		addedPlayers = new ArrayList<OfflinePlayer>();
+
+		/* No item icon provided, set to default item icon */
+		iconMaterial = Material.ENDER_PEARL;
+		iconLore = new ArrayList<String>();
+
+		cost = 0;
+	}
+
+	/**
+	 * Constructor used when constructing a warp from warps.yml.
+	 */
+	public Warp(String name, Location loc, boolean isPrivate, Player warpOwner, ArrayList<OfflinePlayer> players, Material iconMat,
+			ArrayList<String> lore, double cost)
+	{
+		this.name = name;
+
+		this.loc = loc;
+		this.warpOwner = Bukkit.getOfflinePlayer(warpOwner.getUniqueId());
+
+		this.isPrivate = isPrivate;
 		addedPlayers = new ArrayList<OfflinePlayer>();
 		for (OfflinePlayer offlinePlayer : players)
 		{
 			addedPlayers.add(offlinePlayer);
 		}
 
-		/* If no item icon provided, set to default item icon */
-		itemIcon = new ItemStack(Material.ENDER_PEARL);
+		this.iconMaterial = iconMat;
+		this.iconLore = lore;
+
+		this.cost = cost;
 	}
 
-	public Warp(Location loc, boolean isPrivate, Player warpOwner, ArrayList<OfflinePlayer> players, ItemStack itemIcon)
-	{
-		this.loc = loc;
-		this.isPrivate = isPrivate;
-		this.warpOwner = Bukkit.getOfflinePlayer(warpOwner.getUniqueId());
-		addedPlayers = new ArrayList<OfflinePlayer>();
-		for (OfflinePlayer offlinePlayer : players)
-		{
-			addedPlayers.add(offlinePlayer);
-		}
-		this.itemIcon = itemIcon;
-	}
-
+	/**
+	 * Returns the item icon from the current Material and lore.
+	 */
 	public ItemStack getItemIcon()
 	{
-		return itemIcon;
+		ItemStack result = new ItemStack(Material.ENDER_PEARL);
+		if (iconMaterial != null)
+		{
+			result = new ItemStack(iconMaterial);
+		}
+		ItemMeta metaRef = result.getItemMeta();
+
+		metaRef.setDisplayName(name);
+
+		ArrayList<String> tempLore = new ArrayList<String>();
+		if (iconLore != null && iconLore.size() > 0)
+		{
+			for (int i = 0; i < iconLore.size(); i++)
+			{
+				iconLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
+			}
+		}
+		/* Replace with config option for useEconomy */
+		if (true)
+		{
+			tempLore.add("Cost: " + cost);
+		}
+		metaRef.setLore(tempLore);
+
+		result.setItemMeta(metaRef);
+		return result;
+	}
+
+	/**
+	 * Set item icon based on given ItemStack.
+	 */
+	public boolean setItemIcon(ItemStack newIcon)
+	{
+		if (newIcon == null)
+		{
+			return false;
+		}
+
+		try
+		{
+			iconMaterial = newIcon.getType();
+			iconLore = (ArrayList) newIcon.getItemMeta().getLore();
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public String getWarpName()
+	{
+		return name;
 	}
 }

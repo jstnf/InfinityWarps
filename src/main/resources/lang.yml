@@ -1,0 +1,27 @@
+# InfinityWarps language file
+prefix: ''
+
+warpDelay: '&3Warping to &c{0} &3in &f{1} &3seconds.'
+warpSuccess: '&3Warping to &f{0}&3.'
+warpCooldown: '&cYou will be able to warp in &f{0} &cseconds.'
+
+warpUnsafeError: '&cUnable to find a safe location to warp.'
+warpUnsafeWarning: '&cNo safe location was found to warp. Use &f/warpconfirm &cto continue anyways.'
+
+warpNoPermission: '&cYou do not have permission to warp to &f{0}&c.'
+
+warpSetSuccess: '&3Warp &f{0} &3placed.'
+warpDeleteSuccess: '&3Warp &f{0} &3deleted.'
+
+warpLocationError: '&cUnable to warp. Perhaps the world was deleted or unloaded?'
+
+ecoWarpMoneyTaken: '&f{0} &3was taken from your account.'
+ecoWarpCannotAfford: '&cYou cannot afford to warp to &f{0}&c.'
+ecoWarpWarning: '&3It will cost &f{0} &3to warp to &f{1}&3. Use &f/warpconfirm &3to continue.'
+
+commandTooQuickly: '&cYou are attempting to use the command too quickly. Please wait a few seconds.'
+commandNoPermission: '&cYou do not have permission to use this command.'
+
+playerMustUseCommand: '&cThis command must be executed by a Player.'
+invalidInventory: '&cInventory error. Please contact server administration and report to developer if you see this.'
+error: '&cAn error occurred. See error in console and report to plugin developer.'

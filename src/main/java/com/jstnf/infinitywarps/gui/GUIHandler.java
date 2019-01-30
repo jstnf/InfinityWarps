@@ -10,77 +10,91 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class GUIHandler implements Listener
 {
 	public Inventory[] warpSelection;
 	private WarpPusher pusher;
-	private ArrayList<Warp> warps;
+	private HashMap<String, Warp> warps;
 
 	public GUIHandler()
 	{
-
+		warps = new HashMap<String, Warp>();
 	}
 
+	/**
+	 * Create the GUI from the loaded warps. Prints stack trace and returns null if there was an error.
+	 */
 	public Inventory[] constructGUIs()
 	{
-		int pages = calcNumPages();
-
-		Inventory[] sel = new Inventory[pages];
-		int warpsIndex = 0;
-		for (int selIndex = 0; selIndex < sel.length; selIndex++)
+		try
 		{
-			sel[selIndex] = Bukkit.getServer()
-					.createInventory(null, 54, "Warps (" + (selIndex + 1) + " of " + sel.length + ")");
+			int pages = calcNumPages();
 
-			/* Create default, non-warp items */
-			for (int i = 0; i < 9; i++)
+			Inventory[] sel = new Inventory[pages];
+
+			Iterator<String> keyIterator = warps.keySet().iterator();
+			for (int selIndex = 0; selIndex < sel.length; selIndex++)
 			{
-				sel[selIndex].setItem(i, ConstantItemStacks.border());
-			}
-			for (int i = 45; i < 54; i++)
-			{
-				switch (i)
+				sel[selIndex] = Bukkit.getServer()
+						.createInventory(null, 54, "Warps (" + (selIndex + 1) + " of " + sel.length + ")");
+
+				/* Create default, non-warp items */
+				for (int i = 0; i < 9; i++)
 				{
-					case 48: /* Places item for previous page if there is one */
-						if (selIndex > 0)
-						{
-							sel[selIndex].setItem(i, ConstantItemStacks.previousPage());
-						}
-						else
-						{
+					sel[selIndex].setItem(i, ConstantItemStacks.border());
+				}
+				for (int i = 45; i < 54; i++)
+				{
+					switch (i)
+					{
+						case 48: /* Places item for previous page if there is one */
+							if (selIndex > 0)
+							{
+								sel[selIndex].setItem(i, ConstantItemStacks.previousPage());
+							}
+							else
+							{
+								sel[selIndex].setItem(i, ConstantItemStacks.border());
+							}
+							break;
+						case 50: /* Places item for next page if there is one */
+							if (selIndex < sel.length - 1)
+							{
+								sel[selIndex].setItem(i, ConstantItemStacks.nextPage());
+							}
+							else
+							{
+								sel[selIndex].setItem(i, ConstantItemStacks.border());
+							}
+							break;
+						default:
 							sel[selIndex].setItem(i, ConstantItemStacks.border());
-						}
-						break;
-					case 50: /* Places item for next page if there is one */
-						if (selIndex < sel.length - 1)
-						{
-							sel[selIndex].setItem(i, ConstantItemStacks.nextPage());
-						}
-						else
-						{
-							sel[selIndex].setItem(i, ConstantItemStacks.border());
-						}
-						break;
-					default:
-						sel[selIndex].setItem(i, ConstantItemStacks.border());
-						break;
+							break;
+					}
+				}
+
+				/* Set items for warps */
+				if (warps != null)
+				{
+					int slotIndex = 9;
+					while (keyIterator.hasNext() && slotIndex < 45)
+					{
+						sel[selIndex].setItem(slotIndex, warps.get(keyIterator.next()).getItemIcon());
+						slotIndex++;
+					}
 				}
 			}
-
-			/* Set items for warps */
-			if (warps != null)
-			{
-				int slotIndex = 9;
-				while (warpsIndex < warps.size() && slotIndex < 45)
-				{
-					sel[selIndex].setItem(slotIndex, warps.get(warpsIndex).getItemIcon());
-				}
-			}
+			warpSelection = sel;
+			return sel;
 		}
-		warpSelection = sel;
-		return sel;
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@EventHandler
@@ -146,5 +160,22 @@ public class GUIHandler implements Listener
 			}
 		}
 		return pages;
+	}
+
+	/**
+	 * Temporary method to test warp listings
+	 */
+	public boolean addWarp(Warp newWarp)
+	{
+		try
+		{
+			warps.put(newWarp.getWarpName(), newWarp);
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
