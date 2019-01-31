@@ -1,26 +1,31 @@
-package com.jstnf.infinitywarps.commands.test;
+package com.jstnf.infinitywarps.commands.iwtest;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.gui.TestGUIHandler;
+import com.jstnf.infinitywarps.utils.SubCommand;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 public class IWTestCommand implements CommandExecutor
 {
 	private IWMain plugin;
+	private HashMap<String, SubCommand> commandMap;
 
 	public IWTestCommand(IWMain plugin)
 	{
 		this.plugin = plugin;
+		commandMap = new HashMap<String, SubCommand>();
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		plugin.getLogger().info("[/iwtest] test command");
+		plugin.getLogger().info("[/iwtest] iwtest command");
 		switch (args.length)
 		{
 			case 0:
@@ -72,5 +77,10 @@ public class IWTestCommand implements CommandExecutor
 				break;
 		}
 		return true;
+	}
+
+	public void registerSubCommand(String command, SubCommand executor)
+	{
+		commandMap.put(command, executor);
 	}
 }

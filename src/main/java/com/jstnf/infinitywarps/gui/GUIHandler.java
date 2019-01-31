@@ -163,7 +163,7 @@ public class GUIHandler implements Listener
 	}
 
 	/**
-	 * Temporary method to test warp listings
+	 * Temporary method to iwtest warp listings
 	 */
 	public boolean addWarp(Warp newWarp)
 	{
