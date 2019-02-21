@@ -1,5 +1,6 @@
 package com.jstnf.infinitywarps.commands.iwtest;
 
+import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.utils.SubCommand;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -7,7 +8,8 @@ import org.bukkit.entity.Player;
 
 public class MylocationSubCommand implements SubCommand
 {
-	@Override public boolean onCommand(CommandSender sender, String[] args)
+	@Override
+	public boolean onCommand(CommandSender sender, String[] args, IWMain plugin)
 	{
 		if (!(sender instanceof Player))
 		{
@@ -16,17 +18,20 @@ public class MylocationSubCommand implements SubCommand
 		}
 		Player p = (Player) sender;
 		Location currLoc = p.getLocation();
-		p.sendMessage("X: " + currLoc.getX() + ", Y: " + currLoc.getY() + ", Z: " + currLoc.getZ()
-				+ ", Pitch: " + currLoc.getPitch() + ", Yaw: " + currLoc.getYaw());
+		p.sendMessage(
+				"X: " + currLoc.getX() + ", Y: " + currLoc.getY() + ", Z: " + currLoc.getZ() + ", Pitch: " + currLoc
+						.getPitch() + ", Yaw: " + currLoc.getYaw());
 		return true;
 	}
 
-	@Override public String permission()
+	@Override
+	public String permission()
 	{
 		return "infinitywarps.command.iwtest.mylocation";
 	}
 
-	@Override public String commandInfo()
+	@Override
+	public String commandInfo()
 	{
 		return "Prints your current location in chat.";
 	}

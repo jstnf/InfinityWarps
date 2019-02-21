@@ -1,20 +1,24 @@
 package com.jstnf.infinitywarps.commands;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.utils.IWExecutor;
+import com.jstnf.infinitywarps.utils.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class WarpsCommand implements CommandExecutor
-{
-    private IWMain plugin;
+import java.util.HashMap;
 
+public class WarpsCommand extends IWExecutor implements CommandExecutor
+{
     public WarpsCommand(IWMain plugin)
     {
-        this.plugin = plugin;
+        super(plugin);
+        commandMap = new HashMap<String, SubCommand>();
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
         plugin.getLogger().info("[/warps] To implement!");

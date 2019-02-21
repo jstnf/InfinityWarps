@@ -4,7 +4,9 @@ import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.commands.*;
 import com.jstnf.infinitywarps.commands.iwtest.IWTestCommand;
 import com.jstnf.infinitywarps.commands.iwtest.MylocationSubCommand;
+import com.jstnf.infinitywarps.commands.iwtest.TestSetwarpSubCommand;
 import com.jstnf.infinitywarps.commands.iwtest.TestguiSubCommand;
+import com.jstnf.infinitywarps.commands.manwarp.ManwarpCommand;
 
 public class CommandUtils
 {
@@ -21,6 +23,8 @@ public class CommandUtils
 		SetwarpCommand setwarpc = new SetwarpCommand(plugin);
 		DelwarpCommand delwarpc = new DelwarpCommand(plugin);
 		WarpsCommand warpsc = new WarpsCommand(plugin);
+		ManwarpCommand manwarpc = new ManwarpCommand(plugin);
+		SetpwarpCommand setpwarpc = new SetpwarpCommand(plugin);
 
 		/* Register SubCommands */
 
@@ -31,6 +35,8 @@ public class CommandUtils
 		plugin.getCommand("setwarp").setExecutor(setwarpc);
 		plugin.getCommand("delwarp").setExecutor(delwarpc);
 		plugin.getCommand("warps").setExecutor(warpsc);
+		plugin.getCommand("manwarp").setExecutor(manwarpc);
+		plugin.getCommand("setpwarp").setExecutor(setpwarpc);
 	}
 
 	/**
@@ -44,6 +50,7 @@ public class CommandUtils
 		/* Register SubCommands */
 		iwtestc.registerSubCommand("mylocation", new MylocationSubCommand());
 		iwtestc.registerSubCommand("testgui", new TestguiSubCommand());
+		iwtestc.registerSubCommand("setwarp", new TestSetwarpSubCommand());
 
 		/* Set executors */
 		plugin.getCommand("iwtest").setExecutor(iwtestc);

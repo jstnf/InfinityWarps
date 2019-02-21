@@ -1,22 +1,34 @@
 package com.jstnf.infinitywarps.commands;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.utils.IWExecutor;
+import com.jstnf.infinitywarps.utils.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class SetwarpCommand implements CommandExecutor
+import java.util.HashMap;
+
+public class SetwarpCommand extends IWExecutor implements CommandExecutor
 {
-    private IWMain plugin;
+	public SetwarpCommand(IWMain plugin)
+	{
+		super(plugin);
+		commandMap = new HashMap<String, SubCommand>();
+	}
 
-    public SetwarpCommand(IWMain plugin)
-    {
-        this.plugin = plugin;
-    }
-
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-    {
-        plugin.getLogger().info("[/setwarp] To implement!");
-        return true;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+	{
+		sender.sendMessage("[/setwarp] Testing...");
+		if (args.length > 0 && args[0] != null && hasCommand(args[0]))
+		{
+			return commandMap.get(args[0]).onCommand(sender, args, plugin);
+		}
+		else
+		{
+			sender.sendMessage("Invalid arguments.");
+		}
+		return true;
+	}
 }

@@ -1,5 +1,6 @@
 package com.jstnf.infinitywarps.commands.iwtest;
 
+import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.gui.TestGUIHandler;
 import com.jstnf.infinitywarps.utils.SubCommand;
 import org.bukkit.command.CommandSender;
@@ -7,7 +8,8 @@ import org.bukkit.entity.Player;
 
 public class TestguiSubCommand implements SubCommand
 {
-	@Override public boolean onCommand(CommandSender sender, String[] args)
+	@Override
+	public boolean onCommand(CommandSender sender, String[] args, IWMain plugin)
 	{
 		if (!(sender instanceof Player))
 		{
@@ -18,12 +20,14 @@ public class TestguiSubCommand implements SubCommand
 		return true;
 	}
 
-	@Override public String permission()
+	@Override
+	public String permission()
 	{
 		return "infinitywarps.command.iwtest.testgui";
 	}
 
-	@Override public String commandInfo()
+	@Override
+	public String commandInfo()
 	{
 		return "Creates a dummy, test GUI.";
 	}

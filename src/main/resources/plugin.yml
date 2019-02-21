@@ -11,28 +11,29 @@ commands:
     description: The main command for InfinityWarps.
     permission: infinitywarps.infinitywarps
   warp:
+    aliases: [iwarp]
     description: Warp to a location.
     permission: infinitywarps.command.warp
   setwarp:
+    aliases: [isetwarp]
     description: Set a warp at your current location.
     permission: infinitywarps.command.setwarp
   delwarp:
+    aliases: [idelwarp]
     description: Delete a warp.
     permission: infinitywarps.command.delwarp
   warps:
+    aliases: [warpmenu, iwarps, iwarpmenu]
     description: Open a menu to view all warps.
     permission: infinitywarps.command.warps
-  setprivatewarp:
-    aliases: [setpwarp]
+  setpwarp:
+    aliases: [setprivatewarp, isetpwarp, isetprivatewarp]
     description: Set a private warp at your current location.
-    permission: infinitywarps.command.setprivatewarp
-  delprivatewarp:
-    aliases: [delpwarp]
-    description: Delete a private warp.
-    permission: infinitywarps.command.delprivatewarp
-  modifywarp:
-    description: Modify properties of a warp.
-    permission: infinitywarps.command.modifywarp
+    permission: infinitywarps.command.setpwarp
+  manwarp:
+    aliases: [modifywarp, managewarp, imanwarp, imodifywarp, imanagewarp]
+    description: Manage properties of a warp.
+    permission: infinitywarps.command.manwarp
   iwtest:
     description: Test various InfinityWarps functionality.
     permission: infinitywarps.iwtest

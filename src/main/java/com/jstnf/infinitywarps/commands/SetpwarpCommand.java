@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
-public class DelwarpCommand extends IWExecutor implements CommandExecutor
+public class SetpwarpCommand extends IWExecutor implements CommandExecutor
 {
-	public DelwarpCommand(IWMain plugin)
+	public SetpwarpCommand(IWMain plugin)
 	{
 		super(plugin);
 		commandMap = new HashMap<String, SubCommand>();
@@ -20,7 +20,7 @@ public class DelwarpCommand extends IWExecutor implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		sender.sendMessage("[/delwarp] Testing...");
+		sender.sendMessage("[/setpwarp] Testing...");
 		if (args.length > 0 && args[0] != null && hasCommand(args[0]))
 		{
 			return commandMap.get(args[0]).onCommand(sender, args, plugin);

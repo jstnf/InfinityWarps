@@ -1,5 +1,6 @@
 package com.jstnf.infinitywarps.data;
 
+import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +20,7 @@ public class Warp
 	private Material iconMaterial;
 	private ArrayList<String> iconLore;
 
-	/* Private warps */
+	/* Private warp vars */
 	private boolean isPrivate;
 	private OfflinePlayer warpOwner;
 	private ArrayList<OfflinePlayer> addedPlayers;
@@ -30,7 +31,7 @@ public class Warp
 	/**
 	 * Constructor used with '/setwarp <warp>' command.
 	 */
-	public Warp(String name, Location loc, Player warpOwner)
+	public Warp(String name, Location loc, Player warpOwner, IWMain plugin)
 	{
 		this.name = name;
 
@@ -41,7 +42,8 @@ public class Warp
 		addedPlayers = new ArrayList<OfflinePlayer>();
 
 		/* No item icon provided, set to default item icon */
-		iconMaterial = Material.ENDER_PEARL;
+		String mat = plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL");
+		iconMaterial = Material.getMaterial(mat);
 		iconLore = new ArrayList<String>();
 
 		cost = 0;
