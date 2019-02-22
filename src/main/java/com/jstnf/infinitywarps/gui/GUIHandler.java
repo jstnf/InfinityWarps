@@ -1,7 +1,7 @@
 package com.jstnf.infinitywarps.gui;
 
+import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.data.Warp;
-import com.jstnf.infinitywarps.data.WarpPusher;
 import com.jstnf.infinitywarps.utils.ConstantItemStacks;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,12 +16,11 @@ import java.util.Iterator;
 public class GUIHandler implements Listener
 {
 	public Inventory[] warpSelection;
-	private WarpPusher pusher;
-	private HashMap<String, Warp> warps;
+	private IWMain plugin;
 
-	public GUIHandler()
+	public GUIHandler(IWMain plugin)
 	{
-		warps = new HashMap<String, Warp>();
+		this.plugin = plugin;
 	}
 
 	/**
@@ -31,11 +30,13 @@ public class GUIHandler implements Listener
 	{
 		try
 		{
+			HashMap<String, Warp> warps = plugin.warpMan.localWarps;
 			int pages = calcNumPages();
 
 			Inventory[] sel = new Inventory[pages];
 
 			Iterator<String> keyIterator = warps.keySet().iterator();
+			int counter = 0;
 			for (int selIndex = 0; selIndex < sel.length; selIndex++)
 			{
 				sel[selIndex] = Bukkit.getServer()
@@ -82,6 +83,8 @@ public class GUIHandler implements Listener
 					int slotIndex = 9;
 					while (keyIterator.hasNext() && slotIndex < 45)
 					{
+						counter++;
+						System.out.println("warp-counter: " + counter);
 						sel[selIndex].setItem(slotIndex, warps.get(keyIterator.next()).getItemIcon());
 						slotIndex++;
 					}
@@ -146,6 +149,7 @@ public class GUIHandler implements Listener
 	 */
 	private int calcNumPages()
 	{
+		HashMap<String, Warp> warps = plugin.warpMan.localWarps;
 		int pages = 1;
 		if (warps != null)
 		{
@@ -169,7 +173,7 @@ public class GUIHandler implements Listener
 	{
 		try
 		{
-			warps.put(newWarp.getWarpName(), newWarp);
+			plugin.warpMan.localWarps.put(newWarp.getWarpName(), newWarp);
 			return true;
 		}
 		catch (Exception e)

@@ -5,7 +5,9 @@ import org.bukkit.command.CommandSender;
 
 public interface SubCommand
 {
-    public boolean onCommand(CommandSender sender, String[] args, IWMain plugin);
-    public String permission();
-    public String commandInfo();
+	boolean onCommand(CommandSender sender, String[] args, IWMain plugin);
+
+	String permission();
+
+	String commandInfo();
 }

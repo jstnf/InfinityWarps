@@ -2,7 +2,9 @@ package com.jstnf.infinitywarps.utils.config;
 
 import com.jstnf.infinitywarps.IWMain;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 
 public class ConfigUtils
 {
@@ -12,12 +14,12 @@ public class ConfigUtils
 	public ConfigUtils(IWMain plugin)
 	{
 		manager = new SimpleConfigManager(plugin);
-		constructMainConfig(plugin);
-		constructWarpsConfig(plugin);
-		constructLangConfig(plugin);
+		initMainConfig(plugin);
+		initWarpsConfig(plugin);
+		initLangConfig(plugin);
 	}
 
-	public void constructMainConfig(IWMain plugin)
+	public void initMainConfig(IWMain plugin)
 	{
 		if (!new File(plugin.getDataFolder(), "config.yml").exists())
 		{
@@ -77,20 +79,45 @@ public class ConfigUtils
 		}
 	}
 
-	public void constructWarpsConfig(IWMain plugin)
+	public void initWarpsConfig(IWMain plugin)
 	{
 		if (!new File(plugin.getDataFolder(), "warps.yml").exists())
 		{
-			warps = manager.getNewConfig("warps.yml");
-			/* Setup new config below */
+			try
+			{
+				String[] header = { "", "InfinityWarps by jstnf/pokeball92870", "Warps File", "" };
+				warps = manager.getNewConfig("warps.yml", header);
+
+				/* configVersion */
+				warps.set("configVersion", 1, "Config Version (do not change this value!)");
+
+				/* warps */
+				warps.set("warps", null, "Warps List");
+
+				warps.saveConfig();
+
+				BufferedWriter bw = new BufferedWriter(
+						new FileWriter(new File(plugin.getDataFolder(), "warps.yml"), true));
+				bw.write("warps:");
+				bw.close();
+
+				/* Reload warps after appending 'warps:' */
+				warps = manager.getNewConfig("warps.yml", header);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				plugin.getLogger().severe("Error generating warps.yml file.");
+			}
 		}
 		else
 		{
-			warps = manager.getNewConfig("warps.yml");
+			String[] header = { "", "InfinityWarps by jstnf/pokeball92870", "Warps File", "" };
+			warps = manager.getNewConfig("warps.yml", header);
 		}
 	}
 
-	public void constructLangConfig(IWMain plugin)
+	public void initLangConfig(IWMain plugin)
 	{
 		if (!new File(plugin.getDataFolder(), "lang.yml").exists())
 		{

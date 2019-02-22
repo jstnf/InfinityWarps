@@ -21,7 +21,7 @@ public class TestSetwarpSubCommand implements SubCommand
 			}
 			Player p = (Player) sender;
 			Location playerLocation = p.getLocation();
-			Warp newWarp = new Warp(args[1], playerLocation, p, plugin);
+			Warp newWarp = new Warp(args[1], playerLocation, p.getUniqueId().toString(), plugin);
 			plugin.gui.addWarp(newWarp);
 			plugin.gui.constructGUIs();
 		}

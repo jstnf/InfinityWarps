@@ -62,7 +62,7 @@ public class SimpleConfigManager
 	 */
 	private File getConfigFile(String file)
 	{
-		if (file.isEmpty() || file == null)
+		if (file == null || file.isEmpty())
 		{
 			return null;
 		}
@@ -206,7 +206,6 @@ public class SimpleConfigManager
 		try
 		{
 			int commentNum = 0;
-
 			String addLine;
 			String currentLine;
 			String pluginName = this.getPluginName();
@@ -292,7 +291,6 @@ public class SimpleConfigManager
 	{
 		int lastLine = 0;
 		int headerLine = 0;
-
 		String[] lines = configString.split("\n");
 		StringBuilder config = new StringBuilder("");
 

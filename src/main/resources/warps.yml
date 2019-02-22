@@ -5,7 +5,8 @@ configVersion: 1
 # Example warps.yml format
 
 # warps:
-#   warpName:
+#   warpname:
+#     alias: WaRpNaMe ## alias is made to lowercase in the config key
 #     location:
 #       world: world
 #       x: 100.0
@@ -20,10 +21,11 @@ configVersion: 1
 #     - 'Lore line 3'
 #     cost: 100.0
 #     isPrivate: false
-#     warpOwner: ''
+#     warpOwner: none
 #     addedPlayers:
 #     - ''
-#   privateWarpExample:
+#   privatewarpexample:
+#     alias: privateWarpExample
 #     location:
 #       world: world2
 #       x: -15.23
@@ -38,10 +40,10 @@ configVersion: 1
 #     - 'Lore line 3'
 #     cost: 0.0
 #     isPrivate: true
-#     warpOwner: '<insert example UUID>'
+#     warpOwner: 3151ebcc-2d66-45cd-86a1-60c413572aac
 #     addedPlayers:
-#     - '<UUID 1>'
-#     - '<UUID 2>'
+#     - '0aadf56a-d4c4-4ced-8833-895241427041'
+#     - 'e9b3ee26-32ab-4bd0-a55e-255f5ab4c541'
 
 ############################## InfinityWarps Warps File ##############################
 

@@ -124,7 +124,6 @@ public class SimpleConfig
 			this.config.set(manager.getPluginName() + "_COMMENT_" + comments, " " + comment);
 			comments++;
 		}
-
 		this.config.set(path, value);
 	}
 
@@ -138,7 +137,6 @@ public class SimpleConfig
 				comments++;
 			}
 		}
-
 		this.config.set(path, value);
 	}
 

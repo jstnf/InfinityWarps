@@ -8,6 +8,8 @@ import com.jstnf.infinitywarps.commands.iwtest.TestSetwarpSubCommand;
 import com.jstnf.infinitywarps.commands.iwtest.TestguiSubCommand;
 import com.jstnf.infinitywarps.commands.manwarp.ManwarpCommand;
 
+import java.util.regex.Pattern;
+
 public class CommandUtils
 {
 	/**
@@ -54,5 +56,17 @@ public class CommandUtils
 
 		/* Set executors */
 		plugin.getCommand("iwtest").setExecutor(iwtestc);
+	}
+
+	/**
+	 * Checks if the given String is alphanumeric (contains only letters and numbers)
+	 *
+	 * @param s
+	 * @return if the String is alphanumeric
+	 */
+	public static boolean isAlphanumeric(String s)
+	{
+		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		return !p.matcher(s).find();
 	}
 }

@@ -1,8 +1,9 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,6 +13,7 @@ public class Warp
 {
 	/* Warp name */
 	private String name;
+	private String alias;
 
 	/* Warp location */
 	private Location loc;
@@ -22,8 +24,8 @@ public class Warp
 
 	/* Private warp vars */
 	private boolean isPrivate;
-	private OfflinePlayer warpOwner;
-	private ArrayList<OfflinePlayer> addedPlayers;
+	private String ownerUUID;
+	private ArrayList<String> addedPlayers;
 
 	/* Economy - applicable only with useEconomy set to true */
 	private double cost;
@@ -31,15 +33,16 @@ public class Warp
 	/**
 	 * Constructor used with '/setwarp <warp>' command.
 	 */
-	public Warp(String name, Location loc, Player warpOwner, IWMain plugin)
+	public Warp(String name, Location loc, String warpOwnerUUID, IWMain plugin)
 	{
-		this.name = name;
+		this.name = name.toLowerCase();
+		this.alias = name;
 
 		this.loc = loc;
-		this.warpOwner = Bukkit.getOfflinePlayer(warpOwner.getUniqueId());
+		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = false;
-		addedPlayers = new ArrayList<OfflinePlayer>();
+		addedPlayers = new ArrayList<String>();
 
 		/* No item icon provided, set to default item icon */
 		String mat = plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL");
@@ -52,20 +55,17 @@ public class Warp
 	/**
 	 * Constructor used when constructing a warp from warps.yml.
 	 */
-	public Warp(String name, Location loc, boolean isPrivate, Player warpOwner, ArrayList<OfflinePlayer> players, Material iconMat,
-			ArrayList<String> lore, double cost)
+	public Warp(String name, Location loc, boolean isPrivate, String warpOwnerUUID, ArrayList<String> players,
+			Material iconMat, ArrayList<String> lore, double cost)
 	{
-		this.name = name;
+		this.name = name.toLowerCase();
+		this.alias = name;
 
 		this.loc = loc;
-		this.warpOwner = Bukkit.getOfflinePlayer(warpOwner.getUniqueId());
+		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = isPrivate;
-		addedPlayers = new ArrayList<OfflinePlayer>();
-		for (OfflinePlayer offlinePlayer : players)
-		{
-			addedPlayers.add(offlinePlayer);
-		}
+		addedPlayers = players;
 
 		this.iconMaterial = iconMat;
 		this.iconLore = lore;
@@ -92,7 +92,7 @@ public class Warp
 		{
 			for (int i = 0; i < iconLore.size(); i++)
 			{
-				iconLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
+				tempLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
 			}
 		}
 		/* Replace with config option for useEconomy */
@@ -132,5 +132,10 @@ public class Warp
 	public String getWarpName()
 	{
 		return name;
+	}
+
+	public String getWarpAlias()
+	{
+		return alias;
 	}
 }
