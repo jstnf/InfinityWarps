@@ -6,12 +6,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-public class ConfigUtils
+public class ConfigManager
 {
 	public SimpleConfig main, warps, lang;
 	private SimpleConfigManager manager;
 
-	public ConfigUtils(IWMain plugin)
+	public ConfigManager(IWMain plugin)
 	{
 		manager = new SimpleConfigManager(plugin);
 		initMainConfig(plugin);

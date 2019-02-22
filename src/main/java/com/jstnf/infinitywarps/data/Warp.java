@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class Warp
 {
+	private IWMain plugin;
+
 	/* Warp name */
 	private String name;
 	private String alias;
@@ -35,6 +37,8 @@ public class Warp
 	 */
 	public Warp(String name, Location loc, String warpOwnerUUID, IWMain plugin)
 	{
+		this.plugin = plugin;
+
 		this.name = name.toLowerCase();
 		this.alias = name;
 
@@ -87,20 +91,20 @@ public class Warp
 
 		metaRef.setDisplayName(name);
 
-		ArrayList<String> tempLore = new ArrayList<String>();
+		ArrayList<String> finalLore = new ArrayList<String>();
 		if (iconLore != null && iconLore.size() > 0)
 		{
 			for (int i = 0; i < iconLore.size(); i++)
 			{
-				tempLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
+				finalLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
 			}
 		}
 		/* Replace with config option for useEconomy */
-		if (true)
+		if (plugin.useEconomy)
 		{
-			tempLore.add("Cost: " + cost);
+			finalLore.add("Cost: " + cost);
 		}
-		metaRef.setLore(tempLore);
+		metaRef.setLore(finalLore);
 
 		result.setItemMeta(metaRef);
 		return result;

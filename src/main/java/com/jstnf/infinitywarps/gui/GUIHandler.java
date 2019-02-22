@@ -30,7 +30,7 @@ public class GUIHandler implements Listener
 	{
 		try
 		{
-			HashMap<String, Warp> warps = plugin.warpMan.localWarps;
+			HashMap<String, Warp> warps = plugin.warpManager.localWarps;
 			int pages = calcNumPages();
 
 			Inventory[] sel = new Inventory[pages];
@@ -83,8 +83,6 @@ public class GUIHandler implements Listener
 					int slotIndex = 9;
 					while (keyIterator.hasNext() && slotIndex < 45)
 					{
-						counter++;
-						System.out.println("warp-counter: " + counter);
 						sel[selIndex].setItem(slotIndex, warps.get(keyIterator.next()).getItemIcon());
 						slotIndex++;
 					}
@@ -149,7 +147,7 @@ public class GUIHandler implements Listener
 	 */
 	private int calcNumPages()
 	{
-		HashMap<String, Warp> warps = plugin.warpMan.localWarps;
+		HashMap<String, Warp> warps = plugin.warpManager.localWarps;
 		int pages = 1;
 		if (warps != null)
 		{
@@ -173,7 +171,7 @@ public class GUIHandler implements Listener
 	{
 		try
 		{
-			plugin.warpMan.localWarps.put(newWarp.getWarpName(), newWarp);
+			plugin.warpManager.localWarps.put(newWarp.getWarpName(), newWarp);
 			return true;
 		}
 		catch (Exception e)
