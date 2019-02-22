@@ -68,10 +68,6 @@ public class WarpManager
 		{
 			/* Unable to import warps from warps.yml */
 			e.printStackTrace();
-			plugin.getLogger().severe("Unable to import warps from config file.");
-			plugin.getLogger().severe("You may need to delete and generate a new warps.yml file.");
-			plugin.getLogger().severe("InfinityWarps is disabling...");
-			plugin.getServer().getPluginManager().disablePlugin(plugin);
 			return false;
 		}
 	}

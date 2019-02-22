@@ -5,6 +5,7 @@ import com.jstnf.infinitywarps.gui.GUIHandler;
 import com.jstnf.infinitywarps.gui.TestGUIHandler;
 import com.jstnf.infinitywarps.utils.CommandUtils;
 import com.jstnf.infinitywarps.utils.config.ConfigUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,7 +35,15 @@ public class IWMain extends JavaPlugin
 		/* Data */
 		getLogger().info("Getting warp data...");
 		warpMan = new WarpManager(this);
-		warpMan.importWarps();
+		boolean success = warpMan.importWarps();
+		if (!success)
+		{
+			getLogger().severe("Unable to import warps from config file.");
+			getLogger().severe("You may need to generate a new warps.yml file.");
+			getLogger().severe("InfinityWarps is disabling...");
+			Bukkit.getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
 
 		/* GUIs */
 		getLogger().info("Initializing test GUI...");
