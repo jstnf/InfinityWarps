@@ -1,0 +1,14 @@
+alias: exampleWarp
+location:
+  world: world
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  pitch: 0.0
+  yaw: 0.0
+isPrivate: false
+warpOwner: ''
+added: []
+itemIcon: ENDER_PEARL
+lore: ['Lore line 1', '&cLore line 2', '&lLore line 3']
+cost: 0.0

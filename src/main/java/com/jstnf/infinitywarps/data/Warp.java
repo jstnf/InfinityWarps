@@ -46,21 +46,21 @@ public class Warp
 		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = false;
-		addedPlayers = new ArrayList<String>();
+		this.addedPlayers = new ArrayList<String>();
 
 		/* No item icon provided, set to default item icon */
 		String mat = plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL");
-		iconMaterial = Material.getMaterial(mat);
-		iconLore = new ArrayList<String>();
+		this.iconMaterial = Material.getMaterial(mat);
+		this.iconLore = new ArrayList<String>();
 
-		cost = 0;
+		this.cost = 0;
 	}
 
 	/**
-	 * Constructor used when constructing a warp from warps.yml.
+	 * Constructor used when constructing a warp from <warp>.yml.
 	 */
 	public Warp(String name, Location loc, boolean isPrivate, String warpOwnerUUID, ArrayList<String> players,
-			Material iconMat, ArrayList<String> lore, double cost)
+			Material iconMat, ArrayList<String> lore, double cost, IWMain plugin)
 	{
 		this.name = name.toLowerCase();
 		this.alias = name;
@@ -69,12 +69,14 @@ public class Warp
 		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = isPrivate;
-		addedPlayers = players;
+		this.addedPlayers = players;
 
 		this.iconMaterial = iconMat;
 		this.iconLore = lore;
 
 		this.cost = cost;
+
+		this.plugin = plugin;
 	}
 
 	/**
@@ -89,20 +91,27 @@ public class Warp
 		}
 		ItemMeta metaRef = result.getItemMeta();
 
-		metaRef.setDisplayName(name);
+		String displayName = ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', alias);
+		metaRef.setDisplayName(displayName);
 
 		ArrayList<String> finalLore = new ArrayList<String>();
+		if (isPrivate)
+		{
+			finalLore.add("" + ChatColor.RED + ChatColor.ITALIC + "Private Warp");
+		}
 		if (iconLore != null && iconLore.size() > 0)
 		{
 			for (int i = 0; i < iconLore.size(); i++)
 			{
-				finalLore.add(ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
+				finalLore.add(ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
 			}
 		}
 		/* Replace with config option for useEconomy */
 		if (plugin.useEconomy)
 		{
-			finalLore.add("Cost: " + cost);
+			finalLore.add("");
+			finalLore.add(ChatColor.WHITE + "Cost: ");
+			finalLore.add("" + ChatColor.GREEN + cost);
 		}
 		metaRef.setLore(finalLore);
 
@@ -113,7 +122,7 @@ public class Warp
 	/**
 	 * Set item icon based on given ItemStack.
 	 */
-	public boolean setItemIcon(ItemStack newIcon)
+	public boolean setItemIcon(ItemStack newIcon, boolean replaceItemLore)
 	{
 		if (newIcon == null)
 		{
@@ -123,7 +132,10 @@ public class Warp
 		try
 		{
 			iconMaterial = newIcon.getType();
-			iconLore = (ArrayList) newIcon.getItemMeta().getLore();
+			if (replaceItemLore)
+			{
+				iconLore = (ArrayList<String>) newIcon.getItemMeta().getLore();
+			}
 			return true;
 		}
 		catch (Exception e)
@@ -131,6 +143,14 @@ public class Warp
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * Set warp cost.
+	 */
+	public void setCost(double newCost)
+	{
+		cost = newCost;
 	}
 
 	public String getWarpName()
@@ -141,5 +161,10 @@ public class Warp
 	public String getWarpAlias()
 	{
 		return alias;
+	}
+
+	public boolean isPrivate()
+	{
+		return isPrivate;
 	}
 }

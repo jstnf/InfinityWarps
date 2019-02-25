@@ -5,10 +5,15 @@ import com.jstnf.infinitywarps.commands.*;
 import com.jstnf.infinitywarps.commands.iwtest.IWTestCommand;
 import com.jstnf.infinitywarps.commands.iwtest.MylocationSubCommand;
 import com.jstnf.infinitywarps.commands.iwtest.TestSetwarpSubCommand;
-import com.jstnf.infinitywarps.commands.iwtest.TestguiSubCommand;
 import com.jstnf.infinitywarps.commands.manwarp.ManwarpCommand;
+import com.jstnf.infinitywarps.data.Warp;
+import com.jstnf.infinitywarps.data.WarpGroup;
+import com.jstnf.infinitywarps.gui.DefinitionType;
+import com.jstnf.infinitywarps.gui.InventoryDefinition;
+import org.bukkit.ChatColor;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CommandUtils
 {
@@ -51,7 +56,6 @@ public class CommandUtils
 
 		/* Register SubCommands */
 		iwtestc.registerSubCommand("mylocation", new MylocationSubCommand());
-		iwtestc.registerSubCommand("testgui", new TestguiSubCommand());
 		iwtestc.registerSubCommand("setwarp", new TestSetwarpSubCommand());
 
 		/* Set executors */
@@ -59,14 +63,88 @@ public class CommandUtils
 	}
 
 	/**
-	 * Checks if the given String is alphanumeric (contains only letters and numbers)
+	 * Convert any non-alphanumeric characters to _ and return.
 	 *
-	 * @param s
-	 * @return if the String is alphanumeric
+	 * @param s - A string
+	 * @return String with any alphanumeric characters replaced with _
 	 */
-	public static boolean isAlphanumeric(String s)
+	public static String convertNonAlphanumeric(String s)
 	{
-		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
-		return !p.matcher(s).find();
+		String stripped = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', s));
+		return stripped.replaceAll("[^a-zA-Z0-9]", "_");
+	}
+
+	/**
+	 * Determine if a String is already present in an array of Strings.
+	 */
+	public static boolean hasStringConflict(String[] strings, String s)
+	{
+		boolean conflict = false;
+		int index = 0;
+		while (index < strings.length && !conflict)
+		{
+			conflict = strings[index].equalsIgnoreCase(s);
+			index++;
+		}
+		return conflict;
+	}
+
+	/**
+	 * Determine if the given String is a double.
+	 */
+	public static boolean isDouble(String s)
+	{
+		try
+		{
+			Double.parseDouble(s);
+			return true;
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+	}
+
+	public static ArrayList<InventoryDefinition> defineInventoryDefinitions(HashMap<String, Warp> warps,
+			ArrayList<WarpGroup> groups)
+	{
+		ArrayList<InventoryDefinition> definitions = new ArrayList<InventoryDefinition>();
+		ArrayList<Warp> allWarps = ListUtils.alphaSort(warps);
+		InventoryDefinition all = new InventoryDefinition("all_warps", DefinitionType.WARPS, allWarps);
+		InventoryDefinition publicWarps = new InventoryDefinition("public_warps", DefinitionType.WARPS);
+		InventoryDefinition privateWarps = new InventoryDefinition("private_warps", DefinitionType.WARPS);
+		InventoryDefinition groupList = new InventoryDefinition("groups", DefinitionType.GROUPS);
+
+		for (Warp w : allWarps)
+		{
+			if (w.isPrivate())
+			{
+				privateWarps.warps.add(w);
+			}
+			else
+			{
+				publicWarps.warps.add(w);
+			}
+		}
+
+		/* IMPLEMENT GROUP THINGS! */
+
+		definitions.add(all);
+		definitions.add(publicWarps);
+		definitions.add(privateWarps);
+		definitions.add(groupList);
+		return definitions;
+	}
+
+	public static InventoryDefinition getDefinition(ArrayList<InventoryDefinition> definitions, String id)
+	{
+		for (int i = 0; i < definitions.size(); i++)
+		{
+			if (id.equalsIgnoreCase(definitions.get(i).identifier))
+			{
+				return definitions.get(i);
+			}
+		}
+		return null;
 	}
 }

@@ -11,24 +11,24 @@ import java.util.HashMap;
 
 public class WarpCommand extends IWExecutor implements CommandExecutor
 {
-    public WarpCommand(IWMain plugin)
-    {
-        super(plugin);
-        commandMap = new HashMap<String, SubCommand>();
-    }
+	public WarpCommand(IWMain plugin)
+	{
+		super(plugin);
+		commandMap = new HashMap<String, SubCommand>();
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-    {
-        sender.sendMessage("[/warp] Testing...");
-        if (args.length > 0 && args[0] != null && hasCommand(args[0]))
-        {
-            return commandMap.get(args[0]).onCommand(sender, args, plugin);
-        }
-        else
-        {
-            sender.sendMessage("Invalid arguments.");
-        }
-        return true;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+	{
+		sender.sendMessage("[/warp] Testing...");
+		if (args.length > 0 && args[0] != null && hasCommand(args[0]))
+		{
+			return commandMap.get(args[0]).onCommand(sender, args, plugin);
+		}
+		else
+		{
+			sender.sendMessage("Invalid arguments.");
+		}
+		return true;
+	}
 }

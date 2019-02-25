@@ -399,12 +399,12 @@ public class SimpleConfigManager
 		{
 			OutputStream out = new FileOutputStream(file);
 
-			int lenght;
+			int length;
 			byte[] buf = new byte[1024];
 
-			while ((lenght = resource.read(buf)) > 0)
+			while ((length = resource.read(buf)) > 0)
 			{
-				out.write(buf, 0, lenght);
+				out.write(buf, 0, length);
 			}
 
 			out.close();

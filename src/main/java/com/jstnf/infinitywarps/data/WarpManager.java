@@ -1,11 +1,16 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.exception.InvalidCostException;
+import com.jstnf.infinitywarps.exception.SimilarNameException;
+import com.jstnf.infinitywarps.utils.CommandUtils;
 import com.jstnf.infinitywarps.utils.config.SimpleConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,89 +27,93 @@ public class WarpManager
 
 	public boolean importWarps()
 	{
-		localWarps = new HashMap<String, Warp>();
 		try
 		{
-			SimpleConfig warps = plugin.configs.warps;
-			if (warps.getConfigurationSection("warps") != null
-					&& warps.getConfigurationSection("warps").getKeys(false) != null)
+			File warpFolder = new File(plugin.getDataFolder() + File.separator + "warps");
+			if (!warpFolder.exists())
 			{
-				plugin.getLogger()
-						.info("Found " + warps.getConfigurationSection("warps").getKeys(false).size() + " warps.");
-
-				for (String key : warps.getConfigurationSection("warps").getKeys(false))
-				{
-					String pre = "warps." + key + ".";
-
-					String alias = warps.getString(pre + "alias");
-
-					/* Import location */
-					String world = warps.getString(pre + "location.world");
-					double x = warps.getDouble(pre + "location.x");
-					double y = warps.getDouble(pre + "location.y");
-					double z = warps.getDouble(pre + "location.z");
-					float pitch = (float) warps.getDouble(pre + "location.pitch");
-					float yaw = (float) warps.getDouble(pre + "location.yaw");
-
-					Location loc = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
-					boolean isPrivate = warps.getBoolean(pre + "isPrivate");
-					Material iconMaterial = Material.getMaterial(warps.getString(pre + "material"));
-					String ownerUUID = warps.getString(pre + "warpOwner");
-					ArrayList<String> addedPlayers = (ArrayList<String>) warps.getList(pre + "addedPlayers");
-					ArrayList<String> lore = (ArrayList<String>) warps.getList(pre + "lore");
-					double cost = warps.getDouble(pre + "cost");
-
-					Warp newWarp = new Warp(alias, loc, isPrivate, ownerUUID, addedPlayers, iconMaterial, lore, cost);
-					localWarps.put(key, newWarp);
-				}
+				warpFolder.mkdir();
 			}
-			else
+			String[] keys = warpFolder.list();
+
+			for (String key : keys)
 			{
-				plugin.getLogger().info("Found 0 warps.");
+				SimpleConfig config = plugin.configs.manager.getNewConfig("warps" + File.separator + key);
+				String alias = config.getString("alias");
+				String worldName = config.getString("location.world");
+				double x = config.getDouble("location.x");
+				double y = config.getDouble("location.y");
+				double z = config.getDouble("location.z");
+				float pitch = (float) config.getDouble("location.pitch");
+				float yaw = (float) config.getDouble("location.yaw");
+				Location l = new Location(Bukkit.getServer().getWorld(worldName), x, y, z, pitch, yaw);
+				boolean isPrivate = config.getBoolean("isPrivate");
+				String ownerUUID = config.getString("warpOwner");
+				ArrayList<String> addedPlayers = (ArrayList<String>) config.getList("added");
+				String itemMat = config.getString("itemIcon");
+				ArrayList<String> lore = (ArrayList<String>) config.getList("lore");
+				double cost = config.getDouble("cost");
+
+				Warp w = new Warp(alias, l, isPrivate, ownerUUID, addedPlayers, Material.getMaterial(itemMat), lore,
+						cost, plugin);
+				localWarps.put(CommandUtils.convertNonAlphanumeric(alias), w);
 			}
+
 			return true;
 		}
 		catch (Exception e)
 		{
-			/* Unable to import warps from warps.yml */
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public boolean warpExists(String warpName)
+	public void addWarp(String name, String cost, Player p, boolean isPrivate, ArrayList<String> players)
+			throws SimilarNameException, InvalidCostException
 	{
-		if (localWarps == null)
+		File warpFolder = new File(plugin.getDataFolder() + File.separator + "warps");
+		if (!warpFolder.exists())
 		{
-			return false;
+			warpFolder.mkdir();
 		}
-		return localWarps.containsKey(warpName.toLowerCase());
+
+		String fileName = CommandUtils.convertNonAlphanumeric(name) + ".yml";
+		String[] warps = warpFolder.list();
+		if (CommandUtils.hasStringConflict(warps, fileName))
+		{
+			throw new SimilarNameException();
+		}
+		if (!CommandUtils.isDouble(cost))
+		{
+			throw new InvalidCostException();
+		}
+		double c = Double.parseDouble(cost);
+		SimpleConfig warpConfig = plugin.configs.manager.getNewConfig("warps" + File.separator + fileName);
+		warpConfig.set("alias", name);
+		warpConfig.createSection("location");
+		warpConfig.set("location.world", p.getWorld().getName());
+		Location l = p.getLocation();
+		warpConfig.set("location.x", l.getX());
+		warpConfig.set("location.y", l.getY());
+		warpConfig.set("location.z", l.getZ());
+		warpConfig.set("location.pitch", (double) l.getPitch());
+		warpConfig.set("location.yaw", (double) l.getYaw());
+		warpConfig.set("isPrivate", isPrivate);
+		warpConfig.set("warpOwner", p.getUniqueId().toString());
+		warpConfig.set("added", players);
+		warpConfig.set("itemIcon", plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL"));
+		warpConfig.set("lore", new ArrayList<String>());
+		warpConfig.set("cost", c);
+		warpConfig.saveConfig();
+
+		Warp w = new Warp(name, l, p.getUniqueId().toString(), plugin);
+		localWarps.put(CommandUtils.convertNonAlphanumeric(name), w);
+		plugin.gui2.updateInventoryDefinitions(localWarps, null);
 	}
 
-	public boolean removeWarp(String warpName)
+	public boolean removeWarp(String name)
 	{
-		if (warpExists(warpName))
-		{
-			try
-			{
-				plugin.configs.warps.set("warps." + warpName.toLowerCase(), null);
-				plugin.configs.warps.saveConfig();
-				return true;
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public void addWarp(Warp warp)
-	{
-		/* To implement! */
+		/* TO IMPLEMENT! */
+		return false;
 	}
 }
