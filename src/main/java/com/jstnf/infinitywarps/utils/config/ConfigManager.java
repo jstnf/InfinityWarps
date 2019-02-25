@@ -6,14 +6,13 @@ import java.io.File;
 
 public class ConfigManager
 {
-	public SimpleConfig main, lang;
+	public SimpleConfig main;
 	public SimpleConfigManager manager;
 
 	public ConfigManager(IWMain plugin)
 	{
 		manager = new SimpleConfigManager(plugin);
 		initMainConfig(plugin);
-		initLangConfig(plugin);
 	}
 
 	public void initMainConfig(IWMain plugin)
@@ -62,6 +61,9 @@ public class ConfigManager
 					"If false, any costs associated to warps will not show", "up in menus or when using a warp." };
 			main.set("useEconomy", false, useEcoComs);
 
+			String[] localeComs = { "What locale should InfinityWarps use?" };
+			main.set("locale", "en_US", localeComs);
+
 			/* Misc default item icons */
 			main.set("borderItemIcon", "BLUE_STAINED_GLASS_PANE", "Default items for the warps GUI.");
 			main.set("prevPageItemIcon", "FEATHER");
@@ -73,19 +75,6 @@ public class ConfigManager
 		{
 			String[] header = { "", "InfinityWarps by jstnf/pokeball92870", "Configuration File", "" };
 			main = manager.getNewConfig("config.yml", header);
-		}
-	}
-
-	public void initLangConfig(IWMain plugin)
-	{
-		if (!new File(plugin.getDataFolder(), "lang.yml").exists())
-		{
-			lang = manager.getNewConfig("lang.yml");
-			/* Setup new config below */
-		}
-		else
-		{
-			lang = manager.getNewConfig("lang.yml");
 		}
 	}
 }
