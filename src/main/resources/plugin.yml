@@ -34,6 +34,7 @@ commands:
     aliases: [modifywarp, managewarp, imanwarp, imodifywarp, imanagewarp]
     description: Manage properties of a warp.
     permission: infinitywarps.command.manwarp
-  iwtest:
-    description: Test various InfinityWarps functionality.
-    permission: infinitywarps.iwtest
+  warpgroup:
+    aliases: [iwarpgroup]
+    description: Create and manage warp groups.
+    permission: infinitywarps.command.warpgroup

@@ -2,9 +2,6 @@ package com.jstnf.infinitywarps.utils;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.commands.*;
-import com.jstnf.infinitywarps.commands.iwtest.IWTestCommand;
-import com.jstnf.infinitywarps.commands.iwtest.MylocationSubCommand;
-import com.jstnf.infinitywarps.commands.iwtest.TestSetwarpSubCommand;
 import com.jstnf.infinitywarps.commands.manwarp.ManwarpCommand;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
@@ -32,6 +29,7 @@ public class CommandUtils
 		WarpsCommand warpsc = new WarpsCommand(plugin);
 		ManwarpCommand manwarpc = new ManwarpCommand(plugin);
 		SetpwarpCommand setpwarpc = new SetpwarpCommand(plugin);
+		WarpgroupCommand warpgroupc = new WarpgroupCommand(plugin);
 
 		/* Register SubCommands */
 
@@ -44,22 +42,7 @@ public class CommandUtils
 		plugin.getCommand("warps").setExecutor(warpsc);
 		plugin.getCommand("manwarp").setExecutor(manwarpc);
 		plugin.getCommand("setpwarp").setExecutor(setpwarpc);
-	}
-
-	/**
-	 * Register /iwtest command listener for testing and debug purposes.
-	 */
-	public static void setupTestListener(IWMain plugin)
-	{
-		/* Declare commands and command listeners */
-		IWTestCommand iwtestc = new IWTestCommand(plugin);
-
-		/* Register SubCommands */
-		iwtestc.registerSubCommand("mylocation", new MylocationSubCommand());
-		iwtestc.registerSubCommand("setwarp", new TestSetwarpSubCommand());
-
-		/* Set executors */
-		plugin.getCommand("iwtest").setExecutor(iwtestc);
+		plugin.getCommand("warpgroup").setExecutor(warpgroupc);
 	}
 
 	/**
@@ -127,7 +110,7 @@ public class CommandUtils
 			}
 		}
 
-		/* IMPLEMENT GROUP THINGS! */
+		/* IMPLEMENT WARPGROUP THINGS! */
 
 		definitions.add(all);
 		definitions.add(publicWarps);

@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.commands.iwtest;
+package com.jstnf.infinitywarps.commands;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.utils.IWExecutor;
@@ -9,17 +9,18 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
-public class IWTestCommand extends IWExecutor implements CommandExecutor
+public class WarpgroupCommand extends IWExecutor implements CommandExecutor
 {
-	public IWTestCommand(IWMain plugin)
+	public WarpgroupCommand(IWMain plugin)
 	{
 		super(plugin);
 		commandMap = new HashMap<String, SubCommand>();
 	}
 
+	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		sender.sendMessage("[/iwtest] Testing...");
+		sender.sendMessage("[/warpgroup] To implement!");
 		if (args.length > 0 && args[0] != null && hasCommand(args[0]))
 		{
 			return commandMap.get(args[0]).onCommand(sender, args, plugin);

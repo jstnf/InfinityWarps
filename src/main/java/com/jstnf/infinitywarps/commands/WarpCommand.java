@@ -20,7 +20,7 @@ public class WarpCommand extends IWExecutor implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		sender.sendMessage("[/warp] Testing...");
+		sender.sendMessage("[/warp] To implement!");
 		if (args.length > 0 && args[0] != null && hasCommand(args[0]))
 		{
 			return commandMap.get(args[0]).onCommand(sender, args, plugin);

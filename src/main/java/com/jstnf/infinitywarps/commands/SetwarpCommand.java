@@ -33,7 +33,7 @@ public class SetwarpCommand extends IWExecutor implements CommandExecutor
 		else
 		{
 			Player p = (Player) sender;
-			if (p.hasPermission("infinitywarps.setwarp"))
+			if (p.hasPermission("infinitywarps.command.setwarp"))
 			{
 				if (args.length > 0 && args.length < 3)
 				{

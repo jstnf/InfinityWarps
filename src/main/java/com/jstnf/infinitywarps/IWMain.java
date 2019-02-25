@@ -68,7 +68,6 @@ public class IWMain extends JavaPlugin
 
 		/* Commands */
 		CommandUtils.setupListeners(this);
-		CommandUtils.setupTestListener(this);
 
 		/* etc. */
 		this.getLogger().info("InfinityWarps v" + pdf.getVersion() + " successfully enabled.");
