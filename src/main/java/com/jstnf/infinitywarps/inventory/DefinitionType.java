@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.gui;
+package com.jstnf.infinitywarps.inventory;
 
 public enum DefinitionType
 {

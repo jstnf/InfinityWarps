@@ -1,8 +1,8 @@
-package com.jstnf.infinitywarps.commands;
+package com.jstnf.infinitywarps.command.commands;
 
 import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.utils.IWExecutor;
-import com.jstnf.infinitywarps.utils.SubCommand;
+import com.jstnf.infinitywarps.command.IWExecutor;
+import com.jstnf.infinitywarps.command.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

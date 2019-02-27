@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.utils;
+package com.jstnf.infinitywarps.command;
 
 import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.utils;
+package com.jstnf.infinitywarps.inventory;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

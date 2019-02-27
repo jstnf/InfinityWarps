@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.utils.config;
+package com.jstnf.infinitywarps.config;
 
 import com.jstnf.infinitywarps.IWMain;
 

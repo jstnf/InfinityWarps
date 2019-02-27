@@ -49,7 +49,7 @@ public class Warp
 		this.addedPlayers = new ArrayList<String>();
 
 		/* No item icon provided, set to default item icon */
-		String mat = plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL");
+		String mat = plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL");
 		this.iconMaterial = Material.getMaterial(mat);
 		this.iconLore = new ArrayList<String>();
 

@@ -1,9 +1,8 @@
-package com.jstnf.infinitywarps.gui;
+package com.jstnf.infinitywarps.inventory;
 
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
-import com.jstnf.infinitywarps.utils.CommandUtils;
-import com.jstnf.infinitywarps.utils.ConstantItemStacks;
+import com.jstnf.infinitywarps.IWUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,18 +12,18 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GUIHandler2 implements Listener
+public class InventoryManager implements Listener
 {
 	private ArrayList<InventoryDefinition> definitions;
 
-	public GUIHandler2(HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
+	public InventoryManager(HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
 	{
-		definitions = CommandUtils.defineInventoryDefinitions(warps, groups);
+		definitions = IWUtils.defineInventoryDefinitions(warps, groups);
 	}
 
 	public Inventory construct(String id, int index)
 	{
-		InventoryDefinition definition = CommandUtils.getDefinition(definitions, id);
+		InventoryDefinition definition = IWUtils.getDefinition(definitions, id);
 		if (definition == null)
 		{
 			return null;
@@ -111,7 +110,7 @@ public class GUIHandler2 implements Listener
 	{
 		try
 		{
-			definitions = CommandUtils.defineInventoryDefinitions(warps, groups);
+			definitions = IWUtils.defineInventoryDefinitions(warps, groups);
 			return true;
 		}
 		catch (Exception e)

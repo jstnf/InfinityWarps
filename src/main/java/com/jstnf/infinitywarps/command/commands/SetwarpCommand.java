@@ -1,9 +1,9 @@
-package com.jstnf.infinitywarps.commands;
+package com.jstnf.infinitywarps.command.commands;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.exception.InvalidCostException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
-import com.jstnf.infinitywarps.utils.IWExecutor;
+import com.jstnf.infinitywarps.command.IWExecutor;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -48,7 +48,7 @@ public class SetwarpCommand extends IWExecutor implements CommandExecutor
 					}
 					try
 					{
-						plugin.warpManager.addWarp(args[0], cost, p, false, new ArrayList<String>());
+						plugin.getWarpManager().addWarp(args[0], cost, p, false, new ArrayList<String>());
 						sender.sendMessage("Warp " + ChatColor.translateAlternateColorCodes('&', args[0]) + " set.");
 					}
 					catch (InvalidCostException ex)

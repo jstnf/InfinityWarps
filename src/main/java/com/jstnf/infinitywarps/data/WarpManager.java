@@ -1,10 +1,11 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.config.SimpleConfig;
+import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.exception.InvalidCostException;
+import com.jstnf.infinitywarps.exception.NoSuchWarpException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
-import com.jstnf.infinitywarps.utils.CommandUtils;
-import com.jstnf.infinitywarps.utils.config.SimpleConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 
 public class WarpManager
 {
-	public HashMap<String, Warp> localWarps;
+	private HashMap<String, Warp> localWarps;
 	private IWMain plugin;
 
 	public WarpManager(IWMain plugin)
@@ -25,6 +26,11 @@ public class WarpManager
 		localWarps = new HashMap<String, Warp>();
 	}
 
+	/**
+	 * Parse through InfinityWarps/warps and import warp data.
+	 *
+	 * @return if import was successful.
+	 */
 	public boolean importWarps()
 	{
 		try
@@ -38,7 +44,7 @@ public class WarpManager
 
 			for (String key : keys)
 			{
-				SimpleConfig config = plugin.configs.manager.getNewConfig("warps" + File.separator + key);
+				SimpleConfig config = plugin.getConfigManager().manager.getNewConfig("warps" + File.separator + key);
 				String alias = config.getString("alias");
 				String worldName = config.getString("location.world");
 				double x = config.getDouble("location.x");
@@ -56,7 +62,7 @@ public class WarpManager
 
 				Warp w = new Warp(alias, l, isPrivate, ownerUUID, addedPlayers, Material.getMaterial(itemMat), lore,
 						cost, plugin);
-				localWarps.put(CommandUtils.convertNonAlphanumeric(alias), w);
+				localWarps.put(IWUtils.convertNonAlphanumeric(alias), w);
 			}
 
 			return true;
@@ -68,6 +74,17 @@ public class WarpManager
 		}
 	}
 
+	/**
+	 * Add a warp, executed via /setwarp or /setpwarp.
+	 *
+	 * @param name      - Warp alias
+	 * @param cost      - Cost to use the warp
+	 * @param p         - Player who executed the command
+	 * @param isPrivate - true, if the warp is a private warp
+	 * @param players   - List of UUIDs of added users
+	 * @throws SimilarNameException - A warp with a similar name exists
+	 * @throws InvalidCostException - The cost provided through the plugin does is not a valid decimal
+	 */
 	public void addWarp(String name, String cost, Player p, boolean isPrivate, ArrayList<String> players)
 			throws SimilarNameException, InvalidCostException
 	{
@@ -77,18 +94,18 @@ public class WarpManager
 			warpFolder.mkdir();
 		}
 
-		String fileName = CommandUtils.convertNonAlphanumeric(name) + ".yml";
+		String fileName = IWUtils.convertNonAlphanumeric(name) + ".yml";
 		String[] warps = warpFolder.list();
-		if (CommandUtils.hasStringConflict(warps, fileName))
+		if (IWUtils.hasStringConflict(warps, fileName))
 		{
 			throw new SimilarNameException();
 		}
-		if (!CommandUtils.isDouble(cost))
+		if (!IWUtils.isDouble(cost))
 		{
 			throw new InvalidCostException();
 		}
 		double c = Double.parseDouble(cost);
-		SimpleConfig warpConfig = plugin.configs.manager.getNewConfig("warps" + File.separator + fileName);
+		SimpleConfig warpConfig = plugin.getConfigManager().manager.getNewConfig("warps" + File.separator + fileName);
 		warpConfig.set("alias", name);
 		warpConfig.createSection("location");
 		warpConfig.set("location.world", p.getWorld().getName());
@@ -101,19 +118,50 @@ public class WarpManager
 		warpConfig.set("isPrivate", isPrivate);
 		warpConfig.set("warpOwner", p.getUniqueId().toString());
 		warpConfig.set("added", players);
-		warpConfig.set("itemIcon", plugin.configs.main.getString("defaultItemIcon", "ENDER_PEARL"));
+		warpConfig.set("itemIcon", plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL"));
 		warpConfig.set("lore", new ArrayList<String>());
 		warpConfig.set("cost", c);
 		warpConfig.saveConfig();
 
 		Warp w = new Warp(name, l, p.getUniqueId().toString(), plugin);
-		localWarps.put(CommandUtils.convertNonAlphanumeric(name), w);
-		plugin.gui2.updateInventoryDefinitions(localWarps, null);
+		localWarps.put(IWUtils.convertNonAlphanumeric(name), w);
+		plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
 	}
 
-	public boolean removeWarp(String name)
+	/**
+	 * Remove a warp, executed via /delwarp.
+	 *
+	 * @param name - Warp alias
+	 * @return if a warp was successfully removed
+	 */
+	public boolean removeWarp(String name) throws NoSuchWarpException
 	{
 		/* TO IMPLEMENT! */
+		if (9 + 10 == 21)
+		{
+			throw new NoSuchWarpException(name);
+		}
 		return false;
+	}
+
+	/**
+	 * Teleport a player to a warp, executed via /warp or through the GUI.
+	 *
+	 * @param p - Player who requested the warp
+	 * @param w - Warp to teleport to
+	 * @return if the Player successfully teleported to the warp
+	 */
+	public boolean warp(Player p, Warp w)
+	{
+		/* TO IMPLEMENT */
+		return true;
+	}
+
+	/**
+	 * @return HashMap of all loaded warps and corresponding file names.
+	 */
+	public HashMap<String, Warp> getWarps()
+	{
+		return localWarps;
 	}
 }

@@ -1,27 +1,25 @@
-package com.jstnf.infinitywarps.utils;
+package com.jstnf.infinitywarps;
 
-import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.commands.*;
-import com.jstnf.infinitywarps.commands.manwarp.ManwarpCommand;
+import com.jstnf.infinitywarps.command.commands.*;
+import com.jstnf.infinitywarps.command.commands.manwarp.ManwarpCommand;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
-import com.jstnf.infinitywarps.gui.DefinitionType;
-import com.jstnf.infinitywarps.gui.InventoryDefinition;
+import com.jstnf.infinitywarps.inventory.DefinitionType;
+import com.jstnf.infinitywarps.inventory.InventoryDefinition;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
-public class CommandUtils
+public class IWUtils
 {
 	/**
 	 * Register all command and subcommand listeners and executors.
 	 */
 	public static void setupListeners(IWMain plugin)
 	{
-		plugin.getLogger().info("Hooking commands...");
-
-		/* Declare commands and command listeners */
+		/* Declare command and command listeners */
 		InfinitywarpsCommand iwc = new InfinitywarpsCommand(plugin);
 		WarpCommand warpc = new WarpCommand(plugin);
 		SetwarpCommand setwarpc = new SetwarpCommand(plugin);
@@ -92,7 +90,7 @@ public class CommandUtils
 			ArrayList<WarpGroup> groups)
 	{
 		ArrayList<InventoryDefinition> definitions = new ArrayList<InventoryDefinition>();
-		ArrayList<Warp> allWarps = ListUtils.alphaSort(warps);
+		ArrayList<Warp> allWarps = alphaSort(warps);
 		InventoryDefinition all = new InventoryDefinition("all_warps", DefinitionType.WARPS, allWarps);
 		InventoryDefinition publicWarps = new InventoryDefinition("public_warps", DefinitionType.WARPS);
 		InventoryDefinition privateWarps = new InventoryDefinition("private_warps", DefinitionType.WARPS);
@@ -129,5 +127,58 @@ public class CommandUtils
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Given a HashMap of warps (local warps), return an alphabetized ArrayList of Warps
+	 *
+	 * @param warps - local warps
+	 * @return Alphabetized ArrayList of warps
+	 */
+	public static ArrayList<Warp> alphaSort(HashMap<String, Warp> warps)
+	{
+		if (warps == null || warps.size() == 0)
+		{
+			return new ArrayList<Warp>();
+		}
+
+		ArrayList<Warp> sorted = new ArrayList<Warp>();
+		Iterator<Warp> it = warps.values().iterator();
+
+		while (it.hasNext())
+		{
+			Warp w = it.next();
+			if (sorted.size() == 0)
+			{
+				sorted.add(w);
+			}
+			else
+			{
+				int index = 0;
+				while (index < sorted.size() && sorted.get(index).getWarpAlias().compareTo(w.getWarpAlias()) < 0)
+				{
+					index++;
+				}
+				sorted.add(index, w);
+			}
+		}
+
+		return sorted;
+	}
+
+	public static boolean hasStringIgnoreCase(ArrayList<String> list, String s)
+	{
+		if (list == null || s == null)
+		{
+			return false;
+		}
+		for (String str : list)
+		{
+			if (str.equalsIgnoreCase(s))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

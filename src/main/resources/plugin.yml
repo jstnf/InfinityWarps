@@ -4,6 +4,7 @@ main: com.jstnf.infinitywarps.IWMain
 author: jstnf-pokeball92870
 description: A customizable, feature-packed warps plugin.
 api-version: 1.13
+softdepend: [Vault, Essentials]
 
 commands:
   infinitywarps:

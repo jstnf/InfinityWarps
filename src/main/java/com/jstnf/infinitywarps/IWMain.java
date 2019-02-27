@@ -1,22 +1,30 @@
 package com.jstnf.infinitywarps;
 
+import com.jstnf.infinitywarps.config.ConfigManager;
+import com.jstnf.infinitywarps.config.LocaleManager;
 import com.jstnf.infinitywarps.data.WarpManager;
-import com.jstnf.infinitywarps.gui.GUIHandler2;
-import com.jstnf.infinitywarps.utils.CommandUtils;
-import com.jstnf.infinitywarps.utils.config.ConfigManager;
-import com.jstnf.infinitywarps.utils.economy.EconomyUtils;
+import com.jstnf.infinitywarps.economy.EconomyManager;
+import com.jstnf.infinitywarps.inventory.InventoryManager;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class IWMain extends JavaPlugin
 {
 	public final int CONFIG_VERSION = 1;
-	public PluginDescriptionFile pdf;
-	public GUIHandler2 gui2;
-	public WarpManager warpManager;
-	public ConfigManager configs;
 	public boolean useEconomy;
+
+	private PluginDescriptionFile pdf;
+
+	private Economy economy;
+
+	private ConfigManager configManager;
+	private EconomyManager economyManager;
+	private InventoryManager inventoryManager;
+	private LocaleManager localeManager;
+	private WarpManager warpManager;
 
 	public IWMain()
 	{
@@ -25,36 +33,48 @@ public class IWMain extends JavaPlugin
 
 	public void onEnable()
 	{
-		/* Configs */
-		getLogger().info("Initializing configs...");
-		configs = new ConfigManager(this);
+		/* Configuration */
+		getLogger().info("Initializing configuration files...");
+		configManager = new ConfigManager(this);
+		getLogger().info("Initializing language files...");
+		localeManager = new LocaleManager(this);
+		localeManager.loadLocale(configManager.main.getString("locale", "en_US"));
 
 		/* Economy */
-		if (configs.main.getBoolean("useEconomy", false))
+		getLogger().info("Initializing economy...");
+		boolean useEconomyConfig = configManager.main.getBoolean("useEconomy", false);
+		boolean vaultLoaded = Bukkit.getPluginManager().isPluginEnabled("Vault");
+		if (useEconomyConfig)
 		{
-			useEconomy = EconomyUtils.hasPrerequisites(this);
-			if (!useEconomy)
+			if (!vaultLoaded || !setupEconomy())
 			{
+				useEconomy = false;
 				getLogger().warning("An attempt was made to use the economy.");
-				getLogger().warning("However, either Vault or an economy plugin were not found.");
+				getLogger().warning("However, either Vault or a Vault dependent economy plugin were not found.");
 				getLogger().warning(
 						"Please restart the plugin with the missing plugin(s) or set 'useEconomy' in config.yml to false.");
+				getLogger().info("InfinityWarps is disabling...");
+				Bukkit.getServer().getPluginManager().disablePlugin(this);
+				return;
 			}
 			else
 			{
+				useEconomy = true;
+				economyManager = new EconomyManager(economy);
 				getLogger().info("Economy features successfully initialized.");
 			}
 		}
 		else
 		{
+			getLogger().info("useEconomy = false");
+			getLogger().info("Economy is disabled.");
 			useEconomy = false;
 		}
 
-		/* Data */
-		getLogger().info("Getting warp data...");
+		/* Warp Data */
+		getLogger().info("Parsing warp data...");
 		warpManager = new WarpManager(this);
-		boolean success = warpManager.importWarps();
-		if (!success)
+		if (!warpManager.importWarps())
 		{
 			getLogger().severe("There was an error importing warps.");
 			getLogger().severe("InfinityWarps is disabling...");
@@ -64,10 +84,11 @@ public class IWMain extends JavaPlugin
 
 		/* GUIs */
 		getLogger().info("Initializing GUI...");
-		gui2 = new GUIHandler2(warpManager.localWarps, null);
+		inventoryManager = new InventoryManager(warpManager.getWarps(), null);
 
 		/* Commands */
-		CommandUtils.setupListeners(this);
+		getLogger().info("Hooking commands...");
+		IWUtils.setupListeners(this);
 
 		/* etc. */
 		this.getLogger().info("InfinityWarps v" + pdf.getVersion() + " successfully enabled.");
@@ -76,5 +97,49 @@ public class IWMain extends JavaPlugin
 	public void onDisable()
 	{
 		this.getLogger().info("InfinityWarps successfully disabled.");
+	}
+
+	/**
+	 * Find a Vault dependent economy plugin.
+	 *
+	 * @return if a plugin was found
+	 */
+	private boolean setupEconomy()
+	{
+		RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager()
+				.getRegistration(net.milkbowl.vault.economy.Economy.class);
+		if (economyProvider != null)
+		{
+			economy = economyProvider.getProvider();
+		}
+
+		return (economy != null);
+	}
+
+	public EconomyManager getEconomyManager()
+	{
+		if (!useEconomy)
+		{
+			return null;
+		}
+		else
+		{
+			return economyManager;
+		}
+	}
+
+	public InventoryManager getInventoryManager()
+	{
+		return inventoryManager;
+	}
+
+	public WarpManager getWarpManager()
+	{
+		return warpManager;
+	}
+
+	public ConfigManager getConfigManager()
+	{
+		return configManager;
 	}
 }

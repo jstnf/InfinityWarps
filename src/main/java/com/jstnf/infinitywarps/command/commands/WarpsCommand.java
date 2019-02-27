@@ -1,7 +1,7 @@
-package com.jstnf.infinitywarps.commands;
+package com.jstnf.infinitywarps.command.commands;
 
 import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.utils.IWExecutor;
+import com.jstnf.infinitywarps.command.IWExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class WarpsCommand extends IWExecutor implements CommandExecutor
 			return true;
 		}
 		Player p = (Player) sender;
-		p.openInventory(plugin.gui2.construct("all_warps", 0));
+		p.openInventory(plugin.getInventoryManager().construct("all_warps", 0));
 		return true;
 	}
 }

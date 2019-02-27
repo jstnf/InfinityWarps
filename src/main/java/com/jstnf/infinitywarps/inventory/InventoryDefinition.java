@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.gui;
+package com.jstnf.infinitywarps.inventory;
 
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
