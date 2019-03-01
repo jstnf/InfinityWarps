@@ -1,24 +1,29 @@
 package com.jstnf.infinitywarps.inventory;
 
+import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
 import com.jstnf.infinitywarps.IWUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InventoryManager implements Listener
 {
+	private IWMain plugin;
 	private ArrayList<InventoryDefinition> definitions;
 
-	public InventoryManager(HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
+	public InventoryManager(IWMain plugin, HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
 	{
-		definitions = IWUtils.defineInventoryDefinitions(warps, groups);
+		this.plugin = plugin;
+		this.definitions = IWUtils.defineInventoryDefinitions(warps, groups);
 	}
 
 	public Inventory construct(String id, int index)
@@ -34,7 +39,7 @@ public class InventoryManager implements Listener
 		/* Create default, non-warp items */
 		for (int i = 0; i < 9; i++)
 		{
-			inv.setItem(i, ConstantItemStacks.border());
+			inv.setItem(i, ConstantItemStacks.border(plugin));
 		}
 		for (int i = 45; i < 54; i++)
 		{
@@ -43,11 +48,11 @@ public class InventoryManager implements Listener
 				case 48: /* Places item for previous page if there is one */
 					if (index > 0)
 					{
-						inv.setItem(i, ConstantItemStacks.previousPage());
+						inv.setItem(i, ConstantItemStacks.previousPage(plugin));
 					}
 					else
 					{
-						inv.setItem(i, ConstantItemStacks.border());
+						inv.setItem(i, ConstantItemStacks.border(plugin));
 					}
 					break;
 				case 49:
@@ -56,39 +61,39 @@ public class InventoryManager implements Listener
 						switch (definition.identifier)
 						{
 							case "all_warps":
-								inv.setItem(i, ConstantItemStacks.allWarps());
+								inv.setItem(i, ConstantItemStacks.allWarps(plugin));
 								break;
 							case "public_warps":
-								inv.setItem(i, ConstantItemStacks.publicWarps());
+								inv.setItem(i, ConstantItemStacks.publicWarps(plugin));
 								break;
 							case "private_warps":
-								inv.setItem(i, ConstantItemStacks.privateWarps());
+								inv.setItem(i, ConstantItemStacks.privateWarps(plugin));
 								break;
 							default:
-								inv.setItem(i, ConstantItemStacks.border());
+								inv.setItem(i, ConstantItemStacks.border(plugin));
 								break;
 						}
 					}
 					else
 					{
-						inv.setItem(i, ConstantItemStacks.border());
+						inv.setItem(i, ConstantItemStacks.border(plugin));
 					}
 					break;
 				case 50: /* Places item for next page if there is one */
 					if (index < definition.getBounds() - 1)
 					{
-						inv.setItem(i, ConstantItemStacks.nextPage());
+						inv.setItem(i, ConstantItemStacks.nextPage(plugin));
 					}
 					else
 					{
-						inv.setItem(i, ConstantItemStacks.border());
+						inv.setItem(i, ConstantItemStacks.border(plugin));
 					}
 					break;
 				case 53:
-					inv.setItem(i, ConstantItemStacks.borderIdentifier(id, index));
+					inv.setItem(i, ConstantItemStacks.borderIdentifier(plugin, id, index));
 					break;
 				default:
-					inv.setItem(i, ConstantItemStacks.border());
+					inv.setItem(i, ConstantItemStacks.border(plugin));
 					break;
 			}
 		}
@@ -123,6 +128,39 @@ public class InventoryManager implements Listener
 	@EventHandler
 	public void inventoryClick(InventoryClickEvent e)
 	{
+		try
+		{
+			Inventory i = e.getInventory();
 
+			int slots = i.getSize();
+			if (slots != 54)
+			{
+				return;
+			}
+
+			ItemStack identifier = i.getItem(53);
+			if (identifier == null)
+			{
+				return;
+			}
+			else
+			{
+				if (!identifier.getItemMeta().getDisplayName().equals(" ") || !identifier.hasItemMeta() || !identifier.getItemMeta().hasLore())
+				{
+					return;
+				}
+
+				ArrayList<String> lore = (ArrayList<String>) identifier.getItemMeta().getLore();
+				String inventoryId = ChatColor.stripColor(lore.get(0));
+				int inventoryPage = Integer.parseInt(ChatColor.stripColor(lore.get(1)));
+
+				/* TO IMPLEMENT */
+			}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			return;
+		}
 	}
 }
