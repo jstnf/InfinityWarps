@@ -1,7 +1,7 @@
 package com.jstnf.infinitywarps.inventory;
 
-import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
 import org.bukkit.Bukkit;
@@ -145,7 +145,8 @@ public class InventoryManager implements Listener
 			}
 			else
 			{
-				if (!identifier.getItemMeta().getDisplayName().equals(" ") || !identifier.hasItemMeta() || !identifier.getItemMeta().hasLore())
+				if (!identifier.getItemMeta().getDisplayName().equals(" ") || !identifier.hasItemMeta() || !identifier
+						.getItemMeta().hasLore())
 				{
 					return;
 				}
