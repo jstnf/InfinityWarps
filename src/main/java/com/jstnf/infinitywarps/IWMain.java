@@ -142,4 +142,9 @@ public class IWMain extends JavaPlugin
 	{
 		return configManager;
 	}
+
+	public LocaleManager getLocaleManager()
+	{
+		return localeManager;
+	}
 }

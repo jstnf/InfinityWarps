@@ -1,5 +1,6 @@
 package com.jstnf.infinitywarps.inventory;
 
+import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,9 +13,10 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the borders of the warp selection menu.
 	 */
-	public static ItemStack border()
+	public static ItemStack border(IWMain plugin)
 	{
-		ItemStack border = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+		String material = plugin.getConfigManager().main.getString("borderItemIcon", "BLUE_STAINED_GLASS_PANE");
+		ItemStack border = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = border.getItemMeta();
 		metaRef.setDisplayName(" ");
 		border.setItemMeta(metaRef);
@@ -24,9 +26,10 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the border identifier of the warp selection menu.
 	 */
-	public static ItemStack borderIdentifier(String identifier, int index)
+	public static ItemStack borderIdentifier(IWMain plugin, String identifier, int index)
 	{
-		ItemStack borderIdentifier = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+		String material = plugin.getConfigManager().main.getString("borderItemIcon", "BLUE_STAINED_GLASS_PANE");
+		ItemStack borderIdentifier = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = borderIdentifier.getItemMeta();
 		metaRef.setDisplayName(" ");
 		ArrayList<String> lore = new ArrayList<String>();
@@ -40,9 +43,11 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the 'previous page' button of the warp selection menu.
 	 */
-	public static ItemStack previousPage()
+	public static ItemStack previousPage(IWMain plugin)
 	{
-		ItemStack prevPage = new ItemStack(Material.FEATHER);
+		String material = plugin.getConfigManager().main.getString("prevPageItemIcon", "FEATHER");
+		String itemName = plugin.getLocaleManager().getLangConfig().getString("invPrevPage", "&fPrevious Page");
+		ItemStack prevPage = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = prevPage.getItemMeta();
 		metaRef.setDisplayName(ChatColor.WHITE + "Previous Page");
 		prevPage.setItemMeta(metaRef);
@@ -52,7 +57,7 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the 'next page' button of the warp selection menu.
 	 */
-	public static ItemStack nextPage()
+	public static ItemStack nextPage(IWMain plugin)
 	{
 		ItemStack nextPage = new ItemStack(Material.FEATHER);
 		ItemMeta metaRef = nextPage.getItemMeta();
@@ -64,7 +69,7 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the 'All Warps' indicator of the warp selection menu.
 	 */
-	public static ItemStack allWarps()
+	public static ItemStack allWarps(IWMain plugin)
 	{
 		ItemStack allWarps = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 		ItemMeta metaRef = allWarps.getItemMeta();
@@ -79,7 +84,7 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the 'Public Warps' indicator of the warp selection menu.
 	 */
-	public static ItemStack publicWarps()
+	public static ItemStack publicWarps(IWMain plugin)
 	{
 		ItemStack publicWarps = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
 		ItemMeta metaRef = publicWarps.getItemMeta();
@@ -94,7 +99,7 @@ public class ConstantItemStacks
 	/**
 	 * Returns the default ItemStack for the 'Private Warps' indicator of the warp selection menu.
 	 */
-	public static ItemStack privateWarps()
+	public static ItemStack privateWarps(IWMain plugin)
 	{
 		ItemStack privateWarps = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 		ItemMeta metaRef = privateWarps.getItemMeta();
