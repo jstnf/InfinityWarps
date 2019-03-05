@@ -2,7 +2,6 @@ package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,7 +17,12 @@ public class Warp
 	private String alias;
 
 	/* Warp location */
-	private Location loc;
+	private String world;
+	private double x;
+	private double y;
+	private double z;
+	private float pitch;
+	private float yaw;
 
 	/* Item icon vars */
 	private Material iconMaterial;
@@ -33,16 +37,23 @@ public class Warp
 	private double cost;
 
 	/**
-	 * Constructor used with '/setwarp <warp>' command.
+	 * Constructor used with the '/setwarp <warp>' command or importing from Essentials config.
 	 */
-	public Warp(String name, Location loc, String warpOwnerUUID, IWMain plugin)
+	public Warp(String name, String world, double x, double y, double z, float pitch, float yaw, String warpOwnerUUID,
+			IWMain plugin)
 	{
 		this.plugin = plugin;
 
 		this.name = name.toLowerCase();
 		this.alias = name;
 
-		this.loc = loc;
+		this.world = world;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.pitch = pitch;
+		this.yaw = yaw;
+
 		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = false;
@@ -59,13 +70,19 @@ public class Warp
 	/**
 	 * Constructor used when constructing a warp from <warp>.yml.
 	 */
-	public Warp(String name, Location loc, boolean isPrivate, String warpOwnerUUID, ArrayList<String> players,
-			Material iconMat, ArrayList<String> lore, double cost, IWMain plugin)
+	public Warp(String name, String world, double x, double y, double z, float pitch, float yaw, boolean isPrivate,
+			String warpOwnerUUID, ArrayList<String> players, Material iconMat, ArrayList<String> lore, double cost,
+			IWMain plugin)
 	{
 		this.name = name.toLowerCase();
 		this.alias = name;
 
-		this.loc = loc;
+		this.world = world;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.pitch = pitch;
+		this.yaw = yaw;
 		this.ownerUUID = warpOwnerUUID;
 
 		this.isPrivate = isPrivate;

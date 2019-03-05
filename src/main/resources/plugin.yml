@@ -39,3 +39,7 @@ commands:
     aliases: [iwarpgroup]
     description: Create and manage warp groups.
     permission: infinitywarps.command.warpgroup
+  warplist:
+    aliases: [iwarplist, listwarps, ilistwarps]
+    description: List all warps in chat.
+    permission: infinitywarps.command.warplist

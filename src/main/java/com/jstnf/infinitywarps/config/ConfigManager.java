@@ -49,7 +49,7 @@ public class ConfigManager
 
 			/* teleportDelay */
 			String[] tpDelayComs = { "In seconds, the time before a warp is initiated.",
-					"Warps are cancelled if the player moves at any time during this timer." };
+					"Warps are cancelled if the player moves at any time", "during this timer." };
 			main.set("teleportDelay", 5, tpDelayComs);
 
 			/* teleportCooldown */

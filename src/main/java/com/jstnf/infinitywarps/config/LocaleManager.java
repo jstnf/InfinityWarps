@@ -2,8 +2,6 @@ package com.jstnf.infinitywarps.config;
 
 import com.jstnf.infinitywarps.IWMain;
 
-import java.io.File;
-
 public class LocaleManager
 {
 	private IWMain plugin;

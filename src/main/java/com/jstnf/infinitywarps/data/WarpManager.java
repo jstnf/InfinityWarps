@@ -1,14 +1,14 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.config.SimpleConfig;
 import com.jstnf.infinitywarps.IWUtils;
+import com.jstnf.infinitywarps.config.SimpleConfig;
 import com.jstnf.infinitywarps.exception.InvalidCostException;
 import com.jstnf.infinitywarps.exception.NoSuchWarpException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -52,7 +52,6 @@ public class WarpManager
 				double z = config.getDouble("location.z");
 				float pitch = (float) config.getDouble("location.pitch");
 				float yaw = (float) config.getDouble("location.yaw");
-				Location l = new Location(Bukkit.getServer().getWorld(worldName), x, y, z, pitch, yaw);
 				boolean isPrivate = config.getBoolean("isPrivate");
 				String ownerUUID = config.getString("warpOwner");
 				ArrayList<String> addedPlayers = (ArrayList<String>) config.getList("added");
@@ -60,11 +59,68 @@ public class WarpManager
 				ArrayList<String> lore = (ArrayList<String>) config.getList("lore");
 				double cost = config.getDouble("cost");
 
-				Warp w = new Warp(alias, l, isPrivate, ownerUUID, addedPlayers, Material.getMaterial(itemMat), lore,
-						cost, plugin);
+				Warp w = new Warp(alias, worldName, x, y, z, pitch, yaw, isPrivate, ownerUUID, addedPlayers,
+						Material.getMaterial(itemMat), lore, cost, plugin);
 				localWarps.put(IWUtils.convertNonAlphanumeric(alias), w);
 			}
 
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean importFromEssentialsConfig(FileConfiguration essConfig)
+	{
+		try
+		{
+			File warpFolder = new File(plugin.getDataFolder() + File.separator + "warps");
+			if (!warpFolder.exists())
+			{
+				warpFolder.mkdir();
+			}
+
+			String alias = essConfig.getString("name");
+			String world = essConfig.getString("world");
+			double x = essConfig.getDouble("x");
+			double y = essConfig.getDouble("y");
+			double z = essConfig.getDouble("z");
+			double yaw = essConfig.getDouble("yaw");
+			double pitch = essConfig.getDouble("pitch");
+			String ownerUUID = essConfig.getString("lastowner");
+
+			String fileName = IWUtils.convertNonAlphanumeric(alias) + ".yml";
+			String[] warps = warpFolder.list();
+			if (IWUtils.hasStringConflict(warps, fileName))
+			{
+				plugin.getLogger()
+						.warning("Warp " + alias + " was not imported because a warp with a similar name exists.");
+				return false; /* Warp import failed, similar name */
+			}
+			SimpleConfig warpConfig = plugin.getConfigManager().manager
+					.getNewConfig("warps" + File.separator + fileName);
+			warpConfig.set("alias", alias);
+			warpConfig.createSection("location");
+			warpConfig.set("location.world", world);
+			warpConfig.set("location.x", x);
+			warpConfig.set("location.y", y);
+			warpConfig.set("location.z", z);
+			warpConfig.set("location.pitch", pitch);
+			warpConfig.set("location.yaw", yaw);
+			warpConfig.set("isPrivate", false);
+			warpConfig.set("warpOwner", ownerUUID);
+			warpConfig.set("added", new ArrayList<String>());
+			warpConfig.set("itemIcon", plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL"));
+			warpConfig.set("lore", new ArrayList<String>());
+			warpConfig.set("cost", 0.0);
+			warpConfig.saveConfig();
+
+			Warp w = new Warp(alias, world, x, y, z, (float) pitch, (float) yaw, ownerUUID, plugin);
+			localWarps.put(IWUtils.convertNonAlphanumeric(alias), w);
+			plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
 			return true;
 		}
 		catch (Exception e)
@@ -123,7 +179,8 @@ public class WarpManager
 		warpConfig.set("cost", c);
 		warpConfig.saveConfig();
 
-		Warp w = new Warp(name, l, p.getUniqueId().toString(), plugin);
+		Warp w = new Warp(name, l.getWorld().getName(), l.getX(), l.getY(), l.getZ(), l.getPitch(), l.getYaw(),
+				p.getUniqueId().toString(), plugin);
 		localWarps.put(IWUtils.convertNonAlphanumeric(name), w);
 		plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
 	}

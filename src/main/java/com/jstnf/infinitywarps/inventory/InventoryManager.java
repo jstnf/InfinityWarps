@@ -1,8 +1,8 @@
 package com.jstnf.infinitywarps.inventory;
 
+import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
-import com.jstnf.infinitywarps.IWUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -123,6 +123,13 @@ public class InventoryManager implements Listener
 	@EventHandler
 	public void inventoryClick(InventoryClickEvent e)
 	{
-
+		/* To implement! */
+		if (true /* CHECK IF INVENTORY IS A DOUBLE CHEST */)
+		{
+			if (true /* CHECK FOR INVENTORY IDENTIFIER */)
+			{
+				e.setCancelled(true);
+			}
+		}
 	}
 }

@@ -1,7 +1,10 @@
 package com.jstnf.infinitywarps;
 
 import com.jstnf.infinitywarps.command.commands.*;
+import com.jstnf.infinitywarps.command.commands.infinitywarps.ImportesswarpsSubcommand;
+import com.jstnf.infinitywarps.command.commands.infinitywarps.InfinitywarpsCommand;
 import com.jstnf.infinitywarps.command.commands.manwarp.ManwarpCommand;
+import com.jstnf.infinitywarps.command.commands.warpgroup.WarpgroupCommand;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
 import com.jstnf.infinitywarps.inventory.DefinitionType;
@@ -30,7 +33,8 @@ public class IWUtils
 		WarpgroupCommand warpgroupc = new WarpgroupCommand(plugin);
 
 		/* Register SubCommands */
-
+		ImportesswarpsSubcommand importesswarpssbc = new ImportesswarpsSubcommand();
+		iwc.registerSubCommand("importesswarps", importesswarpssbc);
 
 		/* Set executors */
 		plugin.getCommand("infinitywarps").setExecutor(iwc);
@@ -166,7 +170,7 @@ public class IWUtils
 		return sorted;
 	}
 
-	public static boolean hasStringIgnoreCase(ArrayList<String> list, String s)
+	public static boolean listContainsStringIgnoreCase(ArrayList<String> list, String s)
 	{
 		if (list == null || s == null)
 		{
