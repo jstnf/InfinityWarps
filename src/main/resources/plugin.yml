@@ -11,30 +11,26 @@ commands:
     aliases: [iw]
     description: The main command for InfinityWarps.
     permission: infinitywarps.infinitywarps
-  warp:
-    aliases: [iwarp]
-    description: Warp to a location.
-    permission: infinitywarps.command.warp
-  setwarp:
-    aliases: [isetwarp]
-    description: Set a warp at your current location.
-    permission: infinitywarps.command.setwarp
   delwarp:
     aliases: [idelwarp]
     description: Delete a warp.
     permission: infinitywarps.command.delwarp
-  warps:
-    aliases: [warpmenu, iwarps, iwarpmenu]
-    description: Open a menu to view all warps.
-    permission: infinitywarps.command.warps
-  setpwarp:
-    aliases: [setprivatewarp, isetpwarp, isetprivatewarp]
-    description: Set a private warp at your current location.
-    permission: infinitywarps.command.setpwarp
   manwarp:
     aliases: [modifywarp, managewarp, imanwarp, imodifywarp, imanagewarp]
     description: Manage properties of a warp.
     permission: infinitywarps.command.manwarp
+  setpwarp:
+    aliases: [setprivatewarp, isetpwarp, isetprivatewarp]
+    description: Set a private warp at your current location.
+    permission: infinitywarps.command.setpwarp
+  setwarp:
+    aliases: [isetwarp]
+    description: Set a warp at your current location.
+    permission: infinitywarps.command.setwarp
+  warp:
+    aliases: [iwarp]
+    description: Warp to a location.
+    permission: infinitywarps.command.warp
   warpgroup:
     aliases: [iwarpgroup]
     description: Create and manage warp groups.
@@ -43,3 +39,7 @@ commands:
     aliases: [iwarplist, listwarps, ilistwarps]
     description: List all warps in chat.
     permission: infinitywarps.command.warplist
+  warps:
+    aliases: [warpmenu, iwarps, iwarpmenu]
+    description: Open a menu to view all warps.
+    permission: infinitywarps.command.warps

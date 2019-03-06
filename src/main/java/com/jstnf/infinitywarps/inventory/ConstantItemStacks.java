@@ -8,6 +8,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
+/**
+ * InfinityWarps by jstnf
+ * ConstantItemStacks
+ * Util for grabbing commonly used ItemStacks in inventories, uses config and locale for customization.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class ConstantItemStacks
 {
 	/**
@@ -15,7 +22,7 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack border(IWMain plugin)
 	{
-		String material = plugin.getConfigManager().main.getString("borderItemIcon", "BLUE_STAINED_GLASS_PANE");
+		String material = plugin.getConfigManager().main.getString("borderItemIcon", "LIGHT_BLUE_STAINED_GLASS_PANE");
 		ItemStack border = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = border.getItemMeta();
 		metaRef.setDisplayName(" ");
@@ -28,7 +35,7 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack borderIdentifier(IWMain plugin, String identifier, int index)
 	{
-		String material = plugin.getConfigManager().main.getString("borderItemIcon", "BLUE_STAINED_GLASS_PANE");
+		String material = plugin.getConfigManager().main.getString("borderItemIcon", "LIGHT_BLUE_STAINED_GLASS_PANE");
 		ItemStack borderIdentifier = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = borderIdentifier.getItemMeta();
 		metaRef.setDisplayName(" ");
@@ -49,7 +56,7 @@ public class ConstantItemStacks
 		String itemName = plugin.getLocaleManager().getLangConfig().getString("invPrevPage", "&fPrevious Page");
 		ItemStack prevPage = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = prevPage.getItemMeta();
-		metaRef.setDisplayName(ChatColor.WHITE + "Previous Page");
+		metaRef.setDisplayName(ChatColor.translateAlternateColorCodes('&', itemName));
 		prevPage.setItemMeta(metaRef);
 		return prevPage;
 	}
@@ -59,9 +66,11 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack nextPage(IWMain plugin)
 	{
-		ItemStack nextPage = new ItemStack(Material.FEATHER);
+		String material = plugin.getConfigManager().main.getString("nextPageItemIcon", "FEATHER");
+		String itemName = plugin.getLocaleManager().getLangConfig().getString("invNextPage", "&Next Page");
+		ItemStack nextPage = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = nextPage.getItemMeta();
-		metaRef.setDisplayName(ChatColor.WHITE + "Next Page");
+		metaRef.setDisplayName(ChatColor.translateAlternateColorCodes('&', itemName));
 		nextPage.setItemMeta(metaRef);
 		return nextPage;
 	}
@@ -103,11 +112,26 @@ public class ConstantItemStacks
 	{
 		ItemStack privateWarps = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 		ItemMeta metaRef = privateWarps.getItemMeta();
-		metaRef.setDisplayName(ChatColor.RED + "All Warps");
+		metaRef.setDisplayName(ChatColor.RED + "Private Warps");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("" + ChatColor.GRAY + ChatColor.ITALIC + "Click to change category.");
 		metaRef.setLore(lore);
 		privateWarps.setItemMeta(metaRef);
 		return privateWarps;
+	}
+
+	/**
+	 * Returns the default ItemStack for the 'Warp Groups' indicator of the warp selection menu.
+	 */
+	public static ItemStack groupList(IWMain plugin)
+	{
+		ItemStack groupList = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
+		ItemMeta metaRef = groupList.getItemMeta();
+		metaRef.setDisplayName(ChatColor.LIGHT_PURPLE + "Warp Groups");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("" + ChatColor.GRAY + ChatColor.ITALIC + "Click to change category.");
+		metaRef.setLore(lore);
+		groupList.setItemMeta(metaRef);
+		return groupList;
 	}
 }

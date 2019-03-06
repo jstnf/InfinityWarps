@@ -1,28 +1,49 @@
 configVersion: 1
 prefix: '&7[&bInfinity&fWarps&7]'
+
 warpDelay: '&3Warping to &c{0} &3in &f{1} &3seconds.'
 warpSuccess: '&3Warping to &f{0}&3.'
-warpCooldown: '&cYou will be able to warp in &f{0} &cseconds.'
+
+warpLocationError: '&cUnable to locate the warp. Perhaps the world was deleted or unloaded?'
+warpCooldown: '&cYou will be able to warp again in &f{0} &cseconds.'
 warpUnsafeError: '&cUnable to find a safe location to warp.'
 warpUnsafeWarning: '&cNo safe location was found to warp. Use &f/warpconfirm &cto continue anyways.'
 warpNoPermission: '&cYou do not have permission to warp to &f{0}&c.'
+warpNotFound: '&cThe warp &f{0} &cdoes not exist.'
+
 warpSetSuccess: '&3Warp &f{0} &3set.'
 warpSetInvalidCost: '&cYou must use a number for the cost.'
 warpSetSimilarName: '&cA warp with a similar name to &f{0} &calready exists.'
+
 warpDeleteSuccess: '&3Warp &f{0} &3deleted.'
-warpNotFound: '&cThe warp &f{0} &cdoes not exist.'
+
+invTitle: '&8InfinityWarps Menu'
 invNextPage: '&fNext Page'
 invPrevPage: '&fPrevious Page'
+invAllWarps: '&fAll Warps'
+invPublicWarps: '&aPublic Warps'
+invPrivateWarps: '&cPrivate Warps'
+invWarpGroups: '&dWarp Groups'
+invEssWarps: '&6Essentials Warps'
+
+lorePublicWarp: '&a&oPublic Warp'
+lorePrivateWarp: '&c&oPrivate Warp'
+loreWarpGroup: '&d&oWarp Group'
+loreEssWarp: '&6&oEssentials Warp'
+loreClickToChangeCategory: '&7&oClick to change category.'
+loreEcoWarpCost: '&fCost:'
+loreEcoCurrencySign: '$'
+loreLocation: '&e({0} &e@ {1}&e,{2}&e,{3}&e)'
+
 manwarpItemSuccess: '&3Warp item changed to &f{0}&3.'
-warpLocationError: '&cUnable to locate the warp. Perhaps the world was deleted or unloaded?'
-privateWarp: '&c&oPrivate Warp'
-ecoWarpCost: '&fCost:'
-ecoCurrencySign: '&a$'
-ecoWarpMoneyTaken: '&f{0} &3was taken from your account.'
-ecoWarpCannotAfford: '&cYou cannot afford to warp to &f{0}&c.'
-ecoWarpWarning: '&3It will cost &f{0} &3to warp to &f{1}&3. Use &f/warpconfirm &3to continue.'
+
+ecoMoneyTaken: '&f{0} &3was taken from your account.'
+ecoCannotAfford: '&cYou cannot afford to warp to &f{0}&c.'
+ecoWarning: '&3It will cost &f{0} &3to warp to &f{1}&3. Use &f/warpconfirm &3to continue.'
+
 commandTooQuickly: '&cYou are attempting to use the command too quickly. Please wait a few seconds.'
 commandNoPermission: '&cYou do not have permission to use this command.'
-playerMustUseCommand: '&cThis command must be executed by a Player.'
-invalidInventory: '&cInventory error. Please contact server administration and report to developer if you see this.'
+commandPlayerMustUse: '&cThis command must be executed by a Player.'
+
 error: '&cAn error occurred. Refer to console and report to plugin developer.'
+errorInvalidInventory: '&cInventory error. Please contact server administration and report to developer if you see this.'

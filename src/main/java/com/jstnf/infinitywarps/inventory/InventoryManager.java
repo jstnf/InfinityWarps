@@ -4,8 +4,9 @@ import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
+import javafx.util.Pair;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,6 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * InfinityWarps by jstnf
+ * InventoryManager
+ * Constructs Inventory objects for players using InventoryDefinitions.
+ * Inventory Listener for InfinityWarps GUIs.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class InventoryManager implements Listener
 {
 	private IWMain plugin;
@@ -73,6 +82,14 @@ public class InventoryManager implements Listener
 								inv.setItem(i, ConstantItemStacks.border(plugin));
 								break;
 						}
+					}
+					else if (definition.definitionType == DefinitionType.GROUPS)
+					{
+						inv.setItem(i, ConstantItemStacks.groupList(plugin));
+					}
+					else if (definition.definitionType == DefinitionType.WARPGROUP)
+					{
+						/* Do warpgroup stuff here! */
 					}
 					else
 					{
@@ -152,10 +169,30 @@ public class InventoryManager implements Listener
 				}
 
 				ArrayList<String> lore = (ArrayList<String>) identifier.getItemMeta().getLore();
-				String inventoryId = ChatColor.stripColor(lore.get(0));
-				int inventoryPage = Integer.parseInt(ChatColor.stripColor(lore.get(1)));
+				Pair<String, Integer> id = IWUtils.validateInventoryId(lore);
+				if (id == null)
+				{
+					return;
+				}
+				else
+				{
+					e.setCancelled(true);
 
-				/* TO IMPLEMENT */
+					/* To implement! */
+					if (e.getSlot() == 49)
+					{
+						/* temp code! */
+						int index = IWUtils.getDefinitionSlot(definitions, id.getKey());
+						index++;
+						if (index >= definitions.size())
+						{
+							index = 0;
+						}
+
+						Player p = (Player) e.getWhoClicked();
+						p.openInventory(plugin.getInventoryManager().construct(definitions.get(index).identifier, 0));
+					}
+				}
 			}
 		}
 		catch (Exception ex)

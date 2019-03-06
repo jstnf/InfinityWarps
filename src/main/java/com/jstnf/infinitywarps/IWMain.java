@@ -11,6 +11,13 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * InfinityWarps by jstnf
+ * IWMain
+ * Main plugin class for InfinityWarps.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class IWMain extends JavaPlugin
 {
 	public final int CONFIG_VERSION = 1;
@@ -83,15 +90,16 @@ public class IWMain extends JavaPlugin
 		}
 
 		/* GUIs */
-		getLogger().info("Initializing GUI...");
-		inventoryManager = new InventoryManager(warpManager.getWarps(), null);
+		getLogger().info("Initializing inventory and inventory listeners...");
+		inventoryManager = new InventoryManager(this, warpManager.getWarps(), null);
+		Bukkit.getPluginManager().registerEvents(inventoryManager, this);
 
 		/* Commands */
 		getLogger().info("Hooking commands...");
 		IWUtils.setupListeners(this);
 
 		/* etc. */
-		this.getLogger().info("InfinityWarps v" + pdf.getVersion() + " successfully enabled.");
+		getLogger().info("InfinityWarps v" + pdf.getVersion() + " successfully enabled.");
 	}
 
 	public void onDisable()
@@ -101,6 +109,7 @@ public class IWMain extends JavaPlugin
 
 	/**
 	 * Find a Vault dependent economy plugin.
+	 * Code courtesy of VaultAPI
 	 *
 	 * @return if a plugin was found
 	 */

@@ -1,7 +1,6 @@
 package com.jstnf.infinitywarps.command.commands;
 
 import com.jstnf.infinitywarps.IWMain;
-import com.jstnf.infinitywarps.command.IWExecutor;
 import com.jstnf.infinitywarps.exception.InvalidCostException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
 import org.bukkit.ChatColor;
@@ -13,14 +12,14 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 /* /setwarp <name> [cost] */
-public class SetwarpCommand extends IWExecutor implements CommandExecutor
+public class SetwarpCommand implements CommandExecutor
 {
 	private final String help = "Usage: /setwarp <name> [cost]";
+	private IWMain plugin;
 
 	public SetwarpCommand(IWMain plugin)
 	{
-		super(plugin);
-		commandMap = null; // No subcommands
+		this.plugin = plugin;
 	}
 
 	@Override
@@ -53,11 +52,11 @@ public class SetwarpCommand extends IWExecutor implements CommandExecutor
 					}
 					catch (InvalidCostException ex)
 					{
-						sender.sendMessage("[cost] must be double.");
+						sender.sendMessage("[HARD_CODED_LANG] [cost] must be double.");
 					}
 					catch (SimilarNameException ex)
 					{
-						sender.sendMessage("Similar warp name exists.");
+						sender.sendMessage("[HARD_CODED_LANG] Similar warp name exists.");
 					}
 				}
 				else
@@ -67,7 +66,7 @@ public class SetwarpCommand extends IWExecutor implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage("You do not have permission to use this command.");
+				sender.sendMessage("[HARD_CODED_LANG] You do not have permission to use this command.");
 			}
 		}
 

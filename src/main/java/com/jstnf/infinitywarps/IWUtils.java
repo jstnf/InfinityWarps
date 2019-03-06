@@ -9,14 +9,25 @@ import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
 import com.jstnf.infinitywarps.inventory.DefinitionType;
 import com.jstnf.infinitywarps.inventory.InventoryDefinition;
+import javafx.util.Pair;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * InfinityWarps by jstnf
+ * IWUtils
+ * Util methods for all parts of InfinityWarps.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class IWUtils
 {
+	public static final String[] TEMP_INVENTORY_DEFINITION_IDENTIFIERS = { "all_warps", "groups", "ungrouped", "group_",
+			"public_warps", "private_warps", "essentials" };
+
 	/**
 	 * Register all command and subcommand listeners and executors.
 	 */
@@ -60,7 +71,7 @@ public class IWUtils
 	}
 
 	/**
-	 * Determine if a String is already present in an array of Strings.
+	 * Determine if a String is already present within an array of Strings.
 	 */
 	public static boolean hasStringConflict(String[] strings, String s)
 	{
@@ -90,6 +101,29 @@ public class IWUtils
 		}
 	}
 
+	/**
+	 * Determine if the given String is an int.
+	 */
+	public static boolean isInt(String s)
+	{
+		try
+		{
+			Integer.parseInt(s);
+			return true;
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Build the InventoryDefinitions in which the InventoryManager constructs inventories.
+	 *
+	 * @param warps  - The current loaded, local warps
+	 * @param groups - The current loaded, warp groups
+	 * @return All InventoryDefinitions from the given warps and warp groups
+	 */
 	public static ArrayList<InventoryDefinition> defineInventoryDefinitions(HashMap<String, Warp> warps,
 			ArrayList<WarpGroup> groups)
 	{
@@ -121,8 +155,20 @@ public class IWUtils
 		return definitions;
 	}
 
+	/**
+	 * Given an identifier, return its corresponding InventoryDefinition.
+	 *
+	 * @param definitions - The current loaded InventoryDefinitions
+	 * @param id          - The identifier for an InventoryDefinition
+	 * @return The InventoryDefinition that matches the identifier, null if not found
+	 */
 	public static InventoryDefinition getDefinition(ArrayList<InventoryDefinition> definitions, String id)
 	{
+		if (id == null)
+		{
+			return null;
+		}
+
 		for (int i = 0; i < definitions.size(); i++)
 		{
 			if (id.equalsIgnoreCase(definitions.get(i).identifier))
@@ -134,9 +180,28 @@ public class IWUtils
 	}
 
 	/**
-	 * Given a HashMap of warps (local warps), return an alphabetized ArrayList of Warps
+	 * Given an identifier, return its index within the currently loaded InventoryDefinitions.
 	 *
-	 * @param warps - local warps
+	 * @param definitions - The current loaded InventoryDefinitions
+	 * @param id          - The identifier for an InventoryDefinition
+	 * @return The index of the identifier's corresponding InventoryDefinition, -1 if not found
+	 */
+	public static int getDefinitionSlot(ArrayList<InventoryDefinition> definitions, String id)
+	{
+		for (int i = 0; i < definitions.size(); i++)
+		{
+			if (id.equalsIgnoreCase(definitions.get(i).identifier))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Given a HashMap of warps (local warps), return an alphabetized ArrayList of Warps.
+	 *
+	 * @param warps - The current loaded, local warps
 	 * @return Alphabetized ArrayList of warps
 	 */
 	public static ArrayList<Warp> alphaSort(HashMap<String, Warp> warps)
@@ -168,6 +233,44 @@ public class IWUtils
 		}
 
 		return sorted;
+	}
+
+	/**
+	 * Verify, using item lore, if an inventory is a valid InfinityWarps GUI.
+	 *
+	 * @param lore - The item lore
+	 * @return If the lore is a valid identifier for an InfinityWarps GUI
+	 */
+	public static Pair<String, Integer> validateInventoryId(ArrayList<String> lore)
+	{
+		/* Invalid parameters */
+		if (lore == null || lore.size() != 2)
+		{
+			return null;
+		}
+
+		String lore0 = ChatColor.stripColor(lore.get(0));
+		String lore1 = ChatColor.stripColor(lore.get(1));
+
+		boolean matches = false;
+		for (String s : TEMP_INVENTORY_DEFINITION_IDENTIFIERS)
+		{
+			if (lore.get(0).contains(s))
+			{
+				matches = true;
+			}
+		}
+
+		if (matches)
+		{
+			if (isInt(lore1))
+			{
+				return new Pair<String, Integer>(lore0, Integer.parseInt(lore1));
+			}
+		}
+
+		/* A check failed, not a valid inventory ID */
+		return null;
 	}
 
 	public static boolean listContainsStringIgnoreCase(ArrayList<String> list, String s)

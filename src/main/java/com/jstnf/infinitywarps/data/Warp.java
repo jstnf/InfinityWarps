@@ -8,6 +8,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
+/**
+ * InfinityWarps by jstnf
+ * Warp
+ * Locally stores information about location, GUI item icons, and private warp information imported from YAML configs.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class Warp
 {
 	private IWMain plugin;

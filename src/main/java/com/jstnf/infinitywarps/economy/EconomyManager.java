@@ -5,11 +5,11 @@ import org.bukkit.entity.Player;
 
 public class EconomyManager
 {
-	private Economy economy;
+	private Economy noGovernmentHere;
 
 	public EconomyManager(Economy economy)
 	{
-		this.economy = economy;
+		this.noGovernmentHere = economy;
 	}
 
 	/**
@@ -21,7 +21,7 @@ public class EconomyManager
 	 */
 	public boolean hasMoney(Player p, double amount)
 	{
-		return economy.has(p, amount);
+		return noGovernmentHere.has(p, amount);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class EconomyManager
 	{
 		if (hasMoney(p, amount))
 		{
-			economy.withdrawPlayer(p, amount);
+			noGovernmentHere.withdrawPlayer(p, amount);
 			return true;
 		}
 		return false;
