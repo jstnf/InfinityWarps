@@ -2,6 +2,7 @@ package com.jstnf.infinitywarps;
 
 import com.jstnf.infinitywarps.config.ConfigManager;
 import com.jstnf.infinitywarps.config.LocaleManager;
+import com.jstnf.infinitywarps.data.WarpGroupManager;
 import com.jstnf.infinitywarps.data.WarpManager;
 import com.jstnf.infinitywarps.economy.EconomyManager;
 import com.jstnf.infinitywarps.inventory.InventoryManager;
@@ -31,6 +32,7 @@ public class IWMain extends JavaPlugin
 	private EconomyManager economyManager;
 	private InventoryManager inventoryManager;
 	private LocaleManager localeManager;
+	private WarpGroupManager warpGroupManager;
 	private WarpManager warpManager;
 
 	public IWMain()
@@ -78,12 +80,20 @@ public class IWMain extends JavaPlugin
 			useEconomy = false;
 		}
 
-		/* Warp Data */
+		/* Warp & Warp Group Data */
 		getLogger().info("Parsing warp data...");
 		warpManager = new WarpManager(this);
+		warpGroupManager = new WarpGroupManager(this);
 		if (!warpManager.importWarps())
 		{
 			getLogger().severe("There was an error importing warps.");
+			getLogger().severe("InfinityWarps is disabling...");
+			Bukkit.getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+		if (!warpGroupManager.importGroups())
+		{
+			getLogger().severe("There was an error importing warp groups");
 			getLogger().severe("InfinityWarps is disabling...");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
@@ -155,5 +165,10 @@ public class IWMain extends JavaPlugin
 	public LocaleManager getLocaleManager()
 	{
 		return localeManager;
+	}
+
+	public WarpGroupManager getWarpGroupManager()
+	{
+		return warpGroupManager;
 	}
 }
