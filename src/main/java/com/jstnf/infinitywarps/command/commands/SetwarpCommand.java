@@ -48,7 +48,7 @@ public class SetwarpCommand implements CommandExecutor
 					try
 					{
 						plugin.getWarpManager().addWarp(args[0], cost, p, false, new ArrayList<String>());
-						sender.sendMessage("Warp " + ChatColor.translateAlternateColorCodes('&', args[0]) + " &fset.");
+						sender.sendMessage("HARD CODED - Warp " + ChatColor.translateAlternateColorCodes('&', args[0]) + " set.");
 					}
 					catch (InvalidCostException ex)
 					{

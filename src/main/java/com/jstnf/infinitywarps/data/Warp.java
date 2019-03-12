@@ -1,6 +1,7 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.IWUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +52,7 @@ public class Warp
 	{
 		this.plugin = plugin;
 
-		this.name = name.toLowerCase();
+		this.name = IWUtils.iwFormatString(name);
 		this.alias = name;
 
 		this.world = world;
@@ -81,7 +82,7 @@ public class Warp
 			String warpOwnerUUID, ArrayList<String> players, Material iconMat, ArrayList<String> lore, double cost,
 			IWMain plugin)
 	{
-		this.name = name.toLowerCase();
+		this.name = IWUtils.iwFormatString(name);
 		this.alias = name;
 
 		this.world = world;
@@ -130,12 +131,22 @@ public class Warp
 				finalLore.add(ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
 			}
 		}
-		/* Replace with config option for useEconomy */
+		boolean spaceAdded = false;
 		if (plugin.useEconomy)
 		{
 			finalLore.add("");
+			spaceAdded = true;
 			finalLore.add(ChatColor.WHITE + "Cost: ");
 			finalLore.add("" + ChatColor.GREEN + cost);
+		}
+		if (plugin.getConfigManager().main.getBoolean("showCoords", true))
+		{
+			if (spaceAdded)
+			{
+				finalLore.add("");
+				spaceAdded = true;
+			}
+			finalLore.add(ChatColor.AQUA + world + " @ " + (int) x + "," + (int) y + "," + (int) z);
 		}
 		metaRef.setLore(finalLore);
 
@@ -190,5 +201,40 @@ public class Warp
 	public boolean isPrivate()
 	{
 		return isPrivate;
+	}
+
+	public ArrayList<String> getAddedPlayers()
+	{
+		return addedPlayers;
+	}
+
+	public String getWorld()
+	{
+		return world;
+	}
+
+	public double getX()
+	{
+		return x;
+	}
+
+	public double getY()
+	{
+		return y;
+	}
+
+	public double getZ()
+	{
+		return z;
+	}
+
+	public float getPitch()
+	{
+		return pitch;
+	}
+
+	public float getYaw()
+	{
+		return yaw;
 	}
 }

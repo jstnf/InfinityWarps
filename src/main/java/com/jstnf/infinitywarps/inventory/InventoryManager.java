@@ -177,20 +177,33 @@ public class InventoryManager implements Listener
 				else
 				{
 					e.setCancelled(true);
-
-					/* To implement! */
-					if (e.getSlot() == 49)
+					Player p = (Player) e.getWhoClicked();
+					/* temp switch case */
+					switch (e.getSlot())
 					{
-						/* temp code! */
-						int index = IWUtils.getDefinitionSlot(definitions, id.getKey());
-						index++;
-						if (index >= definitions.size())
-						{
-							index = 0;
-						}
-
-						Player p = (Player) e.getWhoClicked();
-						p.openInventory(plugin.getInventoryManager().construct(definitions.get(index).identifier, 0));
+						case 48:
+							if (id.getValue() > 0)
+							{
+								p.openInventory(construct(id.getKey(), id.getValue() - 1));
+							}
+							break;
+						case 49:
+							/* temp code! */
+							int index = IWUtils.getDefinitionSlot(definitions, id.getKey());
+							index++;
+							if (index >= definitions.size())
+							{
+								index = 0;
+							}
+							p.openInventory(construct(definitions.get(index).identifier, 0));
+							break;
+						case 50:
+							InventoryDefinition def = IWUtils.getDefinition(definitions, id.getKey());
+							if (id.getValue() < def.getBounds() - 1)
+							{
+								p.openInventory(construct(id.getKey(), id.getValue() + 1));
+							}
+							break;
 					}
 				}
 			}

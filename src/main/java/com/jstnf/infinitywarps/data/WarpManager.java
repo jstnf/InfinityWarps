@@ -3,9 +3,8 @@ package com.jstnf.infinitywarps.data;
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.config.SimpleConfig;
-import com.jstnf.infinitywarps.exception.InvalidCostException;
-import com.jstnf.infinitywarps.exception.NoSuchWarpException;
-import com.jstnf.infinitywarps.exception.SimilarNameException;
+import com.jstnf.infinitywarps.exception.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -61,7 +60,7 @@ public class WarpManager
 
 				Warp w = new Warp(alias, worldName, x, y, z, pitch, yaw, isPrivate, ownerUUID, addedPlayers,
 						Material.getMaterial(itemMat), lore, cost, plugin);
-				localWarps.put(IWUtils.convertNonAlphanumeric(alias), w);
+				localWarps.put(IWUtils.iwFormatString(alias), w);
 			}
 
 			return true;
@@ -92,7 +91,7 @@ public class WarpManager
 			double pitch = essConfig.getDouble("pitch");
 			String ownerUUID = essConfig.getString("lastowner");
 
-			String fileName = IWUtils.convertNonAlphanumeric(alias) + ".yml";
+			String fileName = IWUtils.iwFormatString(alias) + ".yml";
 			String[] warps = warpFolder.list();
 			if (IWUtils.hasStringConflict(warps, fileName))
 			{
@@ -119,7 +118,7 @@ public class WarpManager
 			warpConfig.saveConfig();
 
 			Warp w = new Warp(alias, world, x, y, z, (float) pitch, (float) yaw, ownerUUID, plugin);
-			localWarps.put(IWUtils.convertNonAlphanumeric(alias), w);
+			localWarps.put(IWUtils.iwFormatString(alias), w);
 			plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
 			return true;
 		}
@@ -150,7 +149,7 @@ public class WarpManager
 			warpFolder.mkdir();
 		}
 
-		String fileName = IWUtils.convertNonAlphanumeric(name) + ".yml";
+		String fileName = IWUtils.iwFormatString(name) + ".yml";
 		String[] warps = warpFolder.list();
 		if (IWUtils.hasStringConflict(warps, fileName))
 		{
@@ -181,7 +180,7 @@ public class WarpManager
 
 		Warp w = new Warp(name, l.getWorld().getName(), l.getX(), l.getY(), l.getZ(), l.getPitch(), l.getYaw(),
 				p.getUniqueId().toString(), plugin);
-		localWarps.put(IWUtils.convertNonAlphanumeric(name), w);
+		localWarps.put(IWUtils.iwFormatString(name), w);
 		plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
 	}
 
@@ -220,5 +219,54 @@ public class WarpManager
 	public HashMap<String, Warp> getWarps()
 	{
 		return localWarps;
+	}
+
+	public void warp(Player p, String warpName, boolean center, boolean safe, boolean unsafeConfirm)
+			throws NoSuchWarpException, PerWarpNoPermissionException, PrivateWarpNotAddedException,
+			WorldNotFoundException
+	{
+		Warp w = localWarps.get(warpName);
+
+		if (w == null)
+		{
+			throw new NoSuchWarpException(null);
+		}
+
+		if (w.isPrivate())
+		{
+			String pUUID = p.getUniqueId().toString();
+			if (!IWUtils.listContainsStringIgnoreCase(w.getAddedPlayers(), pUUID))
+			{
+				throw new PrivateWarpNotAddedException();
+			}
+		}
+
+		if (plugin.getConfigManager().main.getBoolean("perWarpPermissions", false))
+		{
+			if (!p.hasPermission("infinitywarps.warp." + w.getWarpName()))
+			{
+				throw new PerWarpNoPermissionException();
+			}
+		}
+
+		if (Bukkit.getWorld(w.getWorld()) == null)
+		{
+			throw new WorldNotFoundException(w.getWorld());
+		}
+
+		Location l = new Location(Bukkit.getWorld(w.getWorld()), w.getX(), w.getY(), w.getZ(), w.getYaw(),
+				w.getPitch());
+
+		if (center)
+		{
+			l.setX((int) l.getX() + 0.5);
+			l.setY((int) l.getY());
+			l.setZ((int) l.getZ() + 0.5);
+		}
+
+		/* implement safe teleportation here */
+		/* implement teleport timer */
+
+		p.teleport(l);
 	}
 }

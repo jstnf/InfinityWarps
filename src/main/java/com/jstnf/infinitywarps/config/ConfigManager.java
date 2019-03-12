@@ -65,6 +65,10 @@ public class ConfigManager
 			String[] localeComments = { "What locale should InfinityWarps use?" };
 			main.set("locale", "en_US", localeComments);
 
+			/* showCoords */
+			String[] showCoordsComments = { "Should the location of a warp ", "be shown in the warp GUI and list?" };
+			main.set("showCoords", true, showCoordsComments);
+
 			/* Misc default item icons */
 			main.set("borderItemIcon", "LIGHT_BLUE_STAINED_GLASS_PANE", "Default items for the warps GUI.");
 			main.set("prevPageItemIcon", "FEATHER");

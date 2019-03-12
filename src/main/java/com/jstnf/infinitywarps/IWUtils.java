@@ -35,13 +35,14 @@ public class IWUtils
 	{
 		/* Declare command and command listeners */
 		InfinitywarpsCommand iwc = new InfinitywarpsCommand(plugin);
-		WarpCommand warpc = new WarpCommand(plugin);
-		SetwarpCommand setwarpc = new SetwarpCommand(plugin);
 		DelwarpCommand delwarpc = new DelwarpCommand(plugin);
-		WarpsCommand warpsc = new WarpsCommand(plugin);
 		ManwarpCommand manwarpc = new ManwarpCommand(plugin);
+		SetwarpCommand setwarpc = new SetwarpCommand(plugin);
 		SetpwarpCommand setpwarpc = new SetpwarpCommand(plugin);
+		WarpCommand warpc = new WarpCommand(plugin);
 		WarpgroupCommand warpgroupc = new WarpgroupCommand(plugin);
+		WarplistCommand warplistc = new WarplistCommand(plugin);
+		WarpsCommand warpsc = new WarpsCommand(plugin);
 
 		/* Register SubCommands */
 		ImportesswarpsSubcommand importesswarpssbc = new ImportesswarpsSubcommand();
@@ -49,25 +50,26 @@ public class IWUtils
 
 		/* Set executors */
 		plugin.getCommand("infinitywarps").setExecutor(iwc);
-		plugin.getCommand("warp").setExecutor(warpc);
-		plugin.getCommand("setwarp").setExecutor(setwarpc);
 		plugin.getCommand("delwarp").setExecutor(delwarpc);
-		plugin.getCommand("warps").setExecutor(warpsc);
 		plugin.getCommand("manwarp").setExecutor(manwarpc);
+		plugin.getCommand("setwarp").setExecutor(setwarpc);
 		plugin.getCommand("setpwarp").setExecutor(setpwarpc);
+		plugin.getCommand("warp").setExecutor(warpc);
 		plugin.getCommand("warpgroup").setExecutor(warpgroupc);
+		plugin.getCommand("warplist").setExecutor(warplistc);
+		plugin.getCommand("warps").setExecutor(warpsc);
 	}
 
 	/**
-	 * Convert any non-alphanumeric characters to _ and return.
+	 * Convert any String into a format used by InfinityWarps.
 	 *
 	 * @param s - A string
 	 * @return String with any alphanumeric characters replaced with _
 	 */
-	public static String convertNonAlphanumeric(String s)
+	public static String iwFormatString(String s)
 	{
 		String stripped = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', s));
-		return stripped.replaceAll("[^a-zA-Z0-9]", "_");
+		return stripped.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
 	}
 
 	/**
@@ -224,7 +226,7 @@ public class IWUtils
 			else
 			{
 				int index = 0;
-				while (index < sorted.size() && sorted.get(index).getWarpAlias().compareTo(w.getWarpAlias()) < 0)
+				while (index < sorted.size() && sorted.get(index).getWarpName().compareTo(w.getWarpName()) < 0)
 				{
 					index++;
 				}
