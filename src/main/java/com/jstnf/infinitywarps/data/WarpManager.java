@@ -72,6 +72,12 @@ public class WarpManager
 		}
 	}
 
+	/**
+	 * Import data from an Essentials warp YML config.
+	 *
+	 * @param essConfig - The Essentials warp config
+	 * @return if import was successful.
+	 */
 	public boolean importFromEssentialsConfig(FileConfiguration essConfig)
 	{
 		try

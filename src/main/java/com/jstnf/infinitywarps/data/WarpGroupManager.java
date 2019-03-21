@@ -1,9 +1,12 @@
 package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.config.SimpleConfig;
+import com.jstnf.infinitywarps.exception.SimilarNameException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WarpGroupManager
@@ -17,26 +20,62 @@ public class WarpGroupManager
         localWarpGroups = new HashMap<String, WarpGroup>();
     }
 
+    /**
+     * Parse through InfinityWarps/groups and import warp group data.
+     *
+     * @return if import was successful.
+     */
     public boolean importGroups()
     {
-        File groupsFolder = new File(plugin.getDataFolder() + File.separator + "groups");
-        if (!groupsFolder.exists())
+        try
         {
-            groupsFolder.mkdir();
-        }
-        String[] keys = groupsFolder.list();
+            File groupsFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+            if (!groupsFolder.exists())
+            {
+                 groupsFolder.mkdir();
+            }
+            String[] keys = groupsFolder.list();
 
-        for (String key : keys)
-        {
-            SimpleConfig config = plugin.getConfigManager().manager.getNewConfig("groups" + File.separator + key);
+            for (String key : keys)
+            {
+                SimpleConfig config = plugin.getConfigManager().manager.getNewConfig("groups" + File.separator + key);
+                String alias = config.getString("alias");
+                ArrayList<String> warps = (ArrayList<String>) config.getList("warps");
+                String itemMat = config.getString("itemIcon");
+                ArrayList<String> lore = (ArrayList<String>) config.getList("lore");
+
+                WarpGroup wg = new WarpGroup(alias, warps, itemMat, lore);
+                localWarpGroups.put(IWUtils.iwFormatString(alias), wg);
+            }
+
+            return true;
         }
-        return true;
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public boolean addGroup(String groupName)
+    public void addGroup(String groupName) throws SimilarNameException
     {
         /* TO IMPLEMENT! */
-        return false;
+
+        File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+        if (!warpGroupFolder.exists())
+        {
+            warpGroupFolder.mkdir();
+        }
+
+        String fileName = IWUtils.iwFormatString(groupName) + ".yml";
+        String[] warpGroups = warpGroupFolder.list();
+        if (IWUtils.hasStringConflict(warpGroups, fileName))
+        {
+            throw new SimilarNameException();
+        }
+
+        SimpleConfig warpGroupConfig = plugin.getConfigManager().manager.getNewConfig("groups" + File.separator + fileName);
+        warpGroupConfig.set("alias", groupName);
     }
 
     public boolean removeGroup(String groupName)

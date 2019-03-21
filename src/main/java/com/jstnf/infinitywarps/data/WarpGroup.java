@@ -34,6 +34,9 @@ public class WarpGroup
 		this.iconLore = new ArrayList<String>();
 	}
 
+	/**
+	 * Constructor used when constructing a warp group from a <warpgroup>.yml.
+	 */
 	public WarpGroup(String alias, ArrayList<String> warps, String material, ArrayList<String> lore)
 	{
 		this.name = IWUtils.iwFormatString(alias);

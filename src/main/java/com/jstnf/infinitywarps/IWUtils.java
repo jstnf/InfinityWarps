@@ -4,7 +4,7 @@ import com.jstnf.infinitywarps.command.commands.*;
 import com.jstnf.infinitywarps.command.commands.infinitywarps.ImportesswarpsSubcommand;
 import com.jstnf.infinitywarps.command.commands.infinitywarps.InfinitywarpsCommand;
 import com.jstnf.infinitywarps.command.commands.manwarp.ManwarpCommand;
-import com.jstnf.infinitywarps.command.commands.warpgroup.WarpgroupCommand;
+import com.jstnf.infinitywarps.command.commands.warpgroup.*;
 import com.jstnf.infinitywarps.data.Warp;
 import com.jstnf.infinitywarps.data.WarpGroup;
 import com.jstnf.infinitywarps.inventory.DefinitionType;
@@ -45,8 +45,19 @@ public class IWUtils
 		WarpsCommand warpsc = new WarpsCommand(plugin);
 
 		/* Register SubCommands */
+		// iw
 		ImportesswarpsSubcommand importesswarpssbc = new ImportesswarpsSubcommand();
 		iwc.registerSubCommand("importesswarps", importesswarpssbc);
+
+		// warpgroup
+		AddWarpgroupSubcommand addwarpgroupsbc = new AddWarpgroupSubcommand();
+		InfoWarpgroupSubcommand infowarpgroupsbc = new InfoWarpgroupSubcommand();
+		RemoveWarpgroupSubcommand removewarpgroupsbc = new RemoveWarpgroupSubcommand();
+		RenameWarpgroupSubcommand renamewarpgroupsbc = new RenameWarpgroupSubcommand();
+		warpgroupc.registerSubCommand("add", addwarpgroupsbc);
+		warpgroupc.registerSubCommand("info", infowarpgroupsbc);
+		warpgroupc.registerSubCommand("remove", removewarpgroupsbc);
+		warpgroupc.registerSubCommand("rename", renamewarpgroupsbc);
 
 		/* Set executors */
 		plugin.getCommand("infinitywarps").setExecutor(iwc);

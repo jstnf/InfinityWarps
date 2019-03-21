@@ -149,12 +149,13 @@ public class InventoryManager implements Listener
 		{
 			Inventory i = e.getInventory();
 
-			int slots = i.getSize();
-			if (slots != 54)
+			// Check if inventory is a double chest
+			if (i == null || i.getSize() != 54)
 			{
 				return;
 			}
 
+			// Check for InfinityWarps inventory identifier
 			ItemStack identifier = i.getItem(53);
 			if (identifier == null)
 			{

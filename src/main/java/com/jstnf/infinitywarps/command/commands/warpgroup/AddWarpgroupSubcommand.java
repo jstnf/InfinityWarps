@@ -15,7 +15,7 @@ public class AddWarpgroupSubcommand implements SubCommand
 	@Override
 	public String permission()
 	{
-		return "infinitywarps.command.mangroup.add";
+		return "infinitywarps.command.warpgroup.add";
 	}
 
 	@Override
