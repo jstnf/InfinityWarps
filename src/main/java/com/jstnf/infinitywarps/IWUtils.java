@@ -138,7 +138,7 @@ public class IWUtils
 	 * @return All InventoryDefinitions from the given warps and warp groups
 	 */
 	public static ArrayList<InventoryDefinition> defineInventoryDefinitions(HashMap<String, Warp> warps,
-			ArrayList<WarpGroup> groups)
+			HashMap<String, WarpGroup> groups)
 	{
 		ArrayList<InventoryDefinition> definitions = new ArrayList<InventoryDefinition>();
 		ArrayList<Warp> allWarps = alphaSort(warps);

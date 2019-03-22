@@ -101,7 +101,7 @@ public class IWMain extends JavaPlugin
 
 		/* GUIs */
 		getLogger().info("Initializing inventory and inventory listeners...");
-		inventoryManager = new InventoryManager(this, warpManager.getWarps(), null);
+		inventoryManager = new InventoryManager(this, warpManager.getWarps(), warpGroupManager.getWarpGroups());
 		Bukkit.getPluginManager().registerEvents(inventoryManager, this);
 
 		/* Commands */

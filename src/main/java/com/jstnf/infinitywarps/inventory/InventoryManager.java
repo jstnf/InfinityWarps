@@ -29,7 +29,7 @@ public class InventoryManager implements Listener
 	private IWMain plugin;
 	private ArrayList<InventoryDefinition> definitions;
 
-	public InventoryManager(IWMain plugin, HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
+	public InventoryManager(IWMain plugin, HashMap<String, Warp> warps, HashMap<String, WarpGroup> groups)
 	{
 		this.plugin = plugin;
 		this.definitions = IWUtils.defineInventoryDefinitions(warps, groups);
@@ -128,7 +128,7 @@ public class InventoryManager implements Listener
 		return inv;
 	}
 
-	public boolean updateInventoryDefinitions(HashMap<String, Warp> warps, ArrayList<WarpGroup> groups)
+	public boolean updateInventoryDefinitions(HashMap<String, Warp> warps, HashMap<String, WarpGroup> groups)
 	{
 		try
 		{
