@@ -86,13 +86,28 @@ public class IWUtils
 	/**
 	 * Determine if a String is already present within an array of Strings.
 	 */
-	public static boolean hasStringConflict(String[] strings, String s)
+	public static boolean hasStringConflictArray(String[] strings, String s)
 	{
 		boolean conflict = false;
 		int index = 0;
 		while (index < strings.length && !conflict)
 		{
 			conflict = strings[index].equalsIgnoreCase(s);
+			index++;
+		}
+		return conflict;
+	}
+
+	/**
+	 * Determine if a String is already present within an ArrayList of Strings.
+	 */
+	public static boolean hasStringConflictArrayList(ArrayList<String> strings, String s)
+	{
+		boolean conflict = false;
+		int index = 0;
+		while (index < strings.size() && !conflict)
+		{
+			conflict = strings.get(index).equalsIgnoreCase(s);
 			index++;
 		}
 		return conflict;

@@ -99,7 +99,7 @@ public class WarpManager
 
 			String fileName = IWUtils.iwFormatString(alias) + ".yml";
 			String[] warps = warpFolder.list();
-			if (IWUtils.hasStringConflict(warps, fileName))
+			if (IWUtils.hasStringConflictArray(warps, fileName))
 			{
 				plugin.getLogger()
 						.warning("Warp " + alias + " was not imported because a warp with a similar name exists.");
@@ -157,7 +157,7 @@ public class WarpManager
 
 		String fileName = IWUtils.iwFormatString(name) + ".yml";
 		String[] warps = warpFolder.list();
-		if (IWUtils.hasStringConflict(warps, fileName))
+		if (IWUtils.hasStringConflictArray(warps, fileName))
 		{
 			throw new SimilarNameException();
 		}
@@ -196,14 +196,38 @@ public class WarpManager
 	 * @param name - Warp alias
 	 * @return if a warp was successfully removed
 	 */
-	public boolean removeWarp(String name) throws NoSuchWarpException
+	public void removeWarp(String name) throws NoSuchWarpException
 	{
-		/* TO IMPLEMENT! */
-		if (9 + 10 == 21)
+		String wn = IWUtils.iwFormatString(name);
+
+		if (isValidWarp(wn))
+		{
+			localWarps.remove(wn);
+
+			File f = new File(plugin.getDataFolder() + File.separator + "warps" + File.separator + wn + ".yml");
+
+			try
+			{
+				if (f.delete())
+				{
+					plugin.getLogger().info("Successfully deleted file " + f.getPath());
+				}
+				else
+				{
+					plugin.getLogger().warning("Unable to delete file " + f.getPath());
+					plugin.getLogger().warning("Perhaps the file does not exist?");
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				plugin.getLogger().warning("There was a security error when deleting the file " + f.getPath());
+			}
+		}
+		else
 		{
 			throw new NoSuchWarpException(name);
 		}
-		return false;
 	}
 
 	/**
@@ -231,12 +255,12 @@ public class WarpManager
 			throws NoSuchWarpException, PerWarpNoPermissionException, PrivateWarpNotAddedException,
 			WorldNotFoundException
 	{
-		Warp w = localWarps.get(warpName);
-
-		if (w == null)
+		if (!isValidWarp(warpName))
 		{
 			throw new NoSuchWarpException(null);
 		}
+
+		Warp w = localWarps.get(warpName);
 
 		if (w.isPrivate())
 		{
@@ -274,5 +298,10 @@ public class WarpManager
 		/* implement teleport timer */
 
 		p.teleport(l);
+	}
+
+	public boolean isValidWarp(String warpName)
+	{
+		return localWarps.get(warpName) != null;
 	}
 }

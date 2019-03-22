@@ -3,6 +3,8 @@ package com.jstnf.infinitywarps.data;
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.config.SimpleConfig;
+import com.jstnf.infinitywarps.exception.NoSuchWarpException;
+import com.jstnf.infinitywarps.exception.NoSuchWarpGroupException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
 
 import java.io.File;
@@ -44,7 +46,7 @@ public class WarpGroupManager
 				String itemMat = config.getString("itemIcon");
 				ArrayList<String> lore = (ArrayList<String>) config.getList("lore");
 
-				WarpGroup wg = new WarpGroup(alias, warps, itemMat, lore);
+				WarpGroup wg = new WarpGroup(alias, warps, itemMat, lore, plugin);
 				localWarpGroups.put(IWUtils.iwFormatString(alias), wg);
 			}
 
@@ -59,8 +61,6 @@ public class WarpGroupManager
 
 	public void addGroup(String groupName) throws SimilarNameException
 	{
-		/* TO IMPLEMENT! */
-
 		File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
 		if (!warpGroupFolder.exists())
 		{
@@ -69,7 +69,7 @@ public class WarpGroupManager
 
 		String fileName = IWUtils.iwFormatString(groupName) + ".yml";
 		String[] warpGroups = warpGroupFolder.list();
-		if (IWUtils.hasStringConflict(warpGroups, fileName))
+		if (IWUtils.hasStringConflictArray(warpGroups, fileName))
 		{
 			throw new SimilarNameException();
 		}
@@ -83,7 +83,7 @@ public class WarpGroupManager
 		warpGroupConfig.set("itemLore", new ArrayList<String>());
 		warpGroupConfig.saveConfig();
 
-		WarpGroup wg = new WarpGroup(groupName, new ArrayList<String>(), "BOOK", new ArrayList<String>());
+		WarpGroup wg = new WarpGroup(groupName, new ArrayList<String>(), "BOOK", new ArrayList<String>(), plugin);
 		localWarpGroups.put(IWUtils.iwFormatString(groupName), wg);
 		plugin.getInventoryManager().updateInventoryDefinitions(plugin.getWarpManager().getWarps(), localWarpGroups);
 	}
@@ -94,10 +94,76 @@ public class WarpGroupManager
 		return false;
 	}
 
-	public boolean addWarpToGroup(String groupName, String warpName)
+	public void addWarpToGroup(String groupName, String warpName) throws NoSuchWarpGroupException, SimilarNameException, NoSuchWarpException
 	{
-		/* TO IMPLEMENT! */
-		return false;
+		String gn = IWUtils.iwFormatString(groupName);
+		String wn = IWUtils.iwFormatString(warpName);
+
+		WarpGroup wg = null;
+
+		for (WarpGroup g : localWarpGroups.values())
+		{
+			if (g.getGroupName().equals(gn))
+			{
+				wg = g;
+				break;
+			}
+		}
+
+		if (wg != null)
+		{
+			/* Check if warp is already in the warp group */
+			if (wg.containsWarp(wn))
+			{
+				try
+				{
+					wg.addWarp(wn);
+
+					/* Attempt to write changes to warp group file */
+					try
+					{
+						SimpleConfig config = plugin.getConfigManager().manager.getNewConfig("groups" + File.separator + gn + ".yml");
+						config.set("warps", wg.getWarps());
+						config.saveConfig();
+					}
+					/* If cannot find the file, write a new one */
+					catch (Exception e)
+					{
+						File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+						if (!warpGroupFolder.exists())
+						{
+							warpGroupFolder.mkdir();
+						}
+
+						String fileName = gn + ".yml";
+
+						SimpleConfig warpGroupConfig = plugin.getConfigManager().manager
+								.getNewConfig("groups" + File.separator + fileName);
+						warpGroupConfig.set("alias", wg.getGroupAlias());
+						warpGroupConfig.set("warps", wg.getWarps());
+						warpGroupConfig.set("itemIcon", wg.getIconMaterial());
+						warpGroupConfig.set("itemDataValue", wg.getIconDataValue());
+						warpGroupConfig.set("itemLore", wg.getIconLore());
+						warpGroupConfig.saveConfig();
+					}
+
+					plugin.getInventoryManager().updateInventoryDefinitions(plugin.getWarpManager().getWarps(), localWarpGroups);
+				}
+				/* The warp doesn't exist */
+				catch (NoSuchWarpException e)
+				{
+					throw e;
+				}
+			}
+			else
+			{
+				throw new SimilarNameException();
+			}
+		}
+		else
+		{
+			throw new NoSuchWarpGroupException();
+		}
 	}
 
 	public boolean renameWarpInGroups(String warpName, String newWarpName)
