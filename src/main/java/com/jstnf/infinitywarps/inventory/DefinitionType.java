@@ -2,7 +2,8 @@ package com.jstnf.infinitywarps.inventory;
 
 public enum DefinitionType
 {
+	ALL(),
 	WARPS(),
 	GROUPS(),
-	WARPGROUP()
+	WARP_GROUP()
 }

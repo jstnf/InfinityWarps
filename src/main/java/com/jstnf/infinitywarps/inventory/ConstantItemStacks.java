@@ -1,6 +1,7 @@
 package com.jstnf.infinitywarps.inventory;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.config.ConfigPaths;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,8 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack border(IWMain plugin)
 	{
-		String material = plugin.getConfigManager().main.getString("borderItemIcon", "LIGHT_BLUE_STAINED_GLASS_PANE");
+		String material = plugin.getConfigManager().main
+				.getString(ConfigPaths.BORDER_ITEM.getPath(), (String) ConfigPaths.BORDER_ITEM.getDefaultValue());
 		ItemStack border = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = border.getItemMeta();
 		metaRef.setDisplayName(" ");
@@ -35,7 +37,8 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack borderIdentifier(IWMain plugin, String identifier, int index)
 	{
-		String material = plugin.getConfigManager().main.getString("borderItemIcon", "LIGHT_BLUE_STAINED_GLASS_PANE");
+		String material = plugin.getConfigManager().main
+				.getString(ConfigPaths.BORDER_ITEM.getPath(), (String) ConfigPaths.BORDER_ITEM.getDefaultValue());
 		ItemStack borderIdentifier = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = borderIdentifier.getItemMeta();
 		metaRef.setDisplayName(" ");
@@ -52,7 +55,8 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack previousPage(IWMain plugin)
 	{
-		String material = plugin.getConfigManager().main.getString("prevPageItemIcon", "FEATHER");
+		String material = plugin.getConfigManager().main
+				.getString(ConfigPaths.PREV_PAGE_ITEM.getPath(), (String) ConfigPaths.PREV_PAGE_ITEM.getDefaultValue());
 		String itemName = plugin.getLocaleManager().getLangConfig().getString("invPrevPage", "&fPrevious Page");
 		ItemStack prevPage = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = prevPage.getItemMeta();
@@ -66,7 +70,8 @@ public class ConstantItemStacks
 	 */
 	public static ItemStack nextPage(IWMain plugin)
 	{
-		String material = plugin.getConfigManager().main.getString("nextPageItemIcon", "FEATHER");
+		String material = plugin.getConfigManager().main
+				.getString(ConfigPaths.NEXT_PAGE_ITEM.getPath(), (String) ConfigPaths.NEXT_PAGE_ITEM.getDefaultValue());
 		String itemName = plugin.getLocaleManager().getLangConfig().getString("invNextPage", "&Next Page");
 		ItemStack nextPage = new ItemStack(Material.getMaterial(material));
 		ItemMeta metaRef = nextPage.getItemMeta();

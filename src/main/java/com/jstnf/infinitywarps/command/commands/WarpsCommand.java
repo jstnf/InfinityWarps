@@ -26,7 +26,7 @@ public class WarpsCommand implements CommandExecutor
 		Player p = (Player) sender;
 		if (p.hasPermission("infinitywarps.command.warps"))
 		{
-			p.openInventory(plugin.getInventoryManager().construct("all_warps", 0));
+			p.openInventory(plugin.getInventoryManager().construct("all", 0));
 		}
 		else
 		{

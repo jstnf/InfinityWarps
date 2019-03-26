@@ -1,6 +1,7 @@
 package com.jstnf.infinitywarps.config;
 
 import com.jstnf.infinitywarps.IWMain;
+import com.jstnf.infinitywarps.config.log_out.SimpleConfig;
 
 public class LocaleManager
 {

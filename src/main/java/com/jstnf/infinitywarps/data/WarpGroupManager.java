@@ -2,7 +2,7 @@ package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
-import com.jstnf.infinitywarps.config.SimpleConfig;
+import com.jstnf.infinitywarps.config.log_out.SimpleConfig;
 import com.jstnf.infinitywarps.exception.NoSuchWarpException;
 import com.jstnf.infinitywarps.exception.NoSuchWarpGroupException;
 import com.jstnf.infinitywarps.exception.SimilarNameException;
@@ -44,7 +44,7 @@ public class WarpGroupManager
 				String alias = config.getString("alias");
 				ArrayList<String> warps = (ArrayList<String>) config.getList("warps");
 				String itemMat = config.getString("itemIcon");
-				ArrayList<String> lore = (ArrayList<String>) config.getList("lore");
+				ArrayList<String> lore = (ArrayList<String>) config.getList("itemLore");
 
 				WarpGroup wg = new WarpGroup(alias, warps, itemMat, lore, plugin);
 				localWarpGroups.put(IWUtils.iwFormatString(alias), wg);
@@ -94,7 +94,8 @@ public class WarpGroupManager
 		return false;
 	}
 
-	public void addWarpToGroup(String groupName, String warpName) throws NoSuchWarpGroupException, SimilarNameException, NoSuchWarpException
+	public void addWarpToGroup(String groupName, String warpName)
+			throws NoSuchWarpGroupException, SimilarNameException, NoSuchWarpException
 	{
 		String gn = IWUtils.iwFormatString(groupName);
 		String wn = IWUtils.iwFormatString(warpName);
@@ -122,7 +123,8 @@ public class WarpGroupManager
 					/* Attempt to write changes to warp group file */
 					try
 					{
-						SimpleConfig config = plugin.getConfigManager().manager.getNewConfig("groups" + File.separator + gn + ".yml");
+						SimpleConfig config = plugin.getConfigManager().manager
+								.getNewConfig("groups" + File.separator + gn + ".yml");
 						config.set("warps", wg.getWarps());
 						config.saveConfig();
 					}
@@ -147,7 +149,8 @@ public class WarpGroupManager
 						warpGroupConfig.saveConfig();
 					}
 
-					plugin.getInventoryManager().updateInventoryDefinitions(plugin.getWarpManager().getWarps(), localWarpGroups);
+					plugin.getInventoryManager()
+							.updateInventoryDefinitions(plugin.getWarpManager().getWarps(), localWarpGroups);
 				}
 				/* The warp doesn't exist */
 				catch (NoSuchWarpException e)

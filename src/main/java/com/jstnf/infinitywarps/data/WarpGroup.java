@@ -3,7 +3,10 @@ package com.jstnf.infinitywarps.data;
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
 import com.jstnf.infinitywarps.exception.NoSuchWarpException;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
@@ -92,12 +95,49 @@ public class WarpGroup
 
 	/**
 	 * Returns true if a warp with a similar name is found.
+	 *
 	 * @param warpName - the name of the warp, should be formatted already with IWUtils
 	 * @return if the warp group contains the specified warp.
 	 */
 	public boolean containsWarp(String warpName)
 	{
 		return IWUtils.hasStringConflictArrayList(warps, warpName);
+	}
+
+	public ItemStack getItemIcon()
+	{
+		ItemStack result = new ItemStack(Material.BOOK);
+
+		try
+		{
+			Material m = Material.getMaterial(iconMaterial);
+			result = new ItemStack(m);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		ItemMeta metaRef = result.getItemMeta();
+
+		String displayName = ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', alias);
+		metaRef.setDisplayName(displayName);
+
+		ArrayList<String> finalLore = new ArrayList<String>();
+		finalLore.add("" + ChatColor.GRAY + ChatColor.ITALIC + "Warp Group");
+
+		if (iconLore != null && iconLore.size() > 0)
+		{
+			for (int i = 0; i < iconLore.size(); i++)
+			{
+				finalLore.add(ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', iconLore.get(i)));
+			}
+		}
+
+		metaRef.setLore(finalLore);
+		result.setItemMeta(metaRef);
+
+		return result;
 	}
 
 	public String getGroupName()
@@ -117,6 +157,7 @@ public class WarpGroup
 
 	/**
 	 * Exclusively for use in Minecraft versions 1.12 or before.
+	 *
 	 * @return the data value for the item Material to be used in inventories.
 	 */
 	public int getIconDataValue()

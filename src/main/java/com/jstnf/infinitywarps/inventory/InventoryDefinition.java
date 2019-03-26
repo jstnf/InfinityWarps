@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class InventoryDefinition
 {
-	public String identifier;
 	public DefinitionType definitionType;
-	public ArrayList<Warp> warps;
-	public ArrayList<WarpGroup> groups;
+	private String identifier;
+	private ArrayList<Warp> warps;
+	private ArrayList<WarpGroup> groups;
 
 	/* Vague warp list definition */
 	public InventoryDefinition(String id, DefinitionType invType)
@@ -18,24 +18,32 @@ public class InventoryDefinition
 		this.identifier = id;
 		this.definitionType = invType;
 		this.warps = new ArrayList<Warp>();
-		this.groups = null;
+		this.groups = new ArrayList<WarpGroup>();
 	}
 
-	/* Specific warp list definition */
-	public InventoryDefinition(String id, DefinitionType invType, ArrayList<Warp> warps)
+	/* Specific constructor for either all warps or all groups */
+	public InventoryDefinition(String id, ArrayList elements)
 	{
 		this.identifier = id;
-		this.definitionType = invType;
+		if (id.equalsIgnoreCase("all_warps"))
+		{
+			this.definitionType = DefinitionType.WARPS;
+			this.warps = elements;
+			this.groups = new ArrayList<WarpGroup>();
+		}
+		else
+		{
+			this.definitionType = DefinitionType.GROUPS;
+			this.warps = new ArrayList<Warp>();
+			this.groups = elements;
+		}
+	}
+
+	public InventoryDefinition(String id, ArrayList<Warp> warps, ArrayList<WarpGroup> groups)
+	{
+		this.identifier = id;
+		this.definitionType = DefinitionType.ALL;
 		this.warps = warps;
-		this.groups = null;
-	}
-
-	/* Warp group definition */
-	public InventoryDefinition(String id, ArrayList<WarpGroup> groups)
-	{
-		this.identifier = id;
-		this.definitionType = DefinitionType.GROUPS;
-		this.warps = null;
 		this.groups = groups;
 	}
 
@@ -53,17 +61,23 @@ public class InventoryDefinition
 	public int getBounds()
 	{
 		int pages = 1;
+		int size = 0;
 		if (warps != null)
 		{
-			pages = warps.size() / 36;
-			if (warps.size() % 36 != 0)
-			{
-				pages += 1;
-			}
-			if (warps.size() == 0)
-			{
-				pages = 1;
-			}
+			size += warps.size();
+		}
+		if (groups != null)
+		{
+			size += groups.size();
+		}
+		pages = size / 36;
+		if (size % 36 != 0)
+		{
+			pages += 1;
+		}
+		if (size == 0)
+		{
+			pages = 1;
 		}
 		return pages;
 	}
@@ -73,23 +87,36 @@ public class InventoryDefinition
 	 */
 	public String getWarpGroupName()
 	{
-		if (definitionType != DefinitionType.WARPGROUP)
+		if (definitionType != DefinitionType.WARP_GROUP)
 		{
 			return "";
 		}
 		return identifier.substring(6);
 	}
 
-	public Warp getWarpAt(int index)
+	public ArrayList<Object> getCompleteElementList()
 	{
-		if (index >= warps.size())
+		ArrayList<Object> elements = new ArrayList<Object>();
+
+		for (WarpGroup wg : groups)
 		{
-			return null;
+			elements.add(wg);
 		}
-		else
+		for (Warp w : warps)
 		{
-			return warps.get(index);
+			elements.add(w);
 		}
+
+		return elements;
 	}
 
+	public void addWarp(Warp w)
+	{
+		warps.add(w);
+	}
+
+	public void addGroup(WarpGroup wg)
+	{
+		groups.add(wg);
+	}
 }

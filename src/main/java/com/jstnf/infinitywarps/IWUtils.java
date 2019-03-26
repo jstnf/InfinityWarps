@@ -25,8 +25,8 @@ import java.util.Iterator;
  */
 public class IWUtils
 {
-	public static final String[] TEMP_INVENTORY_DEFINITION_IDENTIFIERS = { "all_warps", "groups", "ungrouped", "group_",
-			"public_warps", "private_warps", "essentials" };
+	public static final String[] TEMP_INVENTORY_DEFINITION_IDENTIFIERS = { "all", "all_warps", "groups", "ungrouped",
+			"group_", "public_warps", "private_warps", "essentials" };
 
 	/**
 	 * Register all command and subcommand listeners and executors.
@@ -156,30 +156,53 @@ public class IWUtils
 			HashMap<String, WarpGroup> groups)
 	{
 		ArrayList<InventoryDefinition> definitions = new ArrayList<InventoryDefinition>();
-		ArrayList<Warp> allWarps = alphaSort(warps);
-		InventoryDefinition all = new InventoryDefinition("all_warps", DefinitionType.WARPS, allWarps);
+		ArrayList<Warp> alphaWarps = alphaSort(warps);
+		ArrayList<WarpGroup> alphaGroups = alphaSortGroups(groups);
+		InventoryDefinition all = new InventoryDefinition("all", alphaWarps, alphaGroups);
+		InventoryDefinition allWarps = new InventoryDefinition("all_warps", alphaWarps);
 		InventoryDefinition publicWarps = new InventoryDefinition("public_warps", DefinitionType.WARPS);
 		InventoryDefinition privateWarps = new InventoryDefinition("private_warps", DefinitionType.WARPS);
-		InventoryDefinition groupList = new InventoryDefinition("groups", DefinitionType.GROUPS);
+		InventoryDefinition allGroups = new InventoryDefinition("groups", alphaGroups);
 
-		for (Warp w : allWarps)
+		ArrayList<InventoryDefinition> warpGroupInventoryDefinitions = new ArrayList<InventoryDefinition>();
+
+		for (WarpGroup wg : alphaGroups)
+		{
+			InventoryDefinition groupInvDef = new InventoryDefinition("group_" + wg.getGroupName(),
+					DefinitionType.WARP_GROUP);
+			warpGroupInventoryDefinitions.add(groupInvDef);
+		}
+
+		for (Warp w : alphaWarps)
 		{
 			if (w.isPrivate())
 			{
-				privateWarps.warps.add(w);
+				privateWarps.addWarp(w);
 			}
 			else
 			{
-				publicWarps.warps.add(w);
+				publicWarps.addWarp(w);
+			}
+
+			for (InventoryDefinition invDef : warpGroupInventoryDefinitions)
+			{
+				WarpGroup wg = groups.get(invDef.getWarpGroupName());
+				if (wg.containsWarp(w.getWarpName()))
+				{
+					invDef.addWarp(w);
+				}
 			}
 		}
 
-		/* IMPLEMENT WARPGROUP THINGS! */
-
 		definitions.add(all);
+		definitions.add(allWarps);
 		definitions.add(publicWarps);
 		definitions.add(privateWarps);
-		definitions.add(groupList);
+		definitions.add(allGroups);
+		for (InventoryDefinition invDef : warpGroupInventoryDefinitions)
+		{
+			definitions.add(invDef);
+		}
 		return definitions;
 	}
 
@@ -199,7 +222,7 @@ public class IWUtils
 
 		for (int i = 0; i < definitions.size(); i++)
 		{
-			if (id.equalsIgnoreCase(definitions.get(i).identifier))
+			if (id.equalsIgnoreCase(definitions.get(i).getIdentifier()))
 			{
 				return definitions.get(i);
 			}
@@ -218,7 +241,7 @@ public class IWUtils
 	{
 		for (int i = 0; i < definitions.size(); i++)
 		{
-			if (id.equalsIgnoreCase(definitions.get(i).identifier))
+			if (id.equalsIgnoreCase(definitions.get(i).getIdentifier()))
 			{
 				return i;
 			}
@@ -257,6 +280,43 @@ public class IWUtils
 					index++;
 				}
 				sorted.add(index, w);
+			}
+		}
+
+		return sorted;
+	}
+
+	/**
+	 * Given a HashMap of warp groups (local warp groups), return an alphabetized ArrayList of WarpGroups.
+	 *
+	 * @param groups - The current loaded, local warps groups
+	 * @return Alphabetized ArrayList of warp groups
+	 */
+	public static ArrayList<WarpGroup> alphaSortGroups(HashMap<String, WarpGroup> groups)
+	{
+		if (groups == null || groups.size() == 0)
+		{
+			return new ArrayList<WarpGroup>();
+		}
+
+		ArrayList<WarpGroup> sorted = new ArrayList<WarpGroup>();
+		Iterator<WarpGroup> it = groups.values().iterator();
+
+		while (it.hasNext())
+		{
+			WarpGroup wg = it.next();
+			if (sorted.size() == 0)
+			{
+				sorted.add(wg);
+			}
+			else
+			{
+				int index = 0;
+				while (index < sorted.size() && sorted.get(index).getGroupName().compareTo(wg.getGroupName()) < 0)
+				{
+					index++;
+				}
+				sorted.add(index, wg);
 			}
 		}
 

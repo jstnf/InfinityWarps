@@ -2,7 +2,8 @@ package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
-import com.jstnf.infinitywarps.config.SimpleConfig;
+import com.jstnf.infinitywarps.config.ConfigPaths;
+import com.jstnf.infinitywarps.config.log_out.SimpleConfig;
 import com.jstnf.infinitywarps.exception.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -118,14 +119,16 @@ public class WarpManager
 			warpConfig.set("isPrivate", false);
 			warpConfig.set("warpOwner", ownerUUID);
 			warpConfig.set("added", new ArrayList<String>());
-			warpConfig.set("itemIcon", plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL"));
+			warpConfig.set("itemIcon", plugin.getConfigManager().main.getString(ConfigPaths.DEFAULT_WARP_ITEM.getPath(),
+					(String) ConfigPaths.DEFAULT_WARP_ITEM.getDefaultValue()));
 			warpConfig.set("lore", new ArrayList<String>());
 			warpConfig.set("cost", 0.0);
 			warpConfig.saveConfig();
 
 			Warp w = new Warp(alias, world, x, y, z, (float) pitch, (float) yaw, ownerUUID, plugin);
 			localWarps.put(IWUtils.iwFormatString(alias), w);
-			plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
+			plugin.getInventoryManager()
+					.updateInventoryDefinitions(localWarps, plugin.getWarpGroupManager().getWarpGroups());
 			return true;
 		}
 		catch (Exception e)
@@ -179,7 +182,8 @@ public class WarpManager
 		warpConfig.set("isPrivate", isPrivate);
 		warpConfig.set("warpOwner", p.getUniqueId().toString());
 		warpConfig.set("added", players);
-		warpConfig.set("itemIcon", plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL"));
+		warpConfig.set("itemIcon", plugin.getConfigManager().main.getString(ConfigPaths.DEFAULT_WARP_ITEM.getPath(),
+				(String) ConfigPaths.DEFAULT_WARP_ITEM.getDefaultValue()));
 		warpConfig.set("lore", new ArrayList<String>());
 		warpConfig.set("cost", c);
 		warpConfig.saveConfig();
@@ -187,7 +191,8 @@ public class WarpManager
 		Warp w = new Warp(name, l.getWorld().getName(), l.getX(), l.getY(), l.getZ(), l.getPitch(), l.getYaw(),
 				p.getUniqueId().toString(), plugin);
 		localWarps.put(IWUtils.iwFormatString(name), w);
-		plugin.getInventoryManager().updateInventoryDefinitions(localWarps, null);
+		plugin.getInventoryManager()
+				.updateInventoryDefinitions(localWarps, plugin.getWarpGroupManager().getWarpGroups());
 	}
 
 	/**
@@ -228,6 +233,11 @@ public class WarpManager
 		{
 			throw new NoSuchWarpException(name);
 		}
+	}
+
+	public void renameWarp(String oldName, String newAlias)
+	{
+
 	}
 
 	/**
@@ -271,7 +281,8 @@ public class WarpManager
 			}
 		}
 
-		if (plugin.getConfigManager().main.getBoolean("perWarpPermissions", false))
+		if (plugin.getConfigManager().main.getBoolean(ConfigPaths.PER_WARP_PERMISSIONS.getPath(),
+				(boolean) ConfigPaths.PER_WARP_PERMISSIONS.getDefaultValue()))
 		{
 			if (!p.hasPermission("infinitywarps.warp." + w.getWarpName()))
 			{

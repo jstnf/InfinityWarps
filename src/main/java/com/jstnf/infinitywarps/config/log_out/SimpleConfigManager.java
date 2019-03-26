@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.config;
+package com.jstnf.infinitywarps.config.log_out;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

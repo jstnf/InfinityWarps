@@ -67,7 +67,7 @@ public class InventoryManager implements Listener
 				case 49:
 					if (definition.definitionType == DefinitionType.WARPS)
 					{
-						switch (definition.identifier)
+						switch (definition.getIdentifier())
 						{
 							case "all_warps":
 								inv.setItem(i, ConstantItemStacks.allWarps(plugin));
@@ -87,9 +87,10 @@ public class InventoryManager implements Listener
 					{
 						inv.setItem(i, ConstantItemStacks.groupList(plugin));
 					}
-					else if (definition.definitionType == DefinitionType.WARPGROUP)
+					else if (definition.definitionType == DefinitionType.WARP_GROUP)
 					{
-						/* Do warpgroup stuff here! */
+						WarpGroup wg = plugin.getWarpGroupManager().getWarpGroups().get(definition.getWarpGroupName());
+						inv.setItem(i, wg.getItemIcon());
 					}
 					else
 					{
@@ -116,13 +117,25 @@ public class InventoryManager implements Listener
 		}
 
 		int invIndex = 9;
-		int warpIndex = index * 36;
+		int elementParseIndex = index * 36;
 
-		while (invIndex < 45 && warpIndex < definition.warps.size() && warpIndex < (index + 1) * 36)
+		ArrayList<Object> tempElementStore = definition.getCompleteElementList();
+
+		while (invIndex < 45 && elementParseIndex < tempElementStore.size() && elementParseIndex < (index + 1) * 36)
 		{
-			inv.setItem(invIndex, definition.warps.get(warpIndex).getItemIcon());
+			Object tempElement = tempElementStore.get(elementParseIndex);
+
+			if (tempElement instanceof WarpGroup)
+			{
+				inv.setItem(invIndex, ((WarpGroup) tempElement).getItemIcon());
+			}
+			else if (tempElement instanceof Warp)
+			{
+				inv.setItem(invIndex, ((Warp) tempElement).getItemIcon());
+			}
+
 			invIndex++;
-			warpIndex++;
+			elementParseIndex++;
 		}
 
 		return inv;
@@ -196,7 +209,7 @@ public class InventoryManager implements Listener
 							{
 								index = 0;
 							}
-							p.openInventory(construct(definitions.get(index).identifier, 0));
+							p.openInventory(construct(definitions.get(index).getIdentifier(), 0));
 							break;
 						case 50:
 							InventoryDefinition def = IWUtils.getDefinition(definitions, id.getKey());

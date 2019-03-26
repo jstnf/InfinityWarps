@@ -2,6 +2,7 @@ package com.jstnf.infinitywarps.data;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
+import com.jstnf.infinitywarps.config.ConfigPaths;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -68,7 +69,8 @@ public class Warp
 		this.addedPlayers = new ArrayList<String>();
 
 		/* No item icon provided, set to default item icon */
-		String mat = plugin.getConfigManager().main.getString("defaultItemIcon", "ENDER_PEARL");
+		String mat = plugin.getConfigManager().main.getString(ConfigPaths.DEFAULT_WARP_ITEM.getPath(),
+				(String) ConfigPaths.DEFAULT_WARP_ITEM.getDefaultValue());
 		this.iconMaterial = Material.getMaterial(mat);
 		this.iconLore = new ArrayList<String>();
 
@@ -139,12 +141,12 @@ public class Warp
 			finalLore.add(ChatColor.WHITE + "Cost: ");
 			finalLore.add("" + ChatColor.GREEN + cost);
 		}
-		if (plugin.getConfigManager().main.getBoolean("showCoords", true))
+		if (plugin.getConfigManager().main
+				.getBoolean(ConfigPaths.SHOW_COORDS.getPath(), (boolean) ConfigPaths.SHOW_COORDS.getDefaultValue()))
 		{
 			if (spaceAdded)
 			{
 				finalLore.add("");
-				spaceAdded = true;
 			}
 			finalLore.add(ChatColor.AQUA + world + " @ " + (int) x + "," + (int) y + "," + (int) z);
 		}

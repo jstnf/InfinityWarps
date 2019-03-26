@@ -1,6 +1,7 @@
 package com.jstnf.infinitywarps;
 
 import com.jstnf.infinitywarps.config.ConfigManager;
+import com.jstnf.infinitywarps.config.ConfigPaths;
 import com.jstnf.infinitywarps.config.LocaleManager;
 import com.jstnf.infinitywarps.data.WarpGroupManager;
 import com.jstnf.infinitywarps.data.WarpManager;
@@ -47,11 +48,13 @@ public class IWMain extends JavaPlugin
 		configManager = new ConfigManager(this);
 		getLogger().info("Initializing language files...");
 		localeManager = new LocaleManager(this);
-		localeManager.loadLocale(configManager.main.getString("locale", "en_US"));
+		localeManager.loadLocale(configManager.main
+				.getString(ConfigPaths.LOCALE.getPath(), (String) ConfigPaths.LOCALE.getDefaultValue()));
 
 		/* Economy */
 		getLogger().info("Initializing economy...");
-		boolean useEconomyConfig = configManager.main.getBoolean("useEconomy", false);
+		boolean useEconomyConfig = configManager.main
+				.getBoolean(ConfigPaths.USE_ECONOMY.getPath(), (boolean) ConfigPaths.USE_ECONOMY.getDefaultValue());
 		boolean vaultLoaded = Bukkit.getPluginManager().isPluginEnabled("Vault");
 		if (useEconomyConfig)
 		{
