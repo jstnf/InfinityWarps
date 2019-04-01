@@ -6,7 +6,11 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 /**
- * Credit to Log-out for Config class setup
+ * InfinityWarps by jstnf
+ * SimpleConfigManager
+ * Loads and creates YAML configuration files.
+ *
+ * @author log-out
  * https://bukkit.org/threads/tut-custom-yaml-configurations-with-comments.142592/
  */
 public class SimpleConfigManager

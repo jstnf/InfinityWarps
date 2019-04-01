@@ -11,6 +11,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * InfinityWarps by jstnf
+ * WarpGroupManager
+ * Stores loaded warp groups from configuration files for use in inventory constructing.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class WarpGroupManager
 {
 	private HashMap<String, WarpGroup> localWarpGroups;

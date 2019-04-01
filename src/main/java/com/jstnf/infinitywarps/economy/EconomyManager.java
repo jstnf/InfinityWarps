@@ -3,6 +3,13 @@ package com.jstnf.infinitywarps.economy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 
+/**
+ * InfinityWarps by jstnf
+ * EconomyManager
+ * Performs economy checks and transactions using Vault API.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class EconomyManager
 {
 	private Economy noGovernmentHere;

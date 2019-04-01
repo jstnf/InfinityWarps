@@ -6,6 +6,13 @@ import com.jstnf.infinitywarps.config.log_out.SimpleConfigManager;
 
 import java.io.File;
 
+/**
+ * InfinityWarps by jstnf
+ * ConfigManager
+ * Container for the main configuration and SimpleConfigManager for creating configuration files.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class ConfigManager
 {
 	public SimpleConfig main;

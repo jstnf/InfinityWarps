@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 public class WarpCommand implements CommandExecutor
 {
+	private final String help = "Usage: /warp <warpName>";
 	private IWMain plugin;
 
 	public WarpCommand(IWMain plugin)
@@ -23,40 +24,44 @@ public class WarpCommand implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
+		/* Check if player */
 		if (!(sender instanceof Player))
 		{
 			sender.sendMessage("Command must be executed by a Player!");
 			return false;
 		}
-		if (args != null && args.length > 0)
+
+		/* Check arguments */
+		if (!(args != null && args.length == 1))
 		{
-			try
-			{
-				String warpName = IWUtils.iwFormatString(args[0]);
-				plugin.getWarpManager().warp((Player) sender, warpName, true, false, false);
-				sender.sendMessage("HARD CODED - warped to " + warpName + ".");
-			}
-			catch (NoSuchWarpException e)
-			{
-				sender.sendMessage("HARD CODED - no such warp exists!");
-			}
-			catch (PerWarpNoPermissionException e)
-			{
-				sender.sendMessage("HARD CODED - no permissions (per warp perms)");
-			}
-			catch (PrivateWarpNotAddedException e)
-			{
-				sender.sendMessage("HARD CODED - private warp not added");
-			}
-			catch (WorldNotFoundException e)
-			{
-				sender.sendMessage("HARD CODED - world was not found!");
-			}
+			sender.sendMessage(help);
+			return true;
 		}
-		else
+
+		/* WarpManager handles permissions */
+		try
 		{
-			sender.sendMessage("Usage: /warp <warpName>");
+			String warpName = IWUtils.iwFormatString(args[0]);
+			plugin.getWarpManager().warp((Player) sender, warpName, true, false, false);
+			sender.sendMessage("[HARD_CODED] Warped to " + warpName + ".");
 		}
+		catch (NoSuchWarpException e)
+		{
+			sender.sendMessage("[HARD_CODED] No such warp exists!");
+		}
+		catch (PerWarpNoPermissionException e)
+		{
+			sender.sendMessage("[HARD_CODED] No permissions (per warp perms)");
+		}
+		catch (PrivateWarpNotAddedException e)
+		{
+			sender.sendMessage("[HARD_CODED] You do not have permission to this private warp!");
+		}
+		catch (WorldNotFoundException e)
+		{
+			sender.sendMessage("[HARD_CODED] World was not found!");
+		}
+
 		return true;
 	}
 }

@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-/* /setwarp <name> [cost] */
 public class SetwarpCommand implements CommandExecutor
 {
 	private final String help = "Usage: /setwarp <name> [cost]";
@@ -25,49 +24,49 @@ public class SetwarpCommand implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
+		/* Check if player */
 		if (!(sender instanceof Player))
 		{
 			sender.sendMessage("You must be a Player to use this command.");
+			return true;
+		}
+
+		/* Check permission */
+		if (sender.hasPermission("infinitywarps.command.setwarp"))
+		{
+			/* Check arguments */
+			if (!(args.length > 0 && args.length < 3))
+			{
+				sender.sendMessage(help);
+				return true;
+			}
+
+			/* Cost argument */
+			String cost = "0.0";
+			if (args.length != 1)
+			{
+				cost = args[1];
+			}
+
+			try
+			{
+				Player p = (Player) sender;
+				plugin.getWarpManager().addWarp(args[0], cost, p, false, new ArrayList<String>());
+				sender.sendMessage(
+						"[HARD_CODED] Warp " + ChatColor.translateAlternateColorCodes('&', args[0] + "&f set."));
+			}
+			catch (InvalidCostException ex)
+			{
+				sender.sendMessage("[HARD_CODED] [cost] must be a double.");
+			}
+			catch (SimilarNameException ex)
+			{
+				sender.sendMessage("[HARD_CODED] Similar warp name already exists.");
+			}
 		}
 		else
 		{
-			Player p = (Player) sender;
-			if (p.hasPermission("infinitywarps.command.setwarp"))
-			{
-				if (args.length > 0 && args.length < 3)
-				{
-					String cost;
-					if (args.length == 1)
-					{
-						cost = "0.0";
-					}
-					else
-					{
-						cost = args[1];
-					}
-					try
-					{
-						plugin.getWarpManager().addWarp(args[0], cost, p, false, new ArrayList<String>());
-						sender.sendMessage("HARD CODED - Warp " + ChatColor.translateAlternateColorCodes('&', args[0]) + " set.");
-					}
-					catch (InvalidCostException ex)
-					{
-						sender.sendMessage("[HARD_CODED_LANG] [cost] must be double.");
-					}
-					catch (SimilarNameException ex)
-					{
-						sender.sendMessage("[HARD_CODED_LANG] Similar warp name exists.");
-					}
-				}
-				else
-				{
-					sender.sendMessage(help);
-				}
-			}
-			else
-			{
-				sender.sendMessage("[HARD_CODED_LANG] You do not have permission to use this command.");
-			}
+			sender.sendMessage("[HARD_CODED_LANG] You do not have permission to use this command.");
 		}
 
 		return true;

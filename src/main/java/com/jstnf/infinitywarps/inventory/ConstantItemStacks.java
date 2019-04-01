@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * InfinityWarps by jstnf
  * ConstantItemStacks
- * Util for grabbing commonly used ItemStacks in inventories, uses config and locale for customization.
+ * Util class for grabbing commonly used ItemStacks in inventories, uses config and locale for customization.
  *
  * @author jstnf / pokeball92870
  */

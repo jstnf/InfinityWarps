@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * InfinityWarps by jstnf
  * Warp
- * Locally stores information about location, GUI item icons, and private warp information imported from YAML configs.
+ * Stores loaded information about location, GUI item icons, and private warp information imported from YAML configs.
  *
  * @author jstnf / pokeball92870
  */

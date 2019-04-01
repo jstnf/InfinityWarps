@@ -9,6 +9,7 @@ import com.jstnf.infinitywarps.economy.EconomyManager;
 import com.jstnf.infinitywarps.inventory.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public class IWMain extends JavaPlugin
 {
 	public final int CONFIG_VERSION = 1;
 	public boolean useEconomy;
+	public boolean isLegacy;
 
 	private PluginDescriptionFile pdf;
 
@@ -43,6 +45,9 @@ public class IWMain extends JavaPlugin
 
 	public void onEnable()
 	{
+		/* Legacy version (pre 1.13) check */
+		isLegacy = Material.getMaterial("RED_WOOL") == null;
+
 		/* Configuration */
 		getLogger().info("Initializing configuration files...");
 		configManager = new ConfigManager(this);

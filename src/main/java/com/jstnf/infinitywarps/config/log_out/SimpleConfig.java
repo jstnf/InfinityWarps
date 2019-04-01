@@ -12,7 +12,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Credit to Log-out for Config class setup
+ * InfinityWarps by jstnf
+ * SimpleConfig
+ * Accesses a loaded YAML configuration file.
+ *
+ * @author log-out
  * https://bukkit.org/threads/tut-custom-yaml-configurations-with-comments.142592/
  */
 public class SimpleConfig

@@ -18,20 +18,24 @@ public class WarpsCommand implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
+		/* Check if player */
 		if (!(sender instanceof Player))
 		{
 			sender.sendMessage("Command must be executed by a Player.");
 			return true;
 		}
-		Player p = (Player) sender;
-		if (p.hasPermission("infinitywarps.command.warps"))
+
+		/* Check if permission */
+		if (sender.hasPermission("infinitywarps.command.warps"))
 		{
+			Player p = (Player) sender;
 			p.openInventory(plugin.getInventoryManager().construct("all", 0));
 		}
 		else
 		{
-			p.sendMessage("[HARD_CODED_LANG] No permission to use /warps.");
+			sender.sendMessage("[HARD_CODED] No permission to open the warp GUI.");
 		}
+
 		return true;
 	}
 }

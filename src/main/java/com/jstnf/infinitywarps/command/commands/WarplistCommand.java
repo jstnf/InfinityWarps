@@ -22,6 +22,7 @@ public class WarplistCommand implements CommandExecutor
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
 		/* temporary */
+		// This will be JSON text that you can hover/click!
 		ArrayList<Warp> alphaWarps = IWUtils.alphaSort(plugin.getWarpManager().getWarps());
 		for (Warp w : alphaWarps)
 		{

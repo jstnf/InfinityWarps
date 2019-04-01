@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class DelwarpCommand implements CommandExecutor
 {
+	private final String help = "Usage: /delwarp <warp>";
 	private IWMain plugin;
 
 	public DelwarpCommand(IWMain plugin)
@@ -18,11 +19,13 @@ public class DelwarpCommand implements CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
+		/* Check permission */
 		if (sender.hasPermission("infinitywarps.command.delwarp"))
 		{
-			if (args == null || args.length < 1 || args[0] == null)
+			/* Check arguments */
+			if (args == null || args.length != 1 || args[0] == null)
 			{
-				sender.sendMessage("Usage: /delwarp <warp>");
+				sender.sendMessage(help);
 				return true;
 			}
 

@@ -3,6 +3,13 @@ package com.jstnf.infinitywarps.config;
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.config.log_out.SimpleConfig;
 
+/**
+ * InfinityWarps by jstnf
+ * LocaleManager
+ * Container for the language configuration file.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class LocaleManager
 {
 	private IWMain plugin;
@@ -16,6 +23,8 @@ public class LocaleManager
 
 	public boolean loadLocale(String locale)
 	{
+		/* Need to fix so that it checks for a current lang file based on the main config,
+		as well as update with newer config versions */
 		try
 		{
 			plugin.getLogger().info("Attempting to load locale " + locale + "...");

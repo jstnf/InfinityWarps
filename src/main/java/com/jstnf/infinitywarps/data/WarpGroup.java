@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * InfinityWarps by jstnf
  * WarpGroup
- * Locally stores information about warp groups, or collections of warps for use in the GUI imported from YAML configs.
+ * Stores loaded information about warp groups, or collections of warps for use in the GUI imported from YAML configs.
  *
  * @author jstnf / pokeball92870
  */

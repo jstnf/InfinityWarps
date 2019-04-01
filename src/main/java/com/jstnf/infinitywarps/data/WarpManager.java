@@ -15,6 +15,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * InfinityWarps by jstnf
+ * WarpManager
+ * Stores loaded warps from configuration files and manages player teleporting.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class WarpManager
 {
 	private HashMap<String, Warp> localWarps;

@@ -5,6 +5,13 @@ import com.jstnf.infinitywarps.data.WarpGroup;
 
 import java.util.ArrayList;
 
+/**
+ * InfinityWarps by jstnf
+ * InventoryDefinition
+ * Definitions for use in constructing and listening to inventories.
+ *
+ * @author jstnf / pokeball92870
+ */
 public class InventoryDefinition
 {
 	public DefinitionType definitionType;

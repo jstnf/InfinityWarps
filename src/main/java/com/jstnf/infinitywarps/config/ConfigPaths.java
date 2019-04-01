@@ -1,5 +1,12 @@
 package com.jstnf.infinitywarps.config;
 
+/**
+ * InfinityWarps by jstnf
+ * ConfigPaths
+ * Contains default comments and values for the main configuration file's paths, in the order in which they appear in the file.
+ *
+ * @author jstnf / pokeball92870
+ */
 public enum ConfigPaths
 {
 	CONFIG_VERSION("config-version", 1, new String[] { "Config Version (do not change this value!)" }),
