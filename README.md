@@ -1,15 +1,49 @@
 # InfinityWarps
 <img src="https://i.imgur.com/d3yXEg0.png">
+##### InfinityWarps is a customizable, feature-packed warps plugin for Spigot.
 
-<b>Welcome to the InfinityWarps repo!</b>
+### Features
+  - Warp GUI and organization with Warp Groups!
+  - Support for per-warp permissions and economy!
+  - Import warps straight from *Essentials*!
 
-<b>A customizable, feature-packed warps plugin.</b>
-<br>Developed for Blueprint.
+### Optional Dependencies
+Optional plugin dependencies for InfinityWarps
 
-<hr />
+* [Vault] - For economy support
+* [Essentials] - Import from Essentials warp files to InfinityWarps
+* [PlaceholderAPI] - Put placeholders in InfinityWarps lore and messages.
 
-I keep track of my development progress and current work on <i>Trello</i>.
-<br>https://trello.com/b/lIkurrS7/infinitywarps-development
+More information for these can be found on the Wiki.
+
+### Installation
+To install InfinityWarps, simply drag the plugin file into your `/plugins` folder.
+
+### Commands
+InfinityWarps has the following commands:
+
+| Command | Aliases | Description |
+| ------ | ------ | ------ |
+| **/iw** | */infinitywarps* |
+| **/warp** | */iwarp* |
+| **/warps** | */iwarps* |
+| **/warplist** | */iwarplist* |
+| **/setwarp** | */isetwarp* |
+| **/setpwarp** | */isetpwarp* |
+| **/warpgroup** | */iwarpgroup* |
+| **/editwarp** | */ieditwarp* |
+
+
+### Development
+Development progress can be found on InfinityWarps' [Trello].
 
 Contact me on Discord:
-<br>```jstnf#2626```
+`jstnf#2626`
+
+#### Todos
+ - Finish this page!
+
+   [Essentials]: <>
+   [Vault]: <>
+   [PlaceholderAPI]: <>
+   [Trello]: <>
