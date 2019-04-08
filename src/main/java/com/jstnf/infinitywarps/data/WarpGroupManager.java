@@ -38,12 +38,19 @@ public class WarpGroupManager
 	{
 		try
 		{
-			File groupsFolder = new File(plugin.getDataFolder() + File.separator + "groups");
-			if (!groupsFolder.exists())
+			File warpFolder = new File(plugin.getDataFolder() + File.separator + "warps");
+			if (!warpFolder.exists())
 			{
-				groupsFolder.mkdir();
+				warpFolder.mkdir();
 			}
-			String[] keys = groupsFolder.list();
+
+			File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+			if (!warpGroupFolder.exists())
+			{
+				warpGroupFolder.mkdir();
+			}
+
+			String[] keys = warpGroupFolder.list();
 
 			for (String key : keys)
 			{
@@ -68,6 +75,12 @@ public class WarpGroupManager
 
 	public void addGroup(String groupName) throws SimilarNameException
 	{
+		File warpFolder = new File(plugin.getDataFolder() + File.separator + "warps");
+		if (!warpFolder.exists())
+		{
+			warpFolder.mkdir();
+		}
+
 		File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
 		if (!warpGroupFolder.exists())
 		{

@@ -1,6 +1,6 @@
 # InfinityWarps
-<img src="https://i.imgur.com/d3yXEg0.png">
-##### InfinityWarps is a customizable, feature-packed warps plugin for Spigot.
+<img src="https://i.imgur.com/d3yXEg0.png"></img>
+#### InfinityWarps is a customizable, feature-packed warps plugin for Spigot.
 
 ### Features
   - Warp GUI and organization with Warp Groups!
@@ -24,14 +24,14 @@ InfinityWarps has the following commands:
 
 | Command | Aliases | Description |
 | ------ | ------ | ------ |
-| **/iw** | */infinitywarps* |
-| **/warp** | */iwarp* |
-| **/warps** | */iwarps* |
-| **/warplist** | */iwarplist* |
-| **/setwarp** | */isetwarp* |
-| **/setpwarp** | */isetpwarp* |
-| **/warpgroup** | */iwarpgroup* |
-| **/editwarp** | */ieditwarp* |
+| **/iw** | */infinitywarps* | |
+| **/warp** | */iwarp* | |
+| **/warps** | */iwarps* | |
+| **/warplist** | */iwarplist* | |
+| **/setwarp** | */isetwarp* | |
+| **/setpwarp** | */isetpwarp* | |
+| **/warpgroup** | */iwarpgroup* | |
+| **/editwarp** | */ieditwarp* | |
 
 
 ### Development

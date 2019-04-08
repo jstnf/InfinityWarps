@@ -47,6 +47,13 @@ public class WarpManager
 			{
 				warpFolder.mkdir();
 			}
+
+			File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+			if (!warpGroupFolder.exists())
+			{
+				warpGroupFolder.mkdir();
+			}
+
 			String[] keys = warpFolder.list();
 
 			for (String key : keys)
@@ -86,7 +93,7 @@ public class WarpManager
 	 * @param essConfig - The Essentials warp config
 	 * @return if import was successful.
 	 */
-	public boolean importFromEssentialsConfig(FileConfiguration essConfig)
+	public boolean importFromEssentialsConfig(FileConfiguration essConfig, boolean doGroupDivision, String groupDivider)
 	{
 		try
 		{
@@ -94,6 +101,12 @@ public class WarpManager
 			if (!warpFolder.exists())
 			{
 				warpFolder.mkdir();
+			}
+
+			File warpGroupFolder = new File(plugin.getDataFolder() + File.separator + "groups");
+			if (!warpGroupFolder.exists())
+			{
+				warpGroupFolder.mkdir();
 			}
 
 			String alias = essConfig.getString("name");

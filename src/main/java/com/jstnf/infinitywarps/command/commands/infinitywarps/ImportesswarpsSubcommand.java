@@ -20,6 +20,8 @@ public class ImportesswarpsSubcommand implements SubCommand
 	private String FOLDER_NOT_FOUND = "Could not find Essentials warps folder. Import aborted.";
 	private String IMPORT_COMPLETE = "Importing from Essentials completed!";
 
+	private String usage = "/iw importesswarps [divider] [true|false]";
+
 	@Override
 	public boolean onCommand(CommandSender sender, String[] args, IWMain plugin)
 	{
@@ -44,7 +46,6 @@ public class ImportesswarpsSubcommand implements SubCommand
 			}
 
 			/* Check arguments */
-
 			if (args.length == 1)
 			{
 				groupWarps = true;
@@ -84,7 +85,7 @@ public class ImportesswarpsSubcommand implements SubCommand
 						plugin.getLogger().info(FOUND_CONFIG + fileName);
 						FileConfiguration conf = YamlConfiguration
 								.loadConfiguration(new File(pathToFolder + File.separator + fileName));
-						if (!plugin.getWarpManager().importFromEssentialsConfig(conf))
+						if (!plugin.getWarpManager().importFromEssentialsConfig(conf, groupWarps, groupDivider))
 						{
 							if (playerNotify)
 							{

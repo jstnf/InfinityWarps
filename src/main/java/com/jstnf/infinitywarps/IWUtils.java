@@ -376,4 +376,27 @@ public class IWUtils
 		}
 		return false;
 	}
+
+	/**
+	 * Check if a warp name follows the group divider format for importing Essentials warps.
+	 *
+	 * @param warpName - The warp name
+	 * @param div      - The divider
+	 * @return encapsulation of results and divisions (GroupDividerFormatResult)
+	 */
+	public static GroupDividerFormatResult groupDividerFormat(String warpName, String div)
+	{
+		if (warpName != null && div != null && warpName.length() >= 3)
+		{
+			String stripFirst = warpName.substring(1);
+			int strippedLocation = stripFirst.indexOf(div);
+			if (strippedLocation != -1 && strippedLocation != stripFirst.length() - div.length())
+			{
+				String gN = warpName.substring(0, strippedLocation + 1);
+				String wN = warpName.substring(gN.length() + div.length());
+				return new GroupDividerFormatResult(true, gN, wN);
+			}
+		}
+		return new GroupDividerFormatResult(false, null, null);
+	}
 }
