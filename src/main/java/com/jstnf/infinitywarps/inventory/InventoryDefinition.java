@@ -1,7 +1,7 @@
 package com.jstnf.infinitywarps.inventory;
 
-import com.jstnf.infinitywarps.data.Warp;
-import com.jstnf.infinitywarps.data.WarpGroup;
+import com.jstnf.infinitywarps.database.Warp;
+import com.jstnf.infinitywarps.database.WarpGroup;
 
 import java.util.ArrayList;
 

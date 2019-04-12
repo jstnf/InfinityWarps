@@ -3,6 +3,8 @@ package com.jstnf.infinitywarps.config;
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.config.log_out.SimpleConfig;
 
+import java.io.File;
+
 /**
  * InfinityWarps by jstnf
  * LocaleManager
@@ -23,20 +25,24 @@ public class LocaleManager
 
 	public boolean loadLocale(String locale)
 	{
-		/* Need to fix so that it checks for a current lang file based on the main config,
-		as well as update with newer config versions */
 		try
 		{
 			plugin.getLogger().info("Attempting to load locale " + locale + "...");
-			plugin.saveResource("lang_" + locale + ".yml", true);
-			lang = plugin.getConfigManager().manager.getNewConfig("lang_" + locale + ".yml");
+
+			/* Need to fix so that it checks for a current lang file based on the main config, as well as update with newer config versions */
+			/* This needs to change, look for existing locales and update instead from grabbing resource every time! */
+			plugin.saveResource("locales" + File.separator + "lang_" + locale + ".yml", true);
+			/* -------------- */
+
+			lang = plugin.getConfigManager().manager
+					.getNewConfig("locales" + File.separator + "lang_" + locale + ".yml");
 			return true;
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			plugin.getLogger().warning("There was an error loading the locale " + locale);
 			plugin.getLogger().warning("Defaulting to current locale!");
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -44,5 +50,11 @@ public class LocaleManager
 	public SimpleConfig getLangConfig()
 	{
 		return lang;
+	}
+
+	/* TO IMPLEMENT! */
+	public String getMessage(String message, String... replace)
+	{
+		return null;
 	}
 }

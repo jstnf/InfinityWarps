@@ -46,7 +46,7 @@ teleport-cooldown: 30
 use-economy: false
 
 # What locale should InfinityWarps use?
-locale: en_US
+locale: en-US
 
 # Should the location of a warp
 # be shown in the warp GUI and list?

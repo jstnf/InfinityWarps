@@ -30,7 +30,7 @@ public enum ConfigPaths
 	USE_ECONOMY("use-economy", false,
 			new String[] { "Should InfinityWarps use the economy?", "This requires Vault as well as an economy plugin.",
 					"If false, any costs associated to warps will not show", "up in menus or when using a warp." }),
-	LOCALE("locale", "en_US", new String[] { "What locale should InfinityWarps use?" }),
+	LOCALE("locale", "en-US", new String[] { "What locale should InfinityWarps use?" }),
 	SHOW_COORDS("show-coords", true,
 			new String[] { "Should the location of a warp ", "be shown in the warp GUI and list?" }),
 	BORDER_ITEM("border-item", "LIGHT_BLUE_STAINED_GLASS_PANE", new String[] { "Default items for the warps GUI." }),

@@ -5,8 +5,8 @@ import com.jstnf.infinitywarps.command.commands.infinitywarps.ImportesswarpsSubc
 import com.jstnf.infinitywarps.command.commands.infinitywarps.InfinitywarpsCommand;
 import com.jstnf.infinitywarps.command.commands.manwarp.ManwarpCommand;
 import com.jstnf.infinitywarps.command.commands.warpgroup.*;
-import com.jstnf.infinitywarps.data.Warp;
-import com.jstnf.infinitywarps.data.WarpGroup;
+import com.jstnf.infinitywarps.database.Warp;
+import com.jstnf.infinitywarps.database.WarpGroup;
 import com.jstnf.infinitywarps.inventory.DefinitionType;
 import com.jstnf.infinitywarps.inventory.InventoryDefinition;
 import javafx.util.Pair;

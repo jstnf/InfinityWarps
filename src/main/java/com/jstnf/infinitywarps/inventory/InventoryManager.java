@@ -2,8 +2,8 @@ package com.jstnf.infinitywarps.inventory;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
-import com.jstnf.infinitywarps.data.Warp;
-import com.jstnf.infinitywarps.data.WarpGroup;
+import com.jstnf.infinitywarps.database.Warp;
+import com.jstnf.infinitywarps.database.WarpGroup;
 import javafx.util.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

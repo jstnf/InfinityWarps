@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.data;
+package com.jstnf.infinitywarps.database;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;

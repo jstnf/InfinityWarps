@@ -2,7 +2,7 @@ package com.jstnf.infinitywarps.command.commands;
 
 import com.jstnf.infinitywarps.IWMain;
 import com.jstnf.infinitywarps.IWUtils;
-import com.jstnf.infinitywarps.data.Warp;
+import com.jstnf.infinitywarps.database.Warp;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
