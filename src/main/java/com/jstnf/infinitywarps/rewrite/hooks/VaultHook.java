@@ -4,7 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 
 /**
- * Methods for managing economy
+ * Methods for interacting with a VaultAPI Economy
  *
  * @author jstnf
  * 16 April 2019

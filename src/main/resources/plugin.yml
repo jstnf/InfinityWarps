@@ -1,6 +1,6 @@
 name: InfinityWarps
 version: 0.0.1-dev
-main: com.jstnf.infinitywarps.rewrite.IWMain
+main: com.jstnf.infinitywarps.rewrite.InfinityWarps
 
 author: jstnf-pokeball92870
 description: A customizable, feature-packed warps plugin.
@@ -13,3 +13,10 @@ commands:
     aliases: [infinitywarps]
     description: The main command for InfinityWarps.
     permission: infinitywarps.infinitywarps
+  setwarp:
+    aliases: [isetwarp]
+    description: Set a warp at your current location.
+    permission: infinitywarps.setwarp
+  iwdebuginv:
+    description: Open a debug inventory for InfinityWarps.
+    permission: infinitywarps.debuginv

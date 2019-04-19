@@ -1,0 +1,19 @@
+#  ___       __ _      _ _      __      __
+# |_ _|_ _  / _(_)_ _ (_) |_ _  \ \    / /_ _ _ _ _ __ ___  by jstnf
+#  | || ' \|  _| | ' \| |  _| || \ \/\/ / _` | '_| '_ (_-<  Main Configuration File
+# |___|_||_|_| |_|_||_|_|\__|\_, |\_/\_/\__,_|_| | .__/__/  config.yml
+#                            |__/                |_|
+
+infinitywarps:
+  # Should players need a permission in order to use each warp?
+  # The permission required for each warp would be infinitywarps.warp.<warpname>
+  per-warp-permissions: false
+
+  # Should InfinityWarps show the coordinates of a warp in the warp list and in the warp GUI?
+  show-coords: true
+
+  # Which locale should InfinityWarps use?
+  locale: en_US
+
+do-not-change-this-value:
+  config-version: 1
