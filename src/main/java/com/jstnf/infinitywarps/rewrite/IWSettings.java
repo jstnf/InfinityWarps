@@ -11,6 +11,10 @@ public enum IWSettings
 	PER_WARP_PERMISSIONS("infinitywarps.per-warp-permissions", false),
 	SHOW_COORDS("infinitywarps.show-coords", true),
 	LOCALE("infinitywarps.locale", "en_US"),
+
+	DEFAULT_WARP_ICON("item.default-warp-icon", "ENDER_PEARL"),
+	DEFAULT_BORDER("item.default-border", "GRAY_STAINED_GLASS_PANE"),
+
 	CONFIG_VERSION("do-not-change-this-value.config-version", 1);
 
 	private String path;

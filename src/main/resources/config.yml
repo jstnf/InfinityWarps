@@ -15,5 +15,9 @@ infinitywarps:
   # Which locale should InfinityWarps use?
   locale: en_US
 
+item:
+  default-warp-icon: ENDER_PEARL
+  default-border: GRAY_STAINED_GLASS_PANE
+
 do-not-change-this-value:
   config-version: 1

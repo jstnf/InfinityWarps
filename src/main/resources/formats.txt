@@ -12,6 +12,7 @@ item:
   material:
   name:
   lore: []
+  glow:
 
 (warpgroup)
 name:
@@ -21,3 +22,4 @@ item:
   material:
   name:
   lore: []
+  glow:

@@ -16,15 +16,16 @@ import java.io.*;
 public class ConfigManager
 {
 	private final InfinityWarps plugin;
-	private final int MAIN_CONFIG_VERSION = 1, LANG_VERSION = 1;
-	private File mainConfigFile;
+	private final int MAIN_CONFIG_VERSION = 1, LOCALE_VERSION = 1;
+	private File mainConfigFile, langConfigFile;
+	private String loadedLocale;
 
-	public YamlConfiguration main;
+	public YamlConfiguration main, lang;
 
 	public ConfigManager(InfinityWarps plugin)
 	{
 		this.plugin = plugin;
-		generateDataFolders();
+		loadedLocale = "en_US";
 	}
 
 	private void generateDataFolders()
@@ -54,7 +55,7 @@ public class ConfigManager
 	 *
 	 * @return true if successfully created/checked configs, false if there is an error.
 	 */
-	public boolean generateMainConfig()
+	private boolean generateMainConfig()
 	{
 		main = new YamlConfiguration();
 		mainConfigFile = new File(plugin.getDataFolder(), "config.yml");
@@ -133,6 +134,127 @@ public class ConfigManager
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Generates or version checks the main configuration file (config.yml).
+	 * If the process fails, the plugin will be disabled.
+	 *
+	 * @return true if successfully created/checked configs, false if there is an error.
+	 */
+	private boolean generateLangConfig()
+	{
+		lang = new YamlConfiguration();
+		langConfigFile = new File(plugin.getDataFolder() + File.separator + "locales", loadedLocale + ".yml");
+
+		/* Check if locale file has been generated already */
+		if (!langConfigFile.exists())
+		{
+			/* Locale file hasn't been generated yet */
+			try
+			{
+				/* Try generating locale file from resources and assigning it */
+				plugin.saveResource("locales" + File.separator + loadedLocale + ".yml", false);
+				lang.load(langConfigFile);
+			}
+			catch (Exception e)
+			{
+				/* Could not find locale! */
+				e.printStackTrace();
+				plugin.getLogger().severe("Could not generate locale files.");
+				plugin.getLogger().severe("The locale " + loadedLocale + " was not found in the plugin's resources.");
+				plugin.getLogger().info("InfinityWarps will now default to en_US.");
+				loadedLocale = "en_US";
+				try
+				{
+					plugin.saveResource("locales" + File.separator + loadedLocale + ".yml", false);
+					lang.load(langConfigFile);
+					return true;
+				}
+				catch (Exception e2)
+				{
+					/* Something went wrong! */
+					e2.printStackTrace();
+					plugin.getLogger().severe("The locale could not be loaded.");
+					plugin.getLogger().severe("Contact the developer!");
+					plugin.getLogger().severe("InfinityWarps will now be disabled.");
+					return false;
+				}
+			}
+		}
+		else
+		{
+			/* Check locale version */
+			try
+			{
+				/* Match locale version */
+				lang.load(langConfigFile);
+				int currentConfigVersion = lang.getInt(IWSettings.CONFIG_VERSION.getPath(), 0);
+				if (currentConfigVersion != LOCALE_VERSION)
+				{
+					/* Uh oh! The locale version does not match! */
+					plugin.getLogger().warning("Your locale version (" + currentConfigVersion
+							+ ") does not match the current locale version (" + LOCALE_VERSION + ").");
+					plugin.getLogger()
+							.warning("Your current configuration will be saved to " + loadedLocale + ".yml.backup.");
+
+					/* Begin locale backup */
+					plugin.getLogger().info("Commencing backup...");
+
+					File backup = new File(plugin.getDataFolder() + File.separator + "locales",
+							loadedLocale + ".yml.backup");
+					backup.createNewFile();
+
+					BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(mainConfigFile)));
+					BufferedWriter out = new BufferedWriter(new FileWriter(backup, true));
+
+					String currLine = "";
+					while ((currLine = in.readLine()) != null)
+					{
+						out.write(currLine);
+						out.newLine();
+					}
+
+					in.close();
+					out.close();
+
+					plugin.getLogger().info("Locale backup successful!");
+
+					/* Generate new config.yml */
+					plugin.getLogger().info("Generating a new locale file...");
+					plugin.saveResource("locales" + File.separator + loadedLocale + ".yml", true);
+
+					lang.load(langConfigFile);
+				}
+			}
+			catch (Exception e)
+			{
+				/* Something went wrong loading the locale! */
+				e.printStackTrace();
+				plugin.getLogger().severe("Could not load locale files.");
+				plugin.getLogger().severe("InfinityWarps will now be disabled.");
+				plugin.getServer().getPluginManager().disablePlugin(plugin);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Try generating/updating all InfinityWarps configs.
+	 *
+	 * @return true if generation/updating was successful, false otherwise.
+	 */
+	public boolean generateConfigs()
+	{
+		generateDataFolders();
+		boolean mainSuccess = generateMainConfig();
+		if (mainSuccess)
+		{
+			loadedLocale = main.getString(IWSettings.LOCALE.getPath(), (String) IWSettings.LOCALE.getDefaultValue());
+			return generateLangConfig();
+		}
+		return false;
 	}
 
 	/**

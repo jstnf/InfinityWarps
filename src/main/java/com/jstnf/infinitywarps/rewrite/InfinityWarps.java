@@ -1,8 +1,10 @@
 package com.jstnf.infinitywarps.rewrite;
 
 import com.jstnf.infinitywarps.rewrite.commands.IWCmd;
+import com.jstnf.infinitywarps.rewrite.commands.SetwarpCmd;
 import com.jstnf.infinitywarps.rewrite.commands.debug.IWDebugInvCmd;
 import com.jstnf.infinitywarps.rewrite.managers.ConfigManager;
+import com.jstnf.infinitywarps.rewrite.managers.DatabaseManager;
 import fr.minuskube.inv.InventoryManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class InfinityWarps extends JavaPlugin
 {
 	public ConfigManager configManager;
+	public DatabaseManager databaseManager;
 	public InventoryManager inventoryManager;
 
 	public InfinityWarps()
@@ -25,11 +28,22 @@ public class InfinityWarps extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
+		/* Configuration */
 		if (!initConfigs())
 		{
 			return;
 		}
+
+		/* Database */
+		if (!initDatabaseManager())
+		{
+			return;
+		}
+
+		/* Inventory and GUI */
 		initInventoryManager();
+
+		/* Commands */
 		registerCommands();
 	}
 
@@ -46,6 +60,9 @@ public class InfinityWarps extends JavaPlugin
 		IWCmd iwCmd = new IWCmd(this);
 		getCommand("iw").setExecutor(iwCmd);
 
+		SetwarpCmd setwarpCmd = new SetwarpCmd(this);
+		getCommand("setwarp").setExecutor(setwarpCmd);
+
 		/* Debug commands */
 		IWDebugInvCmd iwDebugInvCmd = new IWDebugInvCmd(this);
 		getCommand("iwdebuginv").setExecutor(iwDebugInvCmd);
@@ -60,7 +77,14 @@ public class InfinityWarps extends JavaPlugin
 	{
 		getLogger().info("Initializing configuration files...");
 		configManager = new ConfigManager(this);
-		return configManager.generateMainConfig();
+		return configManager.generateConfigs();
+	}
+
+	private boolean initDatabaseManager()
+	{
+		getLogger().info("Initializing database manager...");
+		databaseManager = new DatabaseManager(this);
+		return databaseManager.loadDatabase();
 	}
 
 	private void initInventoryManager()

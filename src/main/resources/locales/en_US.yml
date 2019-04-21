@@ -6,3 +6,19 @@
 
 infinitywarps:
   infinitywarps: "InfinityWarps"
+
+  warp-set: "&fWarp {0}&f set."
+  warp-set-with-cost: "&fWarp {0}&f set with cost {1}&f."
+  warp-similar-name: "&cA warp with a similar name already exists."
+  warp-set-error-occurred: "&cAn error occurred setting the warp. Please see console."
+
+  unknown-subcommand: "&fUnknown subcommand. Type &b/iw help&f for command help."
+  feature-not-implemented: "&cThis feature is currently not implemented!"
+  must-be-player: "&cYou must be a player to run this command."
+
+  no-permission-setwarp: "&cYou do not have permission to set a warp."
+
+  temporary: "&fThis is a temporary test message."
+
+do-not-change-this-value:
+  config-version: 1

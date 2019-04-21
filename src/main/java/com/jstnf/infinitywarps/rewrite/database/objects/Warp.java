@@ -44,6 +44,8 @@ public class Warp extends IWDatabaseObject
 		this.z = z;
 		this.pitch = pitch;
 		this.yaw = yaw;
+		itemIcon = new IWItemIcon(plugin.configManager.main.getString(IWSettings.DEFAULT_WARP_ICON.getPath(),
+				(String) IWSettings.DEFAULT_WARP_ICON.getDefaultValue()), alias, new ArrayList<String>(), false);
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class Warp extends IWDatabaseObject
 	 *
 	 * @return ItemStack used in InfinityWarps GUIs.
 	 */
-	public ItemStack getItemIcon()
+	public ItemStack getItemStack()
 	{
 		ItemStack result = itemIcon.getItemStack();
 
@@ -162,5 +164,15 @@ public class Warp extends IWDatabaseObject
 	public double getYaw()
 	{
 		return yaw;
+	}
+
+	/**
+	 * Get the item icon.
+	 *
+	 * @return the item icon.
+	 */
+	public IWItemIcon getItemIcon()
+	{
+		return itemIcon;
 	}
 }
