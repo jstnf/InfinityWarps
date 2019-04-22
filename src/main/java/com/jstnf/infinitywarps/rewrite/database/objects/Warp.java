@@ -26,6 +26,8 @@ public class Warp extends IWDatabaseObject
 	/* Location */
 	private String worldName;
 	private double x, y, z, pitch, yaw;
+
+	/* Item */
 	private IWItemIcon itemIcon;
 
 	/**
@@ -38,12 +40,15 @@ public class Warp extends IWDatabaseObject
 
 		this.plugin = plugin;
 
+		/* Location */
 		this.worldName = worldName;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.pitch = pitch;
 		this.yaw = yaw;
+
+		/* Item */
 		itemIcon = new IWItemIcon(plugin.configManager.main.getString(IWSettings.DEFAULT_WARP_ICON.getPath(),
 				(String) IWSettings.DEFAULT_WARP_ICON.getDefaultValue()), alias, new ArrayList<String>(), false);
 	}
@@ -58,12 +63,15 @@ public class Warp extends IWDatabaseObject
 
 		this.plugin = plugin;
 
+		/* Location */
 		this.worldName = worldName;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.pitch = pitch;
 		this.yaw = yaw;
+
+		/* Item */
 		itemIcon = new IWItemIcon(itemMaterial, itemName, lore, isEnchanted);
 	}
 

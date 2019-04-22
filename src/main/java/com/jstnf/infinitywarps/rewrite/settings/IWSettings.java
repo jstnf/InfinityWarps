@@ -14,6 +14,7 @@ public enum IWSettings
 	LOCALE("infinitywarps.locale", "en_US"),
 
 	DEFAULT_WARP_ICON("item.default-warp-icon", "ENDER_PEARL"),
+	DEFAULT_WARP_GROUP_ICON("item.default-warp-group-icon", "BOOK"),
 	DEFAULT_BORDER("item.default-border", "GRAY_STAINED_GLASS_PANE"),
 
 	CONFIG_VERSION("do-not-change-this-value.config-version", 1);

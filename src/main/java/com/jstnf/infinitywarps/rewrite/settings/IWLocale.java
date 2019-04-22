@@ -3,7 +3,7 @@ package com.jstnf.infinitywarps.rewrite.settings;
 import org.bukkit.ChatColor;
 
 /**
- * Holds all of the paths and default values for locale values in the localization files.
+ * Holds all of the paths and default values for locale values in the localization files
  *
  * @author jstnf
  * 20 April 2019

@@ -1,7 +1,5 @@
 package com.jstnf.infinitywarps.rewrite.database;
 
-import com.jstnf.infinitywarps.rewrite.gui.IWItemIcon;
-
 /**
  * Abstract class of an InfinityWarps database object
  *
@@ -18,11 +16,19 @@ public abstract class IWDatabaseObject
 		this.name = IWDatabaseUtils.convertToDatabaseName(alias);
 	}
 
+	/**
+	 * Get the name of the database object used in methods, files, and commands.
+	 * @return the database object's name (identifier).
+	 */
 	public String getName()
 	{
 		return name;
 	}
 
+	/**
+	 * Get the alias of the database object used in GUIs and command outputs.
+	 * @return the database object's alias.
+	 */
 	public String getAlias()
 	{
 		return alias;

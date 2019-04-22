@@ -1,26 +1,25 @@
-# (thanks mcmmo!)
-# Eclipse stuff
+# Eclipse
 /.classpath
 /.project
 /.settings
 /dependency-reduced-pom.xml
 
-#vs code
+# vs code
 /.vscode
 
-# netbeans
+# NetBeans
 /nbproject
 
 # we use maven!
 /build.xml
 
-# maven
+# Maven
 /target
 
 # vim
 .*.sw[a-p]
 
-# various other potential build files
+# Various other potential build files
 /build
 /bin
 /dist
@@ -31,7 +30,7 @@
 # Mac filesystem dust
 *.DS_Store
 
-# intellij
+# IntelliJ
 *.iml
 *.ipr
 *.iws

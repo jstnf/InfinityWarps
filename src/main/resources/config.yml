@@ -20,6 +20,7 @@ infinitywarps:
 
 item:
   default-warp-icon: ENDER_PEARL
+  default-warp-group-icon: BOOK
   default-border: GRAY_STAINED_GLASS_PANE
 
 do-not-change-this-value:
