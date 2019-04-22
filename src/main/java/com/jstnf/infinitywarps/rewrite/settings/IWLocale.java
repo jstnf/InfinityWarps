@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.rewrite;
+package com.jstnf.infinitywarps.rewrite.settings;
 
 import org.bukkit.ChatColor;
 
@@ -22,6 +22,7 @@ public enum IWLocale
 	MUST_BE_PLAYER("infinitywarps.must-be-player", "&cYou must be a player to run this command."),
 
 	NO_PERMISSION_SETWARP("infinitywarps.no-permission-setwarp", "&cYou do not have permission to set a warp."),
+	NO_PERMISSION_WARP("infinitywarps.no-permission-warp", "&cYou do not have permission to warp."),
 
 	TEMPORARY("infinitywarps.temporary", "&fThis is a temporary test message."),
 

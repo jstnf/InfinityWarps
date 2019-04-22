@@ -2,9 +2,14 @@ package com.jstnf.infinitywarps.rewrite.managers;
 
 import com.jstnf.infinitywarps.old.exception.SimilarNameException;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
+import com.jstnf.infinitywarps.rewrite.database.WarpResponse;
 import com.jstnf.infinitywarps.rewrite.database.objects.Warp;
 import com.jstnf.infinitywarps.rewrite.database.objects.WarpGroup;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.HashMap;
@@ -92,5 +97,36 @@ public class DatabaseManager
 
 		loadedWarps.put(w.getName(), w);
 		return true;
+	}
+
+	public WarpResponse doWarp(Player p, Warp w)
+	{
+		if (plugin.getServer().getWorld(w.getWorldName()) == null)
+		{
+			return WarpResponse.INVALID_WORLD;
+		}
+
+		double x = w.getX();
+		double z = w.getZ();
+
+		if (plugin.configManager.main.getBoolean(IWSettings.CENTER_ON_BLOCK.getPath(),
+				(boolean) IWSettings.CENTER_ON_BLOCK.getDefaultValue()))
+		{
+			x = (int) x + 0.5;
+			z = (int) z + 0.5;
+		}
+
+		p.teleport(new Location(Bukkit.getWorld(w.getWorldName()), x, w.getY(), z, (float) w.getYaw(), (float) w.getPitch()));
+		return WarpResponse.SUCCESS;
+	}
+
+	public boolean isWarp(String warpName)
+	{
+		return loadedWarps.get(warpName) != null;
+	}
+
+	public boolean isWarpGroup(String warpGroupName)
+	{
+		return loadedWarpGroups.get(warpGroupName) != null;
 	}
 }

@@ -1,6 +1,6 @@
 package com.jstnf.infinitywarps.rewrite.managers;
 
-import com.jstnf.infinitywarps.rewrite.IWSettings;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

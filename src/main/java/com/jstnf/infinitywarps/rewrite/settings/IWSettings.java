@@ -1,4 +1,4 @@
-package com.jstnf.infinitywarps.rewrite;
+package com.jstnf.infinitywarps.rewrite.settings;
 
 /**
  * Holds all of the settings and default config values for InfinityWarps
@@ -9,6 +9,7 @@ package com.jstnf.infinitywarps.rewrite;
 public enum IWSettings
 {
 	PER_WARP_PERMISSIONS("infinitywarps.per-warp-permissions", false),
+	CENTER_ON_BLOCK("infinitywarps.center-on-block", true),
 	SHOW_COORDS("infinitywarps.show-coords", true),
 	LOCALE("infinitywarps.locale", "en_US"),
 

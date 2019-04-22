@@ -1,7 +1,7 @@
 package com.jstnf.infinitywarps.rewrite.commands;
 
 import com.jstnf.infinitywarps.old.exception.SimilarNameException;
-import com.jstnf.infinitywarps.rewrite.IWLocale;
+import com.jstnf.infinitywarps.rewrite.settings.IWLocale;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import com.jstnf.infinitywarps.rewrite.database.objects.Warp;
 import org.bukkit.Location;
@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
  */
 public class SetwarpCmd extends IWExecutor implements CommandExecutor
 {
-	private final String help = "Usage: /setwarp <name> [cost]";
+	private final String help = "Usage: /setwarp <name>";
 
 	public SetwarpCmd(InfinityWarps plugin)
 	{

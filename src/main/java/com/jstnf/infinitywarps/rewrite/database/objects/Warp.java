@@ -1,6 +1,6 @@
 package com.jstnf.infinitywarps.rewrite.database.objects;
 
-import com.jstnf.infinitywarps.rewrite.IWSettings;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import com.jstnf.infinitywarps.rewrite.database.IWDatabaseObject;
 import com.jstnf.infinitywarps.rewrite.gui.IWItemIcon;

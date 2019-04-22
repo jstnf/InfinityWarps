@@ -9,6 +9,9 @@ infinitywarps:
   # The permission required for each warp would be infinitywarps.warp.<warpname>
   per-warp-permissions: false
 
+  # On teleport, should InfinityWarps center the player on warp location block?
+  center-on-block: true
+
   # Should InfinityWarps show the coordinates of a warp in the warp list and in the warp GUI?
   show-coords: true
 
