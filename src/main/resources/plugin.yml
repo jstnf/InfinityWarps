@@ -17,6 +17,10 @@ commands:
     aliases: [isetwarp]
     description: Set a warp at your current location.
     permission: infinitywarps.setwarp
+  warp:
+    aliases: [iwarp]
+    description: Teleport to a specified warp.
+    permission: infinitywarps.warp
   iwdebuginv:
     description: Open a debug inventory for InfinityWarps.
     permission: infinitywarps.debuginv

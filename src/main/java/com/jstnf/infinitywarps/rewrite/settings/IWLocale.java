@@ -11,11 +11,17 @@ import org.bukkit.ChatColor;
 public enum IWLocale
 {
 	INFINITYWARPS("infinitywarps.infinitywarps", "InfinityWarps"),
+	PREFIX("infinitywarps.prefix", "&7[&bInfinity&dWarps&7] "),
+
+	WARP_SUCCESS("infinitywarps.warp-success", "&fWarped to {0}&f."),
+
+	WARP_NOT_FOUND("infinitywarps.warp-not-found", "&cCould not find the warp {0}&c."),
 
 	WARP_SET("infinitywarps.warp-set", "&fWarp {0}&f set."),
 	WARP_SET_WITH_COST("infinitywarps.warp-set-with-cost", "&fWarp {0}&f set with cost {1}&f."),
 	WARP_SIMILAR_NAME("infinitywarps.warp-similar-name", "&cA warp with a similar name already exists."),
-	WARP_SET_ERROR_OCCURRED("infinitywarps.warp-set-error-occurred", "&cAn error occurred setting the warp. Please see console."),
+	WARP_SET_ERROR_OCCURRED("infinitywarps.warp-set-error-occurred",
+			"&cAn error occurred setting the warp. Please see console."),
 
 	UNKNOWN_SUBCOMMAND("infinitywarps.unknown-subcommand", "&fUnknown subcommand. Type &b/iw help&f for command help."),
 	FEATURE_NOT_IMPLEMENTED("infinitywarps.feature-not-implemented", "&cThis feature is currently not implemented!"),
@@ -47,14 +53,23 @@ public enum IWLocale
 		return value;
 	}
 
-	public static String format(String s, String... replace)
+	public static String format(String s, String... args)
 	{
 		String manip = s;
 		int index = 0;
-		for (String rep : replace)
+		for (String rep : args)
 		{
-			manip = manip.replaceAll("\\{" + index + "\\}", rep);
+			String replaceMarker = "{" + index + "}";
+
+			int indexOf = manip.indexOf(replaceMarker);
+			if (indexOf != -1)
+			{
+				manip = manip.substring(0, indexOf) + "&f" /* Replace color back to white */ + rep + manip
+						.substring(indexOf + replaceMarker.length());
+			}
+
 			index++;
 		}
 		return ChatColor.translateAlternateColorCodes('&', manip);
-	}}
+	}
+}

@@ -6,6 +6,11 @@
 
 infinitywarps:
   infinitywarps: "InfinityWarps"
+  prefix: "&7[&bInfinity&dWarps&7] "
+
+  warp-success: "&fWarped to {0}&f."
+
+  warp-not-found: "&cCould not find the warp {0}&c."
 
   warp-set: "&fWarp {0}&f set."
   warp-set-with-cost: "&fWarp {0}&f set with cost {1}&f."
@@ -20,6 +25,36 @@ infinitywarps:
   no-permission-warp: "&cYou do not have permission to warp."
 
   temporary: "&fThis is a temporary test message."
+
+  help:
+    colors:
+      header-color: "&b"
+      command-color: "&d"
+      description-color: "&f"
+    commands:
+      iw: "/iw"
+      iw-help: "/iw help [page]"
+      iw-importesswarps: "/iw importesswarps [groupSeparator]"
+      iw-reload: "/iw reload"
+      delwarp: "/delwarp <warp>"
+      editwarp: "/editwarp"
+      setwarp: "/setwarp <warpName>"
+      warp: "/warp <warpName>"
+      warpgroup: "/warpgroup"
+      warplist: "/warplist [page]"
+      warps: "/warps"
+    description:
+      iw: ""
+      iw-help: ""
+      iw-importesswarps: ""
+      iw-reload: ""
+      delwarp: ""
+      editwarp: ""
+      setwarp: ""
+      warp: ""
+      warpgroup: ""
+      warplist: ""
+      warps: ""
 
 do-not-change-this-value:
   config-version: 1

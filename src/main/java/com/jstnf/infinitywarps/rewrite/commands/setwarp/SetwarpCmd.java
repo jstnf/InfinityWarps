@@ -1,6 +1,7 @@
-package com.jstnf.infinitywarps.rewrite.commands;
+package com.jstnf.infinitywarps.rewrite.commands.setwarp;
 
 import com.jstnf.infinitywarps.old.exception.SimilarNameException;
+import com.jstnf.infinitywarps.rewrite.commands.IWExecutor;
 import com.jstnf.infinitywarps.rewrite.settings.IWLocale;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import com.jstnf.infinitywarps.rewrite.database.objects.Warp;
@@ -31,8 +32,7 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		/* Check if player */
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(IWLocale.format(plugin.configManager.lang
-					.getString(IWLocale.MUST_BE_PLAYER.getPath(), (String) IWLocale.MUST_BE_PLAYER.getDefaultValue())));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER));
 			return true;
 		}
 
@@ -41,9 +41,7 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		/* Check permission */
 		if (!p.hasPermission("infinitywarps.setwarp"))
 		{
-			sender.sendMessage(IWLocale.format(plugin.configManager.lang
-					.getString(IWLocale.NO_PERMISSION_SETWARP.getPath(),
-							(String) IWLocale.NO_PERMISSION_SETWARP.getDefaultValue())));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_SETWARP));
 			return true;
 		}
 
@@ -61,20 +59,16 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		{
 			if (plugin.databaseManager.addWarp(w, false))
 			{
-				sender.sendMessage(IWLocale.format(plugin.configManager.lang
-						.getString(IWLocale.WARP_SET.getPath(), (String) IWLocale.WARP_SET.getDefaultValue())));
+				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET, args[0]));
 			}
 			else
 			{
-				sender.sendMessage(IWLocale.format(plugin.configManager.lang
-						.getString(IWLocale.WARP_SET_ERROR_OCCURRED.getPath(),
-								(String) IWLocale.WARP_SET_ERROR_OCCURRED.getDefaultValue())));
+				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET_ERROR_OCCURRED));
 			}
 		}
 		catch (SimilarNameException e)
 		{
-			sender.sendMessage(IWLocale.format(plugin.configManager.lang.getString(IWLocale.WARP_SIMILAR_NAME.getPath(),
-					(String) IWLocale.WARP_SIMILAR_NAME.getDefaultValue())));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SIMILAR_NAME));
 		}
 
 		return true;

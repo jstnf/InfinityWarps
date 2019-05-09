@@ -49,7 +49,7 @@ public class Warp extends IWDatabaseObject
 		this.yaw = yaw;
 
 		/* Item */
-		itemIcon = new IWItemIcon(plugin.configManager.main.getString(IWSettings.DEFAULT_WARP_ICON.getPath(),
+		itemIcon = new IWItemIcon(plugin, plugin.configManager.main.getString(IWSettings.DEFAULT_WARP_ICON.getPath(),
 				(String) IWSettings.DEFAULT_WARP_ICON.getDefaultValue()), alias, new ArrayList<String>(), false);
 	}
 
@@ -72,7 +72,7 @@ public class Warp extends IWDatabaseObject
 		this.yaw = yaw;
 
 		/* Item */
-		itemIcon = new IWItemIcon(itemMaterial, itemName, lore, isEnchanted);
+		itemIcon = new IWItemIcon(plugin, itemMaterial, itemName, lore, isEnchanted);
 	}
 
 	/* GET METHODS */

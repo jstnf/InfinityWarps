@@ -1,11 +1,17 @@
 package com.jstnf.infinitywarps.rewrite.managers;
 
-import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
+import com.jstnf.infinitywarps.rewrite.settings.IWLocale;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 
 /**
  * Manager for configuration files
@@ -284,5 +290,10 @@ public class ConfigManager
 				return null;
 			}
 		}
+	}
+
+	public String getMessage(IWLocale message, boolean usePrefix, String... args)
+	{
+		return IWLocale.format(lang.getString(message.getPath(), (String) message.getDefaultValue()), args);
 	}
 }

@@ -3,6 +3,8 @@ package com.jstnf.infinitywarps.rewrite.database.objects;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import com.jstnf.infinitywarps.rewrite.database.IWDatabaseObject;
 import com.jstnf.infinitywarps.rewrite.gui.IWItemIcon;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -14,31 +16,65 @@ import java.util.ArrayList;
  */
 public class WarpGroup extends IWDatabaseObject
 {
-    private InfinityWarps plugin;
+	private InfinityWarps plugin;
 
-    /* Warps */
-    private ArrayList<String> warps;
+	/* Warps */
+	private ArrayList<String> warps;
 
-    /* Item */
-    private IWItemIcon itemIcon;
+	/* Item */
+	private IWItemIcon itemIcon;
 
-    /**
-     * Constructor used when creating a new warp group. (Importing Essentials warps or /warpgroup command)
-     */
-    public WarpGroup(InfinityWarps plugin, String alias)
-    {
-        super(alias);
+	/**
+	 * Constructor used when creating a new warp group. (Importing Essentials warps or /warpgroup command)
+	 */
+	public WarpGroup(InfinityWarps plugin, String alias)
+	{
+		super(alias);
 
-        this.plugin = plugin;
-    }
+		this.plugin = plugin;
 
-    /**
-     * Constructor used when importing a warp group from InfinityWarps config files.
-     */
-    public WarpGroup(InfinityWarps plugin, String alias, ArrayList<String> warps, String itemMaterial, String itemName, ArrayList<String> lore, boolean isEnchanted)
-    {
-        super(alias);
+		/* Item */
+		itemIcon = new IWItemIcon(plugin, plugin.configManager.main
+				.getString(IWSettings.DEFAULT_WARP_GROUP_ICON.getPath(),
+						(String) IWSettings.DEFAULT_WARP_GROUP_ICON.getDefaultValue()), alias, new ArrayList<String>(),
+				false);
+	}
 
-        this.plugin = plugin;
-    }
+	/**
+	 * Constructor used when importing a warp group from InfinityWarps config files.
+	 */
+	public WarpGroup(InfinityWarps plugin, String alias, ArrayList<String> warps, String itemMaterial, String itemName,
+			ArrayList<String> lore, boolean isEnchanted)
+	{
+		super(alias);
+
+		this.plugin = plugin;
+
+		this.warps = warps;
+
+		/* Item */
+		itemIcon = new IWItemIcon(plugin, itemMaterial, itemName, lore, isEnchanted);
+	}
+
+	/* GET METHODS */
+
+	/**
+	 * Get the list of warp identifiers in this warp group.
+	 *
+	 * @return the list of warps in the warp group (by identifier).
+	 */
+	public ArrayList<String> getWarps()
+	{
+		return warps;
+	}
+
+	/**
+	 * Get the ItemStack to be used in the InfinityWarps GUIs.
+	 *
+	 * @return ItemStack used in InfinityWarps GUIs.
+	 */
+	public ItemStack getItemStack()
+	{
+		return itemIcon.getItemStack();
+	}
 }

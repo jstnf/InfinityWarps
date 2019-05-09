@@ -1,8 +1,9 @@
 package com.jstnf.infinitywarps.rewrite;
 
-import com.jstnf.infinitywarps.rewrite.commands.IWCmd;
-import com.jstnf.infinitywarps.rewrite.commands.SetwarpCmd;
 import com.jstnf.infinitywarps.rewrite.commands.debug.IWDebugInvCmd;
+import com.jstnf.infinitywarps.rewrite.commands.iw.IWCmd;
+import com.jstnf.infinitywarps.rewrite.commands.setwarp.SetwarpCmd;
+import com.jstnf.infinitywarps.rewrite.commands.warp.WarpCmd;
 import com.jstnf.infinitywarps.rewrite.managers.ConfigManager;
 import com.jstnf.infinitywarps.rewrite.managers.DatabaseManager;
 import fr.minuskube.inv.InventoryManager;
@@ -20,11 +21,6 @@ public class InfinityWarps extends JavaPlugin
 	public DatabaseManager databaseManager;
 	public InventoryManager inventoryManager;
 
-	public InfinityWarps()
-	{
-
-	}
-
 	@Override
 	public void onEnable()
 	{
@@ -40,28 +36,29 @@ public class InfinityWarps extends JavaPlugin
 			return;
 		}
 
-		/* Inventory and GUI */
-		initInventoryManager();
-
-		/* Commands */
-		registerCommands();
+		initInventoryManager(); /* Inventory and GUI */
+		registerCommands(); /* Commands */
 	}
 
 	@Override
 	public void onDisable()
 	{
-
+		getLogger().info("InfinityWarps has been disabled.");
 	}
 
 	private void registerCommands()
 	{
 		getLogger().info("Registering commands...");
+
 		/* Main commands */
 		IWCmd iwCmd = new IWCmd(this);
 		getCommand("iw").setExecutor(iwCmd);
 
 		SetwarpCmd setwarpCmd = new SetwarpCmd(this);
 		getCommand("setwarp").setExecutor(setwarpCmd);
+
+		WarpCmd warpCmd = new WarpCmd(this);
+		getCommand("warp").setExecutor(warpCmd);
 
 		/* Debug commands */
 		IWDebugInvCmd iwDebugInvCmd = new IWDebugInvCmd(this);

@@ -1,6 +1,7 @@
-package com.jstnf.infinitywarps.rewrite.commands;
+package com.jstnf.infinitywarps.rewrite.commands.warp;
 
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
+import com.jstnf.infinitywarps.rewrite.commands.IWExecutor;
 import com.jstnf.infinitywarps.rewrite.database.IWDatabaseUtils;
 import com.jstnf.infinitywarps.rewrite.settings.IWLocale;
 import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
@@ -9,9 +10,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * Class for the /warp command
+ *
+ * @author jstnf
+ * 28 April 2019
+ */
 public class WarpCmd extends IWExecutor implements CommandExecutor
 {
-	private final String help = "Usage: /setwarp <name>";
+	private final String help = "Usage: /warp <name>";
 
 	public WarpCmd(InfinityWarps plugin)
 	{
@@ -24,8 +31,7 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		/* Check if player */
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(IWLocale.format(plugin.configManager.lang
-					.getString(IWLocale.MUST_BE_PLAYER.getPath(), (String) IWLocale.MUST_BE_PLAYER.getDefaultValue())));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER));
 			return true;
 		}
 
@@ -37,9 +43,7 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		/* Check permission */
 		if (!p.hasPermission("infinitywarps.warp"))
 		{
-			sender.sendMessage(IWLocale.format(plugin.configManager.lang
-					.getString(IWLocale.NO_PERMISSION_WARP.getPath(),
-							(String) IWLocale.NO_PERMISSION_WARP.getDefaultValue())));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_WARP));
 			return true;
 		}
 
@@ -53,7 +57,16 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		String warp = args[0];
 		String formatted = IWDatabaseUtils.convertToDatabaseName(warp);
 
-		/* Validate warp */
+		/* Validate the warp */
+		if (plugin.databaseManager.isWarp(formatted))
+		{
+
+		}
+		else
+		{
+			/* Warp was not found */
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_NOT_FOUND, args[0]));
+		}
 
 		return true;
 	}

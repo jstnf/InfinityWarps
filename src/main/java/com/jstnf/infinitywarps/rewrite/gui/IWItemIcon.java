@@ -1,5 +1,7 @@
 package com.jstnf.infinitywarps.rewrite.gui;
 
+import com.jstnf.infinitywarps.rewrite.InfinityWarps;
+import com.jstnf.infinitywarps.rewrite.settings.IWSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,14 +23,15 @@ public class IWItemIcon
 	private ArrayList<String> itemLore;
 	private boolean isEnchanted;
 
-	public IWItemIcon(String material, String name, ArrayList<String> lore, boolean isEnchanted)
+	public IWItemIcon(InfinityWarps plugin, String material, String name, ArrayList<String> lore, boolean isEnchanted)
 	{
 		/**
 		 * Check valid item
 		 */
 		if (Material.getMaterial(material) == null)
 		{
-			itemMaterial = "ENDER_PEARL"; // have option to change this default later
+			itemMaterial = plugin.configManager.main.getString(IWSettings.DEFAULT_WARP_ICON.getPath(),
+					(String) IWSettings.DEFAULT_WARP_ICON.getDefaultValue());
 		}
 		else
 		{
