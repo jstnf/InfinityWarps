@@ -2,10 +2,15 @@
 # |_ _|_ _  / _(_)_ _ (_) |_ _  \ \    / /_ _ _ _ _ __ ___  by jstnf
 #  | || ' \|  _| | ' \| |  _| || \ \/\/ / _` | '_| '_ (_-<  Localization File
 # |___|_||_|_| |_|_||_|_|\__|\_, |\_/\_/\__,_|_| | .__/__/  en_US.yml
-#
+#                            |__/                |_|
 
 infinitywarps:
   infinitywarps: "InfinityWarps"
+  prefix: "&7[&bInfinity&dWarps&7] "
+
+  warp-success: "&fWarped to {0}&f."
+
+  warp-not-found: "&cCould not find the warp {0}&c."
 
   warp-set: "&fWarp {0}&f set."
   warp-set-with-cost: "&fWarp {0}&f set with cost {1}&f."
@@ -16,10 +21,84 @@ infinitywarps:
   feature-not-implemented: "&cThis feature is currently not implemented!"
   must-be-player: "&cYou must be a player to run this command."
 
+  no-permission-help: "&cYou do not have permission to view the command help."
   no-permission-setwarp: "&cYou do not have permission to set a warp."
   no-permission-warp: "&cYou do not have permission to warp."
 
   temporary: "&fThis is a temporary test message."
+
+  help:
+    colors:
+      command-color: "&b"
+      description-color: "&f&o"
+    tooltips:
+      command: "&bClick me to insert the command into chat!"
+      prev-page: "&bClick me to go to the previous page!"
+      next-page: "&bClick me to go to the next page!"
+      start-page: "&bClick me to go to the starting page!"
+    page:
+      header: "&b&lInfinity&d&lWarps &f&lCommand Help"
+      prev-page: "&f&lPrev"
+      separator: "&b ----[{0}&b/{1}&b]---- "
+      next-page: "&f&lNext"
+    commands: # NOTE: Changing any of these values does not actually change the command!
+      iw: "/iw"
+      iw-help: "/iw help [page]"
+      iw-importesswarps: "/iw importesswarps [groupSeparator]"
+      iw-reload: "/iw reload"
+      delwarp: "/delwarp <warp>"
+      editwarp-info: "/editwarp info <warp>"
+      editwarp-lore-add: "/editwarp lore <warp> add <line>"
+      editwarp-lore-edit: "/editwarp lore <warp> edit <#> <line>"
+      editwarp-lore-list: "/editwarp lore <warp> list"
+      editwarp-lore-remove: "/editwarp lore <warp> remove <#>"
+      editwarp-rename: "/editwarp rename <warp> <newName>"
+      editwarp-setitem: "/editwarp setitem <warp> [hand|inv]"
+      setwarp: "/setwarp <warp>"
+      warp: "/warp <warp>"
+      warpgroup-add: "/warpgroup add <warpgroup>"
+      warpgroup-addwarp: "/warpgroup addwarp <warpgroup> <warp> [warp...]"
+      warpgroup-info: "/warpgroup info <warpgroup>"
+      warpgroup-list: "/warpgroup list [page]"
+      warpgroup-lore-add: "/warpgroup lore <warpgroup> add <line>"
+      warpgroup-lore-edit: "/warpgroup lore <warpgroup> edit <#> <line>"
+      warpgroup-lore-list: "/warpgroup lore <warpgroup> list"
+      warpgroup-lore-remove: "/warpgroup lore <warpgroup> remove <#>"
+      warpgroup-remove: "/warpgroup remove <warpgroup>"
+      warpgroup-removewarp: "/warpgroup removewarp <warpgroup> <warp> [warp...]"
+      warpgroup-rename: "/warpgroup rename <warpgroup> <newName>"
+      warpgroup-setitem: "/warpgroup setitem <warpgroup> [hand|inv]"
+      warplist: "/warplist [page]"
+      warpmenu: "/warpmenu"
+    description:
+      iw: "Base command for InfinityWarps."
+      iw-help: "View the command help for InfinityWarps."
+      iw-importesswarps: "Initialize the importing of warps from Essentials."
+      iw-reload: "Reload the plugin's configuration, warps, and warp groups."
+      delwarp: "Delete a given warp."
+      editwarp-info: "<FILL THIS IN LATER!>"
+      editwarp-lore-add: "<FILL THIS IN LATER!>"
+      editwarp-lore-edit: "<FILL THIS IN LATER!>"
+      editwarp-lore-list: "<FILL THIS IN LATER!>"
+      editwarp-lore-remove: "<FILL THIS IN LATER!>"
+      editwarp-rename: "<FILL THIS IN LATER!>"
+      editwarp-setitem: "<FILL THIS IN LATER!>"
+      setwarp: "Set a warp at the current location."
+      warp: "Warp to a given warp."
+      warpgroup-add: "Create a warp group."
+      warpgroup-addwarp: "Add a warp to a warp group."
+      warpgroup-info: "View information about a warp group."
+      warpgroup-list: "List all current warp groups."
+      warpgroup-lore-add: "Add a line of lore to a warp group."
+      warpgroup-lore-edit: "Edit a line of lore in a warp group."
+      warpgroup-lore-list: "List the lines of lore in a warp group."
+      warpgroup-lore-remove: "Remove a line of lore in a warp group."
+      warpgroup-remove: "Remove a warp group."
+      warpgroup-removewarp: "Remove a warp from a warp group."
+      warpgroup-rename: "Rename a warp group."
+      warpgroup-setitem: "Set the item of a warp group to be used in the GUI."
+      warplist: "List all warps in the chat."
+      warpmenu: "Open the warp GUI."
 
 do-not-change-this-value:
   config-version: 1
