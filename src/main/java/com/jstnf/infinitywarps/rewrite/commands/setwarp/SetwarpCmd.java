@@ -32,7 +32,7 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		/* Check if player */
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER, true));
 			return true;
 		}
 
@@ -41,7 +41,7 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		/* Check permission */
 		if (!p.hasPermission("infinitywarps.setwarp"))
 		{
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_SETWARP));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_SETWARP, true));
 			return true;
 		}
 
@@ -59,16 +59,16 @@ public class SetwarpCmd extends IWExecutor implements CommandExecutor
 		{
 			if (plugin.databaseManager.addWarp(w, false))
 			{
-				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET, args[0]));
+				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET, true, args[0]));
 			}
 			else
 			{
-				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET_ERROR_OCCURRED));
+				sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SET_ERROR_OCCURRED, true));
 			}
 		}
 		catch (SimilarNameException e)
 		{
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SIMILAR_NAME));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_SIMILAR_NAME, true));
 		}
 
 		return true;

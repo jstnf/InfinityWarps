@@ -1,5 +1,6 @@
 package com.jstnf.infinitywarps.rewrite.commands.iw;
 
+import com.jstnf.infinitywarps.rewrite.IWUtils;
 import com.jstnf.infinitywarps.rewrite.InfinityWarps;
 import com.jstnf.infinitywarps.rewrite.commands.IWExecutor;
 import com.jstnf.infinitywarps.rewrite.settings.IWLocale;
@@ -28,6 +29,8 @@ public class IWCmd extends IWExecutor implements CommandExecutor
 	private final String help =
 			ChatColor.WHITE + "Use " + ChatColor.AQUA + "/iw help" + ChatColor.WHITE + " for command help.";
 
+	private final int HELP_ENTRIES_PER_PAGE = 3;
+
 	public IWCmd(InfinityWarps plugin)
 	{
 		super(plugin);
@@ -52,21 +55,23 @@ public class IWCmd extends IWExecutor implements CommandExecutor
 			{
 				case "importesswarps":
 					/* Feature currently not implemented */
-					sender.sendMessage(plugin.configManager.getMessage(IWLocale.FEATURE_NOT_IMPLEMENTED));
+					sender.sendMessage(plugin.configManager.getMessage(IWLocale.FEATURE_NOT_IMPLEMENTED, true));
 					break;
 				case "help":
-					/* Implement this! */
+					int page = 1;
+					if (args.length > 1)
+					{
+						if (IWUtils.isInt(args[1]))
+						{
+							page = Integer.parseInt(args[1]);
+						}
+					}
 
-					/* Some test JSON stuff */
-					TextComponent msg = new TextComponent(ChatColor.RED + "Test component!");
-					msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-							new ComponentBuilder(ChatColor.RED + "This text is shown on hover!").create()));
-					msg.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/iwdebuginv"));
-					sender.spigot().sendMessage(msg);
+					sendCommandHelp(sender, page);
 
 					break;
 				default:
-					sender.sendMessage(plugin.configManager.getMessage(IWLocale.UNKNOWN_SUBCOMMAND));
+					sender.sendMessage(plugin.configManager.getMessage(IWLocale.UNKNOWN_SUBCOMMAND, true));
 					break;
 			}
 		}
@@ -82,6 +87,78 @@ public class IWCmd extends IWExecutor implements CommandExecutor
 	 */
 	private void sendCommandHelp(CommandSender sender, int page)
 	{
+		/* Grab entries, colors, and tooltips */
+		HelpEntry[] entries = HelpEntry.values();
 
+		String cmdColor = plugin.configManager.getMessage(IWLocale.HELP_COMMAND_COLOR, false);
+		String descColor = plugin.configManager.getMessage(IWLocale.HELP_DESCRIPTION_COLOR, false);
+		String commandTooltip = plugin.configManager.getMessage(IWLocale.HELP_TOOLTIP_COMMAND, false);
+		String prevTooltip = plugin.configManager.getMessage(IWLocale.HELP_TOOLTIP_PREV_PAGE, false);
+		String nextTooltip = plugin.configManager.getMessage(IWLocale.HELP_TOOLTIP_NEXT_PAGE, false);
+
+		/* Do page calculations */
+		int pageToDisplay = page;
+
+		int pages = entries.length / HELP_ENTRIES_PER_PAGE;
+		if (entries.length % HELP_ENTRIES_PER_PAGE != 0)
+		{
+			pages += 1;
+		}
+
+		if (pageToDisplay < 1 || pageToDisplay > pages)
+		{
+			pageToDisplay = 1;
+		}
+
+		int lowIndex = (pageToDisplay - 1) * HELP_ENTRIES_PER_PAGE;
+		int highIndex = lowIndex + HELP_ENTRIES_PER_PAGE;
+
+		int prevPageIndex = pageToDisplay - 1;
+		int nextPageIndex = pageToDisplay + 1;
+
+		if (prevPageIndex < 1)
+		{
+			prevPageIndex = pages;
+		}
+		if (nextPageIndex > pages)
+		{
+			nextPageIndex = 1;
+		}
+
+		/* Constructing TextComponent */
+		TextComponent newLine = new TextComponent("\n");
+		TextComponent header = new TextComponent(plugin.configManager.getMessage(IWLocale.HELP_HEADER, false));
+
+		TextComponent separator = new TextComponent(plugin.configManager.getMessage(IWLocale.HELP_SEPARATOR, false, "" + pageToDisplay, "" + pages));
+
+		TextComponent prev = new TextComponent(plugin.configManager.getMessage(IWLocale.HELP_PREV_PAGE, false));
+		prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(prevTooltip).create()));
+		prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/iw help " + prevPageIndex));
+
+		TextComponent next = new TextComponent(plugin.configManager.getMessage(IWLocale.HELP_NEXT_PAGE, false));
+		next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(nextTooltip).create()));
+		next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/iw help " + nextPageIndex));
+
+		ComponentBuilder helpPage = new ComponentBuilder(header).append(newLine);
+
+		for (int i = lowIndex; i < highIndex && i < entries.length; i++)
+		{
+			String command = plugin.configManager.getMessage(entries[i].command(), false);
+			String description = plugin.configManager.getMessage(entries[i].description(), false);
+			String suggestion = entries[i].suggestion();
+
+			TextComponent cmd = new TextComponent(cmdColor + command);
+			cmd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(commandTooltip).create()));
+			cmd.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, suggestion));
+
+			TextComponent desc = new TextComponent(descColor + description);
+			desc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(commandTooltip).create()));
+			desc.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, suggestion));
+
+			helpPage.append(newLine).append(cmd).append(newLine).append(desc);
+		}
+
+		helpPage.append(newLine).append(newLine).append(prev).append(separator, ComponentBuilder.FormatRetention.NONE).append(next);
+		sender.spigot().sendMessage(helpPage.create());
 	}
 }

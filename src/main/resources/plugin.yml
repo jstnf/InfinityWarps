@@ -1,5 +1,5 @@
 name: InfinityWarps
-version: 0.0.1-dev
+version: 1.0.0-SNAPSHOT
 main: com.jstnf.infinitywarps.rewrite.InfinityWarps
 
 author: jstnf-pokeball92870
@@ -13,6 +13,14 @@ commands:
     aliases: [infinitywarps]
     description: The main command for InfinityWarps.
     permission: infinitywarps.infinitywarps
+  delwarp:
+    aliases: [idelwarp, deletewarp, ideletewarp]
+    description: Delete a given warp.
+    permission: infinitywarps.delwarp
+  editwarp:
+    aliases: [ieditwarp, managewarp, imanagewarp, manwarp, imanwarp]
+    description: Edit and manage properties of warps.
+    permissions: infinitywarps.editwarp
   setwarp:
     aliases: [isetwarp]
     description: Set a warp at your current location.
@@ -21,6 +29,18 @@ commands:
     aliases: [iwarp]
     description: Teleport to a specified warp.
     permission: infinitywarps.warp
+  warpgroup:
+    aliases: [iwarpgroup]
+    description: Edit and manage warp groups.
+    permissions: infinitywarps.warpgroup
+  warplist:
+    aliases: [iwarplist]
+    description: List all warps in the chat.
+    permissions: infinitywarps.warplist
+  warpmenu:
+    aliases: [iwarpmenu, warps, iwarps]
+    description: Open the warp GUI.
+    permissions: infinitywarps.warpmenu
   iwdebuginv:
     description: Open a debug inventory for InfinityWarps.
     permission: infinitywarps.debuginv

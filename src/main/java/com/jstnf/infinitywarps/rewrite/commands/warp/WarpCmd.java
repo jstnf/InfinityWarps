@@ -31,7 +31,7 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		/* Check if player */
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.MUST_BE_PLAYER, true));
 			return true;
 		}
 
@@ -43,7 +43,7 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		/* Check permission */
 		if (!p.hasPermission("infinitywarps.warp"))
 		{
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_WARP));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.NO_PERMISSION_WARP, true));
 			return true;
 		}
 
@@ -65,7 +65,7 @@ public class WarpCmd extends IWExecutor implements CommandExecutor
 		else
 		{
 			/* Warp was not found */
-			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_NOT_FOUND, args[0]));
+			sender.sendMessage(plugin.configManager.getMessage(IWLocale.WARP_NOT_FOUND, true, args[0]));
 		}
 
 		return true;
