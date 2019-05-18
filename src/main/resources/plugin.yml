@@ -1,6 +1,6 @@
 name: InfinityWarps
 version: 1.0.0-SNAPSHOT
-main: com.jstnf.infinitywarps.rewrite.InfinityWarps
+main: com.jstnf.infinitywarps.InfinityWarps
 
 author: jstnf-pokeball92870
 description: A customizable, feature-packed warps plugin.

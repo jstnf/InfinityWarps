@@ -21,6 +21,7 @@ infinitywarps:
   feature-not-implemented: "&cThis feature is currently not implemented!"
   must-be-player: "&cYou must be a player to run this command."
 
+  no-permission-help: "&cYou do not have permission to view the command help."
   no-permission-setwarp: "&cYou do not have permission to set a warp."
   no-permission-warp: "&cYou do not have permission to warp."
 
