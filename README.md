@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/gsR4X6l.png" align="right">InfinityWarps
+# <div style="text-align: right"> ![InfinityWarps](assets/InfinityWarpsLogo.png?raw=true) </div> InfinityWarps
 [![Commit Activity](https://img.shields.io/github/last-commit/jstnf/InfinityWarps.svg)](https://github.com/jstnf/InfinityWarps/commits/master)
 [![Open Issues](https://img.shields.io/github/issues/jstnf/infinitywarps.svg)](https://github.com/jstnf/InfinityWarps/issues)
 
