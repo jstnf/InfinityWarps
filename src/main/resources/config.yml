@@ -5,30 +5,16 @@
 #                            |__/                |_|
 
 infinitywarps:
-  # Should players need a permission in order to use each warp?
-  # The permission required for each warp would be infinitywarps.warp.<warpname>
-  per-warp-permissions: false
-
+  # Which locale should InfinityWarps use?
+  locale: en_US
   # On teleport, should InfinityWarps center the player on the warp location block?
   center-on-block: true
-
   # Should InfinityWarps show the coordinates of a warp in the warp list and the warp GUI?
   show-coords: true
 
-  # Which locale should InfinityWarps use?
-  locale: en_US
-
-  # Should commands that users have no permission to use be shown when they use /iw help?
-  # /!\ Currently not used.
-  show-no-permission-commands: true
-
-  # How many commands should be listed per page when using /iw help?
-  entries-per-help-page: 7
-
-item:
-  default-warp-icon: ENDER_PEARL
-  default-warp-group-icon: BOOK
-  default-border: GRAY_STAINED_GLASS_PANE
-
-do-not-change-this-value:
-  config-version: 1
+  item:
+    border: BLACK_STAINED_GLASS_PANE
+    # Default item in GUI when creating a warp
+    warp: ENDER_PEARL
+    # Default item in GUI when creating a warp group
+    group: BOOK

@@ -2,29 +2,18 @@
 [![Commit Activity](https://img.shields.io/github/last-commit/jstnf/InfinityWarps.svg)](https://github.com/jstnf/InfinityWarps/commits/master)
 [![Open Issues](https://img.shields.io/github/issues/jstnf/infinitywarps.svg)](https://github.com/jstnf/InfinityWarps/issues)
 
-InfinityWarps is a **customizable, feature-packed warps plugin** for Spigot.
+InfinityWarps is a **customizable warps plugin** for Spigot.
 
 Introduction
 ---
-> InfinityWarps is an end-all solution to warping on servers!
+> InfinityWarps is a simple but powerful solution to warping on servers!
 
 Key features of InfinityWarps include:
 
 * Warp GUI and organization with Warp Groups!
-* Support for per-warp permissions and economy!
-* Import warps straight from *Essentials*!
+* Easy warp customization!
 
 **As InfinityWarps is under development, contributions are welcome!**
-
-Optional Dependencies
----
-**Optional plugin dependencies** for InfinityWarps include:
-
-* **[Vault]** - For economy support (warp costs).
-* **[Essentials]** - Import from Essentials warp files to InfinityWarps!
-* **[PlaceholderAPI]** - Put placeholders in InfinityWarps lore and messages.
-
-More information for these can be found on the Wiki.
 
 Get Started
 ---
@@ -37,20 +26,11 @@ InfinityWarps has the following commands:
 
 | Command | Aliases | Description |
 | ------ | ------ | ------ |
-| **/iw** | */infinitywarps* | Main command for InfinityWarps |
-| **/delwarp** | */idelwarp* | Delete a warp |
-| **/editwarp** | */ieditwarp* | Edit the properties of a warp |
-| **/setwarp** | */isetwarp* | Set a warp |
-| **/setpwarp** | */isetpwarp* | Set a private warp |
-| **/warp** | */iwarp* | Teleport to a warp |
-| **/warpgroup** | */iwarpgroup* | Manage warp groups |
-| **/warplist** | */iwarplist* | List the warps in the chat |
-| **/warps** | */iwarps* | Open the warps GUI |
-
-Development
----
-### Trello
-Development progress can be found on InfinityWarps' [Trello].
+| **/delwarp** \<warp> | */idelwarp* | Delete a warp |
+| **/setwarp** \<warp> | */isetwarp* | Set a warp |
+| **/warp** [warp] | */iwarp* | Teleport to a warp, or open the warp GUI |
+| **/listwarps** [page] | */ilistwarps* | List all warps in the chat |
+| **/warps** | */iwarps* | Open the warp GUI |
 
 ### Discord
 Contact me on Discord:
@@ -58,8 +38,3 @@ Contact me on Discord:
 
 ### To-do's
  - Finish this page!
-
-   [Essentials]: <https://github.com/EssentialsX/Essentials>
-   [Vault]: <https://github.com/MilkBowl/VaultAPI/>
-   [PlaceholderAPI]: <https://github.com/PlaceholderAPI/PlaceholderAPI>
-   [Trello]: <https://trello.com/b/lIkurrS7/infinitywarps-development>
