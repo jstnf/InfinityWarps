@@ -2,6 +2,7 @@ name: InfinityWarps
 version: ${version}
 author: jstnf
 main: dev.justinf.infinitywarps.InfinityWarps
+api-version: 1.13
 
 commands:
   iwdelwarp:

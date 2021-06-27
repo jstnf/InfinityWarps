@@ -22,6 +22,7 @@ public class WarpsCommand implements CommandExecutor {
             return true;
         }
 
+        iw.getPanelManager().openWarpsPanel((Player) sender);
         return true;
     }
 }

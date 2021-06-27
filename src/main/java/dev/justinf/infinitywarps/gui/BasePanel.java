@@ -8,8 +8,8 @@ import java.util.Map;
 
 public abstract class BasePanel implements InventoryHolder {
 
-    private final Map<Integer, IPanelButton> buttons;
-    private Inventory inventory;
+    protected final Map<Integer, IPanelButton> buttons;
+    protected Inventory inventory;
 
     public BasePanel() {
         buttons = new HashMap<>();

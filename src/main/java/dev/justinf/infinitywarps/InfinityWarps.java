@@ -45,6 +45,7 @@ public class InfinityWarps extends JavaPlugin {
 
         warpManager = new WarpManager();
         fileIO = new FileIO(this);
+        panelManager = new PanelManager(this);
 
         getCommand("iwdelwarp").setExecutor(new DelwarpCommand(this));
         getCommand("iw").setExecutor(new IWCommand(this));
