@@ -1,13 +1,14 @@
 package dev.justinf.infinitywarps.command;
 
 import dev.justinf.infinitywarps.InfinityWarps;
+import dev.justinf.infinitywarps.object.Warp;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class TabWarpExecutor implements TabExecutor {
 
@@ -22,18 +23,21 @@ public abstract class TabWarpExecutor implements TabExecutor {
         List<String> results;
         switch (args.length) {
             case 0:
-                results = new ArrayList<>(iw.getWarpManager().getWarps().keySet());
-                results.sort(Comparator.naturalOrder());
+                results = iw.getWarpManager().getWarps().values()
+                        .stream()
+                        .map(Warp::getId)
+                        .sorted(String.CASE_INSENSITIVE_ORDER)
+                        .collect(Collectors.toList());
                 break;
             case 1:
                 String arg0 = args[0];
                 results = new ArrayList<>();
-                for (String warpId : iw.getWarpManager().getWarps().keySet()) {
-                    if (warpId.toLowerCase().indexOf(arg0.toLowerCase()) == 0) {
-                        results.add(warpId);
+                for (Warp w : iw.getWarpManager().getWarps().values()) {
+                    if (w.getId().toLowerCase().indexOf(arg0.toLowerCase()) == 0) {
+                        results.add(w.getId());
                     }
                 }
-                results.sort(Comparator.naturalOrder());
+                results.sort(String.CASE_INSENSITIVE_ORDER);
                 break;
             default:
                 return null;
