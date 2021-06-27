@@ -57,8 +57,11 @@ public class IWLocale {
     }
 
     public String raw(String reference, String... args) {
-        // TODO
-        return null;
+        String manip = raw(reference);
+        for (int i = 0; i < args.length; i++) {
+            manip = manip.replace("{" + i + "}", args[i]);
+        }
+        return manip;
     }
 
     public String format(String reference) {
@@ -69,8 +72,23 @@ public class IWLocale {
         return ChatColor.translateAlternateColorCodes('&', raw(reference, args));
     }
 
+    public String formatPrefixed(String reference, String... args) {
+        return ChatColor.translateAlternateColorCodes('&', (iw.getConfiguration().getBoolean(IWConVar.USE_PREFIX_IN_MESSAGES) ? raw(IWRefs.GENERAL_PREFIX) : "") + raw(reference, args));
+    }
+
     public String formatNoColorArgs(String reference, String... args) {
-        // TODO
-        return null;
+        String manip = format(reference);
+        for (int i = 0; i < args.length; i++) {
+            manip = manip.replace("{" + i + "}", args[i]);
+        }
+        return manip;
+    }
+
+    public String formatNoColorArgsPrefixed(String reference, String... args) {
+        String manip = formatPrefixed(reference);
+        for (int i = 0; i < args.length; i++) {
+            manip = manip.replace("{" + i + "}", args[i]);
+        }
+        return manip;
     }
 }

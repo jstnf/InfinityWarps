@@ -7,6 +7,9 @@
 infinitywarps:
   # Which locale should InfinityWarps use?
   locale: en_US
+  # Should we use the prefix defined in the locale behind certain messages?
+  # Alternatively, you can set infinitywarps.general.prefix in locale to an empty string ("") to achieve the same effect
+  use-prefix-in-messages: true
   # On teleport, should InfinityWarps center the player on the warp location block?
   center-on-block: true
   # Should InfinityWarps show the coordinates of a warp in the warp list and the warp GUI?
