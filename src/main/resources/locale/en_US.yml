@@ -5,6 +5,28 @@
 #                            |__/                |_|
 
 infinitywarps:
+  general:
+    prefix: "&b&lI&d&lW&7 > "
+    no-permission: "&cYou do not have permission to do that! &8(&7{0}&8)"
+    must-be-player: "&cYou must be a player to do that!"
+    to-be-implemented: "&fThis feature is coming soon!"
+
+  command:
+    iw:
+      help:
+        message: "TODO"
+    listwarps:
+      no-warps: "&fThere are currently no warps set!"
+      invalid-page: "&cPlease enter a valid page number!"
+    warp:
+      usage: "&fUsage&8: &b/{0} &8[&7warp&8]"
+      invalid-warp: "&fThe warp &b{0}&f does not exist!"
+
+  panel:
+    title:
+      warps: "&7Warps"
+
+
   infinitywarps: "InfinityWarps"
   prefix: "&7[&bInfinity&dWarps&7] "
 
@@ -99,6 +121,3 @@ infinitywarps:
       warpgroup-setitem: "Set the item of a warp group to be used in the GUI."
       warplist: "List all warps in the chat."
       warpmenu: "Open the warp GUI."
-
-do-not-change-this-value:
-  config-version: 1
