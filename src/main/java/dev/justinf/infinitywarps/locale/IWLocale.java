@@ -40,7 +40,7 @@ public class IWLocale {
 
     public boolean merge(String locale) {
         BaseConfiguration localeFile = new BaseConfiguration(iw, "locale/" + locale + ".yml");
-        if (!localeFile.initialize(false)) return false;
+        if (!localeFile.initialize(false, true)) return false;
 
         for (String key : localeFile.getConfig().getKeys(true)) {
             entries.put(key, localeFile.getString(key, key));

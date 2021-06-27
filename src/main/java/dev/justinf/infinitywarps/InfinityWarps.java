@@ -31,6 +31,9 @@ public class InfinityWarps extends JavaPlugin {
         locale = new IWLocale(this);
         locale.load();
 
+        fileIO = new FileIO(this);
+        if (!fileIO.onEnable()) return;
+
         loaded = true;
     }
 
@@ -44,7 +47,7 @@ public class InfinityWarps extends JavaPlugin {
         }
 
         warpManager = new WarpManager();
-        fileIO = new FileIO(this);
+        fileIO.load();
         panelManager = new PanelManager(this);
 
         getCommand("iwdelwarp").setExecutor(new DelwarpCommand(this));

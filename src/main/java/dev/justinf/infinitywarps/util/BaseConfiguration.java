@@ -1,9 +1,11 @@
 package dev.justinf.infinitywarps.util;
 
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 
 public class BaseConfiguration {
 
@@ -40,43 +42,48 @@ public class BaseConfiguration {
      * @return true if the configuration was read/created successfully, false otherwise.
      */
     public boolean initialize() {
-        return initialize(true);
+        return initialize(true, true);
     }
 
     /**
-     * Attempt to read or create the file.
+     * Safely attempts to read or create the file. (catches and prints exceptions)
      * Use this method instead of onEnable() for more control over this process.
      * @param tryPluginFolder Whether to attempt to create the plugin folder or not
+     * @param verbose Whether initialization messages should be printed
      * @return true if the configuration was read/created successfully, false otherwise.
      */
-    public boolean initialize(boolean tryPluginFolder) {
+    public boolean initialize(boolean tryPluginFolder, boolean verbose) {
         try {
-            config = new YamlConfiguration();
-
-            if (tryPluginFolder) {
-                if (generatePluginFolder()) {
-                    plugin.getLogger().info("Found the plugin folder!");
-                } else {
-                    plugin.getLogger().warning("Something went wrong generating the plugin folder.");
-                    return false;
-                }
-            }
-
-            File configFile = new File(plugin.getDataFolder() + File.separator + filePath);
-
-            if (configFile.exists()) {
-                plugin.getLogger().info("Found existing " + filePath + "!");
-            } else {
-                plugin.getLogger().info("Generating a new " + filePath + " file!");
-                plugin.saveResource(filePath, false);
-            }
-
-            config.load(configFile);
-            return true;
+            return unsafeInitialize(tryPluginFolder, verbose);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean unsafeInitialize(boolean tryPluginFolder, boolean verbose) throws IOException, InvalidConfigurationException {
+        config = new YamlConfiguration();
+
+        if (tryPluginFolder) {
+            if (generatePluginFolder()) {
+                if (verbose) plugin.getLogger().info("Found the plugin folder!");
+            } else {
+                if (verbose) plugin.getLogger().warning("Something went wrong generating the plugin folder.");
+                return false;
+            }
+        }
+
+        File configFile = new File(plugin.getDataFolder() + File.separator + filePath);
+
+        if (configFile.exists()) {
+            if (verbose) plugin.getLogger().info("Found existing " + filePath + "!");
+        } else {
+            if (verbose) plugin.getLogger().info("Generating a new " + filePath + " file!");
+            plugin.saveResource(filePath, false);
+        }
+
+        config.load(configFile);
+        return true;
     }
 
     /**

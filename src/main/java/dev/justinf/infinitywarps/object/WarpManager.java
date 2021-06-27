@@ -13,12 +13,12 @@ public class WarpManager {
         groups = new HashMap<>();
     }
 
-    public boolean addOrUpdate(Warp w) {
-        return warps.put(w.getId(), w) != null;
+    public boolean addOrUpdateLocally(Warp w) {
+        return warps.put(w.getId().toLowerCase(), w) != null;
     }
 
-    public boolean addOrUpdate(WarpGroup g) {
-        return groups.put(g.getId(), g) != null;
+    public boolean addOrUpdateLocally(WarpGroup g) {
+        return groups.put(g.getId().toLowerCase(), g) != null;
     }
 
     public Warp getWarp(String id) {
