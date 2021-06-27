@@ -13,7 +13,7 @@ public class Warp {
     private String id;
     private String title;
     private List<String> lore;
-    private WarpGroup category;
+    private WarpGroup group;
     private String iconMaterial;
 
     private String world;
@@ -28,7 +28,7 @@ public class Warp {
         this.id = id;
         title = id;
         lore = new ArrayList<>();
-        category = null;
+        group = null;
         iconMaterial = iw.getConfiguration().getString(IWConVar.ITEM_WARP);
         world = l.getWorld().getName();
         x = l.getX();
@@ -39,11 +39,11 @@ public class Warp {
     }
 
     // On load
-    public Warp(String id, String title, List<String> lore, WarpGroup category, String iconMaterial, String world, double x, double y, double z, float pitch, float yaw) {
+    public Warp(String id, String title, List<String> lore, WarpGroup group, String iconMaterial, String world, double x, double y, double z, float pitch, float yaw) {
         this.id = id;
         this.title = title;
         this.lore = lore;
-        this.category = category;
+        this.group = group;
         this.iconMaterial = iconMaterial;
         this.world = world;
         this.x = x;
@@ -95,12 +95,12 @@ public class Warp {
         this.lore = lore;
     }
 
-    public WarpGroup getCategory() {
-        return category;
+    public WarpGroup getGroup() {
+        return group;
     }
 
-    public void setCategory(WarpGroup category) {
-        this.category = category;
+    public void setGroup(WarpGroup group) {
+        this.group = group;
     }
 
     public String getIconMaterial() {
