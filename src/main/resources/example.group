@@ -1,0 +1,4 @@
+id: example
+name: &5Example Group
+lore: &7This is an example warp group!\n&6Purely made for an example!
+icon-material: BOOK
