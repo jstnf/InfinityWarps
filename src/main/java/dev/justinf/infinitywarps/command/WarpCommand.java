@@ -5,17 +5,12 @@ import dev.justinf.infinitywarps.locale.IWRefs;
 import dev.justinf.infinitywarps.object.Warp;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
-public class WarpCommand implements TabExecutor {
-
-    private final InfinityWarps iw;
+public class WarpCommand extends TabWarpExecutor {
 
     public WarpCommand(InfinityWarps iw) {
-        this.iw = iw;
+        super(iw);
     }
 
     @Override
@@ -46,12 +41,6 @@ public class WarpCommand implements TabExecutor {
             return true;
         }
         return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        // TODO
-        return null;
     }
 
     private void sendHelp(CommandSender sender, String label) {
