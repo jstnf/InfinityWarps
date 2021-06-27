@@ -1,5 +1,11 @@
 package dev.justinf.infinitywarps;
 
+import dev.justinf.infinitywarps.command.DelwarpCommand;
+import dev.justinf.infinitywarps.command.IWCommand;
+import dev.justinf.infinitywarps.command.ListwarpsCommand;
+import dev.justinf.infinitywarps.command.SetwarpCommand;
+import dev.justinf.infinitywarps.command.WarpCommand;
+import dev.justinf.infinitywarps.command.WarpsCommand;
 import dev.justinf.infinitywarps.config.IWConfiguration;
 import dev.justinf.infinitywarps.event.PanelListener;
 import dev.justinf.infinitywarps.gui.PanelManager;
@@ -39,6 +45,13 @@ public class InfinityWarps extends JavaPlugin {
 
         warpManager = new WarpManager();
         fileIO = new FileIO(this);
+
+        getCommand("iwdelwarp").setExecutor(new DelwarpCommand(this));
+        getCommand("iw").setExecutor(new IWCommand(this));
+        getCommand("iwlistwarps").setExecutor(new ListwarpsCommand(this));
+        getCommand("iwsetwarp").setExecutor(new SetwarpCommand(this));
+        getCommand("iwwarp").setExecutor(new WarpCommand(this));
+        getCommand("iwwarps").setExecutor(new WarpsCommand(this));
 
         getServer().getPluginManager().registerEvents(new PanelListener(), this);
     }

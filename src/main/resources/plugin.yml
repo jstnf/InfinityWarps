@@ -4,8 +4,17 @@ author: jstnf
 main: dev.justinf.infinitywarps.InfinityWarps
 
 commands:
-  delwarp:
+  iwdelwarp:
   iw:
-  setwarp:
-  warp:
-  warps:
+  iwsetwarp:
+  iwwarp:
+  iwwarps:
+  iwlistwarps:
+
+permissions:
+  infinitywarps.delwarp:
+    description: Permission to remove a warp.
+  infinitywarps.reload:
+    description: Permission to reload InfinityWarps' config file and warps.
+  infinitywarps.setwarp:
+    description: Permission to set a warp.
