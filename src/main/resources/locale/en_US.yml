@@ -10,17 +10,30 @@ infinitywarps:
     no-permission: "&cYou do not have permission to do that! &8(&7{0}&8)"
     must-be-player: "&cYou must be a player to do that!"
     to-be-implemented: "&fThis feature is coming soon!"
+    could-not-find-player: "&fCould not find the player &b{0}&f!"
 
   command:
+    delwarp:
+      usage: "&fUsage&8: &b/{0} &8<&7warp&8>"
+      success: "&fSuccessfully deleted the warp &b{0}&f!"
+      invalid-warp: "&fThe warp &b{0}&f does not exist!"
+      failure-error-saving: "&cAn error occurred deleting the warp. Please see console."
     iw:
       help:
         message: "TODO"
     listwarps:
       no-warps: "&fThere are currently no warps set!"
       invalid-page: "&cPlease enter a valid page number!"
+    setwarp:
+      usage: "&fUsage&8: &b/{0} &8<&7warp&8>"
+      success: "&fWarp &b{0}&f set!"
+      success-updated: "&fUpdated the location of &b{0}&f!"
+      failure-error-saving: "&cAn error occurred setting the warp. Please see console."
     warp:
       usage: "&fUsage&8: &b/{0} &8[&7warp&8]"
       invalid-warp: "&fThe warp &b{0}&f does not exist!"
+      success: "&fWarped to &b{0}&f!"
+      success-target: "&fWarped &b{0}&f to &b{1}&f!"
 
   panel:
     title:

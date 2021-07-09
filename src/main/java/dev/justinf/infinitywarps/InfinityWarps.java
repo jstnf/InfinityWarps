@@ -46,7 +46,7 @@ public class InfinityWarps extends JavaPlugin {
             return;
         }
 
-        warpManager = new WarpManager();
+        warpManager = new WarpManager(this);
         fileIO.load();
         panelManager = new PanelManager(this);
 

@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 
 public class ListwarpsCommand implements CommandExecutor {
 
+    private static final int WARPS_PER_PAGE = 15;
+
     private final InfinityWarps iw;
 
     public ListwarpsCommand(InfinityWarps iw) {
@@ -22,7 +24,7 @@ public class ListwarpsCommand implements CommandExecutor {
             return true;
         }
 
-        int numPages = (int) Math.ceil(iw.getWarpManager().getWarps().size() / 10.0);
+        int numPages = (int) Math.ceil(iw.getWarpManager().getWarps().size() / (double) WARPS_PER_PAGE);
         int selectedPage = 1;
         if (args.length > 0) {
             try {

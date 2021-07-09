@@ -1,13 +1,13 @@
 package dev.justinf.infinitywarps.io;
 
 import dev.justinf.infinitywarps.InfinityWarps;
+import dev.justinf.infinitywarps.exception.DuplicateException;
 import dev.justinf.infinitywarps.object.Warp;
 import dev.justinf.infinitywarps.object.WarpGroup;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,13 +35,15 @@ public class FileIO {
 
     public void load() {
         try {
-            List<WarpGroup> loadedGroups = new ArrayList<>();
+            Map<String, WarpGroup> loadedGroups = new HashMap<>();
             Map<File, Exception> invalidGroups = new HashMap<>();
             for (File f : Objects.requireNonNull(groupsFolder.listFiles())) {
                 try {
                     WarpGroupConfiguration groupConfiguration = new WarpGroupConfiguration(iw, f);
                     groupConfiguration.unsafeInitialize(false, false);
-                    loadedGroups.add(groupConfiguration.toWarpGroup());
+                    WarpGroup wg = groupConfiguration.build();
+                    if (loadedGroups.containsKey(wg.getInternalId())) throw new DuplicateException(wg.getInternalId());
+                    loadedGroups.put(wg.getInternalId(), wg);
                 } catch (Exception e2) {
                     invalidGroups.put(f, e2);
                 }
@@ -49,7 +51,7 @@ public class FileIO {
 
             // Clear all current data
             iw.getWarpManager().getGroups().clear();
-            loadedGroups.forEach(iw.getWarpManager()::addOrUpdateLocally);
+            loadedGroups.values().forEach(iw.getWarpManager()::addOnLoad);
             iw.getLogger().info("Successfully loaded " + loadedGroups.size() + " warp groups!");
 
             if (!invalidGroups.isEmpty()) {
@@ -63,20 +65,22 @@ public class FileIO {
         }
 
         try {
-            List<Warp> loadedWarps = new ArrayList<>();
+            Map<String, Warp> loadedWarps = new HashMap<>();
             Map<File, Exception> invalidWarps = new HashMap<>();
             for (File f : Objects.requireNonNull(warpsFolder.listFiles())) {
                 try {
                     WarpConfiguration warpConfiguration = new WarpConfiguration(iw, f);
                     warpConfiguration.unsafeInitialize(false, false);
-                    loadedWarps.add(warpConfiguration.toWarp());
+                    Warp w = warpConfiguration.build();
+                    if (loadedWarps.containsKey(w.getInternalId())) throw new DuplicateException(w.getInternalId());
+                    loadedWarps.put(w.getInternalId(), w);
                 } catch (Exception e2) {
                     invalidWarps.put(f, e2);
                 }
 
                 // Clear all current data
                 iw.getWarpManager().getWarps().clear();
-                loadedWarps.forEach(iw.getWarpManager()::addOrUpdateLocally);
+                loadedWarps.values().forEach(iw.getWarpManager()::addOnLoad);
                 iw.getLogger().info("Successfully loaded " + loadedWarps.size() + " warps!");
 
                 if (!invalidWarps.isEmpty()) {
@@ -88,6 +92,26 @@ public class FileIO {
         } catch (NullPointerException e) {
             e.printStackTrace();
             iw.getLogger().severe("Error grabbing warp files. Check if the warps folder exists in your InfinityWarps folder!");
+        }
+    }
+
+    public void write(Warp w) {
+        try {
+            WarpConfiguration conf = new WarpConfiguration(iw, w);
+            conf.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+            iw.getLogger().severe("Error saving warp file " + w.getInternalId() + ".warp!");
+        }
+    }
+
+    public void write(WarpGroup wg) {
+        try {
+            WarpGroupConfiguration conf = new WarpGroupConfiguration(iw, wg);
+            conf.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+            iw.getLogger().severe("Error saving warp file " + wg.getInternalId() + ".group!");
         }
     }
 

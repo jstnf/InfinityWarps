@@ -3,6 +3,8 @@ package dev.justinf.infinitywarps.command;
 import dev.justinf.infinitywarps.InfinityWarps;
 import dev.justinf.infinitywarps.locale.IWRefs;
 import dev.justinf.infinitywarps.object.Warp;
+import dev.justinf.infinitywarps.util.IWPermissions;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,11 +17,6 @@ public class WarpCommand extends TabWarpExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.GENERAL_MUST_BE_PLAYER));
-            return true;
-        }
-
         if (args.length > 0) {
             Warp w = iw.getWarpManager().getWarp(args[0].toLowerCase());
             if (w == null) {
@@ -27,23 +24,35 @@ public class WarpCommand extends TabWarpExecutor {
                 return true;
             }
 
+            Player target;
+
             // Player target
             if (args.length > 1) {
-                // TODO
-                sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.GENERAL_TO_BE_IMPLEMENTED));
-                return true;
+                if (!(sender.hasPermission(IWPermissions.WARP_OTHERS))) {
+                    sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.GENERAL_NO_PERMISSION, IWPermissions.WARP_OTHERS));
+                    return true;
+                }
+
+                target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    sender.sendMessage(iw.getLocale().formatNoColorArgsPrefixed(IWRefs.GENERAL_COULD_NOT_FIND_PLAYER, args[1]));
+                    return true;
+                }
+                sender.sendMessage(iw.getLocale().formatNoColorArgsPrefixed(IWRefs.COMMAND_WARP_SUCCESS_TARGET, target.getName(), w.getId()));
+            } else {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.GENERAL_MUST_BE_PLAYER));
+                    return true;
+                }
+                target = (Player) sender;
+                sender.sendMessage(iw.getLocale().formatNoColorArgsPrefixed(IWRefs.COMMAND_WARP_SUCCESS, w.getId()));
             }
 
-            // TODO message
-            ((Player) sender).teleport(w.getLocation());
+            target.teleport(w.getLocation());
         } else {
-            sendHelp(sender, label);
+            sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.COMMAND_WARP_USAGE, label));
             return true;
         }
         return true;
-    }
-
-    private void sendHelp(CommandSender sender, String label) {
-        sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.COMMAND_WARP_USAGE, label));
     }
 }

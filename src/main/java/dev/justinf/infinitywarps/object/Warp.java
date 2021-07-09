@@ -2,18 +2,19 @@ package dev.justinf.infinitywarps.object;
 
 import dev.justinf.infinitywarps.InfinityWarps;
 import dev.justinf.infinitywarps.config.IWConVar;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warp {
+public class Warp extends DataObject {
 
-    private String id;
     private String title;
     private List<String> lore;
-    private WarpGroup group;
     private String iconMaterial;
 
     private String world;
@@ -25,10 +26,9 @@ public class Warp {
 
     // On creation
     public Warp(InfinityWarps iw, String id, Location l) {
-        this.id = id;
+        super(id);
         title = id;
         lore = new ArrayList<>();
-        group = null;
         iconMaterial = iw.getConfiguration().getString(IWConVar.ITEM_WARP);
         world = l.getWorld().getName();
         x = l.getX();
@@ -39,11 +39,10 @@ public class Warp {
     }
 
     // On load
-    public Warp(String id, String title, List<String> lore, WarpGroup group, String iconMaterial, String world, double x, double y, double z, float pitch, float yaw) {
-        this.id = id;
+    public Warp(String id, String title, List<String> lore, String iconMaterial, String world, double x, double y, double z, float pitch, float yaw) {
+        super(id);
         this.title = title;
         this.lore = lore;
-        this.group = group;
         this.iconMaterial = iconMaterial;
         this.world = world;
         this.x = x;
@@ -70,15 +69,26 @@ public class Warp {
         yaw = l.getYaw();
     }
 
+    public String pluginFilePath() {
+        return "warps" + File.separator + getInternalId() + ".warp";
+    }
+
+    public YamlConfiguration toYaml() {
+        YamlConfiguration result = new YamlConfiguration();
+        result.set("id", id);
+        result.set("title", title);
+        result.set("lore", StringUtils.join(lore, '\n'));
+        result.set("icon-material", iconMaterial);
+        result.set("location.world", world);
+        result.set("location.x", x);
+        result.set("location.y", y);
+        result.set("location.z", z);
+        result.set("location.yaw", yaw);
+        result.set("location.pitch", pitch);
+        return result;
+    }
+
     /* getset */
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -93,14 +103,6 @@ public class Warp {
 
     public void setLore(List<String> lore) {
         this.lore = lore;
-    }
-
-    public WarpGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(WarpGroup group) {
-        this.group = group;
     }
 
     public String getIconMaterial() {

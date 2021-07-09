@@ -5,4 +5,5 @@ public class IWPermissions {
     public static final String DELWARP = "infinitywarps.delwarp";
     public static final String IW_RELOAD = "infinitywarps.reload";
     public static final String SETWARP = "infinitywarps.setwarp";
+    public static final String WARP_OTHERS = "infinitywarps.warp.others";
 }

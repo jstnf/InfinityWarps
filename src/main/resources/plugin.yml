@@ -19,3 +19,5 @@ permissions:
     description: Permission to reload InfinityWarps' config file and warps.
   infinitywarps.setwarp:
     description: Permission to set a warp.
+  infinitywarps.warp.others:
+    description: Permission to teleport others to warps.

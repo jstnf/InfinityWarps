@@ -1,9 +1,6 @@
 id: example
-name: &5Example
+title: &5Example
 lore: &7This is an example warp!\n&6Purely made for an example!
-group:
-  enabled: false
-  id: none
 icon-material: ENDER_PEARL
 location:
   world: world
