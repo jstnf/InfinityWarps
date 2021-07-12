@@ -14,6 +14,11 @@ public class IWRefs {
     public static final String COMMAND_IW_HELP_MESSAGE = "infinitywarps.command.iw.help.message";
     public static final String COMMAND_LISTWARPS_NO_WARPS = "infinitywarps.command.listwarps.no-warps";
     public static final String COMMAND_LISTWARPS_INVALID_PAGE = "infinitywarps.command.listwarps.invalid-page";
+    public static final String COMMAND_LISTWARPS_HEADER = "infinitywarps.command.listwarps.header";
+    public static final String COMMAND_LISTWARPS_HOVER_TIP = "infinitywarps.command.listwarps.hover-tip";
+    public static final String COMMAND_LISTWARPS_LISTING_DIVIDER = "infinitywarps.command.listwarps.listing-divider";
+    public static final String COMMAND_LISTWARPS_LISTING_COLOR = "infinitywarps.command.listwarps.listing-color";
+    public static final String COMMAND_LISTWARPS_LISTING_COLOR_ALT = "infinitywarps.command.listwarps.listing-color-alt";
     public static final String COMMAND_SETWARP_USAGE = "infinitywarps.command.setwarp.usage";
     public static final String COMMAND_SETWARP_SUCCESS = "infinitywarps.command.setwarp.success";
     public static final String COMMAND_SETWARP_SUCCESS_UPDATED = "infinitywarps.command.setwarp.success-updated";

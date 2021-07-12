@@ -19,7 +19,7 @@ public abstract class DataObject {
     public abstract YamlConfiguration toYaml();
 
     public String getId() {
-        return id.toLowerCase();
+        return id;
     }
 
     public void setId(String id) {

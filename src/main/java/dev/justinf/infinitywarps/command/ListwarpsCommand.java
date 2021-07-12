@@ -2,9 +2,17 @@ package dev.justinf.infinitywarps.command;
 
 import dev.justinf.infinitywarps.InfinityWarps;
 import dev.justinf.infinitywarps.locale.IWRefs;
+import dev.justinf.infinitywarps.object.Warp;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListwarpsCommand implements CommandExecutor {
 
@@ -24,7 +32,8 @@ public class ListwarpsCommand implements CommandExecutor {
             return true;
         }
 
-        int numPages = (int) Math.ceil(iw.getWarpManager().getWarps().size() / (double) WARPS_PER_PAGE);
+        int numWarps = iw.getWarpManager().getWarps().size();
+        int numPages = (int) Math.ceil(numWarps / (double) WARPS_PER_PAGE);
         int selectedPage = 1;
         if (args.length > 0) {
             try {
@@ -42,8 +51,30 @@ public class ListwarpsCommand implements CommandExecutor {
             return true;
         }
 
-        // TODO
-        sender.sendMessage(iw.getLocale().formatPrefixed(IWRefs.GENERAL_TO_BE_IMPLEMENTED));
+        // Header
+        sender.sendMessage(iw.getLocale().format(IWRefs.COMMAND_LISTWARPS_HEADER, numWarps + "", selectedPage + "", numPages + ""));
+
+        String color = iw.getLocale().format(IWRefs.COMMAND_LISTWARPS_LISTING_COLOR);
+        String colorAlt = iw.getLocale().format(IWRefs.COMMAND_LISTWARPS_LISTING_COLOR_ALT);
+
+        // Sort the list of warps alphabetically, and then get the warps for that specific page
+        List<String> warpIds = iw.getWarpManager().getWarps().values()
+                .stream()
+                .map(Warp::getId)
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.toList());
+
+        ComponentBuilder warpContents = new ComponentBuilder();
+        int startIndex = WARPS_PER_PAGE * (selectedPage - 1);
+        for (int i = startIndex; i < warpIds.size() && i < startIndex + WARPS_PER_PAGE; i++) {
+            if (i != startIndex) warpContents.append(iw.getLocale().format(IWRefs.COMMAND_LISTWARPS_LISTING_DIVIDER), ComponentBuilder.FormatRetention.NONE);
+            String id = warpIds.get(i);
+            warpContents.append((i % 2 == 0 ? color : colorAlt) + id);
+            warpContents.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp " + id));
+            warpContents.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(iw.getLocale().format(IWRefs.COMMAND_LISTWARPS_HOVER_TIP, id))));
+        }
+
+        sender.spigot().sendMessage(warpContents.create());
         return true;
     }
 }
