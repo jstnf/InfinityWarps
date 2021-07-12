@@ -19,11 +19,13 @@ public class PlayerWarpEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void on(PlayerWarpEvent e) {
         Location l = e.getWarp().getLocation();
+        // Handle invalid location
         if (l == null) {
             e.getPlayer().sendMessage(iw.getLocale().formatNoColorArgs(IWRefs.GENERAL_WARP_INVALID_LOCATION, e.getWarp().getId()));
             return;
         }
 
+        // Do teleportation
         e.getPlayer().teleport(e.getWarp().getLocation());
     }
 }
